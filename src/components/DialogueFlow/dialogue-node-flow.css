@@ -1,0 +1,88 @@
+.dialogue-node-flow {
+  width: 300px;
+  background-color: #fefefe;
+  border-radius: 10px;
+
+  position: relative;
+
+  box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.18);
+  -webkit-box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.18);
+  -moz-box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.18);
+
+  cursor: pointer;
+  padding: 1rem;
+
+  .dialogue-node-flow-drag-handle {
+    width: 70px;
+    height: 25px;
+    background-color: #666;
+    position: absolute;
+    top: -3px; /* sobe um pouco pra parecer uma “aba” */
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: grab;
+    clip-path: polygon(0% 0%, 100% 0%, 80% 100%, 20% 100%);
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .dialogue-node-flow-main {
+    display: block;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background-color: rgb(250, 233, 86);
+
+    left: 0;
+    top: 0;
+
+    border-radius: 10px 0;
+  }
+
+  .dialogue-node-flow-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    border-bottom: dashed 1px #cecece;
+    margin-bottom: 0.7rem;
+
+    .dialogue-node-flow-type,
+    .dialogue-node-flow-character-name {
+      font-size: small;
+      font-weight: bolder;
+    }
+  }
+
+  .dialogue-node-flow-control-random-content {
+    .dialogue-node-flow-control-random-option {
+      border-top: solid 1px #cecece;
+      position: relative;
+
+      padding: 0.5rem 0;
+
+      &:first-child {
+        border-top: none;
+      }
+    }
+  }
+
+  .dialogue-node-flow-choice-content-message {
+    border-bottom: dashed 1px #cecece;
+    padding-bottom: 0.7rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .dialogue-node-flow-choice-content-options {
+    .dialogue-node-flow-choice-option {
+      border-top: solid 1px #cecece;
+      position: relative;
+
+      padding: 0.5rem 0;
+
+      &:first-child {
+        border-top: none;
+      }
+    }
+  }
+}
