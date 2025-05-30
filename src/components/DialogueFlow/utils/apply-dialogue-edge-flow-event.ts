@@ -4,12 +4,8 @@ import {
   DialogueNodeFlowEventType,
 } from "../../../entities/dialogue-node-flow-event";
 import { applyDialogueEdgeFlowEventChangeDialogueType } from "./apply-dialogue-edge-flow-event-type/apply-dialogue-edge-flow-event-change-dialogue-type";
+import { applyDialogueEdgeFlowEventConnectionDialogueCard } from "./apply-dialogue-edge-flow-event-type/apply-dialogue-edge-flow-event-connection-dialogue-card";
 import { applyNothingDialogueEdgeFlowEvent } from "./apply-dialogue-edge-flow-event-type/apply-nothing-dialogue-edge-flow-event";
-// import { applyDialogueEdgeFlowEventChangeDialogueCharacter } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-character";
-// import { applyDialogueEdgeFlowEventChangeDialogueText } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-text";
-// import { applyDialogueEdgeFlowEventChangeDialogueType } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-type";
-// import { applyDialogueEdgeFlowEventDimensionDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-dimension-dialogue-card";
-// import { applyDialogueEdgeFlowEventMoveDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-move-dialogue-card";
 
 type FunctionApplyDialogueEdgeFlowEvent<T extends DialogueNodeFlowEventType> = (
   event: DialogueNodeFlowEvent<T>,
@@ -20,17 +16,19 @@ const applyDialogueEdgeFlowEventByEventType: {
   [T in DialogueNodeFlowEventType]: FunctionApplyDialogueEdgeFlowEvent<T>;
 } = {
   [DialogueNodeFlowEventType.MOVE_DIALOGUE_CARD]:
-  applyNothingDialogueEdgeFlowEvent,
+    applyNothingDialogueEdgeFlowEvent,
   [DialogueNodeFlowEventType.DIMENSION_DIALOGUE_CARD]:
-  applyNothingDialogueEdgeFlowEvent,
+    applyNothingDialogueEdgeFlowEvent,
+  [DialogueNodeFlowEventType.CONNECTION_DIALOGUE_CARD]:
+    applyDialogueEdgeFlowEventConnectionDialogueCard,
 
   // Dialogue
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]:
-  applyNothingDialogueEdgeFlowEvent,
+    applyNothingDialogueEdgeFlowEvent,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]:
-  applyNothingDialogueEdgeFlowEvent,
+    applyNothingDialogueEdgeFlowEvent,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE]:
-  applyDialogueEdgeFlowEventChangeDialogueType,
+    applyDialogueEdgeFlowEventChangeDialogueType,
 };
 
 export function applyDialogueEdgeFlowEvent<T extends DialogueNodeFlowEventType>(

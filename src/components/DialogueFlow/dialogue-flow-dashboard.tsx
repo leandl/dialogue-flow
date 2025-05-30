@@ -52,8 +52,16 @@ export function DialogueFlowDashboard() {
   const [nodes, setNodes] = useNodesState(dialogueNodeFlows);
   const [edges, setEdges] = useEdgesState(dialogueEdgeFlows);
 
-  const { notifyNodeReactFlowEvent, onNodeDialogueFlowEvent } =
-    useDialogueFlow();
+  console.log({
+    nodes,
+    edges,
+  });
+
+  const {
+    notifyNodeReactFlowEvent,
+    notifyConnectionReactFlowEvent,
+    onNodeDialogueFlowEvent,
+  } = useDialogueFlow();
 
   useEffect(
     () =>
@@ -61,7 +69,7 @@ export function DialogueFlowDashboard() {
         setNodes((nodes) => applyDialogueNodeFlowEvent(event, nodes));
         setEdges((edges) => applyDialogueEdgeFlowEvent(event, edges));
       }),
-    [onNodeDialogueFlowEvent, setNodes]
+    [onNodeDialogueFlowEvent, setNodes, setEdges]
   );
 
   return (
@@ -70,9 +78,7 @@ export function DialogueFlowDashboard() {
         nodes={nodes}
         edges={edges}
         onNodesChange={notifyNodeReactFlowEvent}
-        // onNodesChange={onNodesChange}
-        // onEdgesChange={onEdgesChange}
-        onConnect={console.log}
+        onConnect={notifyConnectionReactFlowEvent}
         nodeTypes={nodeTypes}
         fitView
       >

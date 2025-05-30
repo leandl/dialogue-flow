@@ -1,4 +1,4 @@
-import type { NodeChange } from "@xyflow/react";
+import type { Connection, NodeChange } from "@xyflow/react";
 import {
   Observer,
   type ObserverListener,
@@ -14,11 +14,13 @@ import {
 import type { DialogueNodeFlowEvent } from "../entities/dialogue-node-flow-event";
 import { convertNodeReactFlowEventToNodeDialogueFlowEvent } from "../converts/convert-node-react-flow-event-to-node-dialogue-flow-event";
 import { allDialogueNodeFlowTypes } from "../entities/dialogue-node-flow";
+import { convertConnectionReactFlowEventToNodeDialogueFlowEvent } from "../converts/convert-connection-react-flow-event-to-node-dialogue-flow-event";
 
 type DialogueFlowData = {
   allCharacters: string[];
   allDialogueTypes: string[];
   notifyNodeReactFlowEvent(e: NodeChange[]): void;
+  notifyConnectionReactFlowEvent(e: Connection): void;
   notifyNodeDialogueFlowEvent(e: DialogueNodeFlowEvent): void;
   onNodeDialogueFlowEvent(
     l: ObserverListener<DialogueNodeFlowEvent>
@@ -39,6 +41,10 @@ type DialogueFlowProviderProps = {
 };
 
 export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
+  const connectionReactFlowEventObserver = useMemo(
+    () => new Observer<Connection>(),
+    []
+  );
   const nodeReactFlowEventObserver = useMemo(
     () => new Observer<NodeChange[]>(),
     []
@@ -54,21 +60,43 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
   );
 
   useEffect(() => {
-    const unsubscribe = nodeReactFlowEventObserver.subscribe((events) => {
-      events
-        .map(convertNodeReactFlowEventToNodeDialogueFlowEvent)
-        .forEach((event) => {
-          if (event) {
-            nodeDialogueFlowEventObserver.publish(event);
-          }
-        });
-    });
-    return unsubscribe;
-  }, [nodeDialogueFlowEventObserver, nodeReactFlowEventObserver]);
+    const unsubscribeNodeReactFlowEvent = nodeReactFlowEventObserver.subscribe(
+      (events) => {
+        events
+          .map(convertNodeReactFlowEventToNodeDialogueFlowEvent)
+          .forEach((event) => {
+            if (event) {
+              nodeDialogueFlowEventObserver.publish(event);
+            }
+          });
+      }
+    );
+
+    const unsubscribeConnectionReactFlowEvent =
+      connectionReactFlowEventObserver.subscribe((event) => {
+        nodeDialogueFlowEventObserver.publish(
+          convertConnectionReactFlowEventToNodeDialogueFlowEvent(event)
+        );
+      });
+
+    return () => {
+      unsubscribeNodeReactFlowEvent();
+      unsubscribeConnectionReactFlowEvent();
+    };
+  }, [
+    nodeDialogueFlowEventObserver,
+    nodeReactFlowEventObserver,
+    connectionReactFlowEventObserver,
+  ]);
 
   const notifyNodeReactFlowEvent = useCallback(
     (e: NodeChange[]) => nodeReactFlowEventObserver.publish(e),
     [nodeReactFlowEventObserver]
+  );
+
+  const notifyConnectionReactFlowEvent = useCallback(
+    (e: Connection) => connectionReactFlowEventObserver.publish(e),
+    [connectionReactFlowEventObserver]
   );
 
   const notifyNodeDialogueFlowEvent = useCallback(
@@ -88,6 +116,7 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
         notifyNodeReactFlowEvent,
         onNodeDialogueFlowEvent,
         notifyNodeDialogueFlowEvent,
+        notifyConnectionReactFlowEvent,
         allCharacters: ["CHRIS", "BENNEDETTE"],
         allDialogueTypes,
       }}

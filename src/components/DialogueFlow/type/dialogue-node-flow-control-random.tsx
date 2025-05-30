@@ -19,7 +19,7 @@ export function DialogueNodeFlowControlRandom({
             className="dialogue-node-flow-control-random-option"
             key={nextOption.sourceId}
           >
-            Oprion {index + 1}
+            Option {index + 1}
             <Handle
               id={nextOption.sourceId}
               type="source"
