@@ -1,20 +1,40 @@
+import { useCallback, type ReactNode } from "react";
+import { DialogueNodeFlowSelect } from "./dialogue-node-flow-select";
+import { useDialogueFlow } from "../../../hooks/useDialogueFlow";
+import type { DialogueNodeFlowType } from "../../../entities/dialogue-node-flow";
+import { DialogueNodeFlowEventType } from "../../../entities/dialogue-node-flow-event";
+
 type DialogueNodeFlowHeaderProps = {
+  dialogId: string;
   dialogueType: string;
-  characterName?: string;
+
+  children?: ReactNode;
 };
 
 export function DialogueNodeFlowHeader({
+  dialogId,
   dialogueType,
-  characterName,
+  children,
 }: DialogueNodeFlowHeaderProps) {
+  const { notifyNodeDialogueFlowEvent, allDialogueTypes } = useDialogueFlow();
+  const handleChangeType = useCallback(
+    (dialogueType: DialogueNodeFlowType) =>
+      notifyNodeDialogueFlowEvent({
+        dialogueId: dialogId,
+        type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE,
+        dialogueType: dialogueType,
+      }),
+    [notifyNodeDialogueFlowEvent, dialogId]
+  );
+
   return (
     <div className="dialogue-node-flow-header">
-      <span className="dialogue-node-flow-type">{dialogueType}</span>
-      {characterName && (
-        <span className="dialogue-node-flow-character-name">
-          {characterName}
-        </span>
-      )}
+      <DialogueNodeFlowSelect
+        value={dialogueType}
+        onChange={handleChangeType}
+        options={allDialogueTypes}
+      />
+      {children}
     </div>
   );
 }

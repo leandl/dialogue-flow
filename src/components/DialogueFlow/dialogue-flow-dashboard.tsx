@@ -19,6 +19,7 @@ import { DialogueNodeFlowControlRandom } from "./type/dialogue-node-flow-control
 
 import "./dialogue-node-flow.css";
 import { useDialogueFlow } from "../../hooks/useDialogueFlow";
+import { applyDialogueNodeFlowEvent } from "./utils/apply-dialogue-node-flow-event";
 
 const nodeTypes = {
   DIALOGUE: DialogueNodeFlowDialogue,
@@ -50,43 +51,15 @@ export function DialogueFlowDashboard() {
   const [nodes, setNodes] = useNodesState(dialogueNodeFlows);
   const [edges, _setEdges] = useEdgesState(dialogueEdgeFlows);
 
-  const { notifyNodeReactFlowEvent, onNodeDialogueEvent } = useDialogueFlow();
+  const { notifyNodeReactFlowEvent, onNodeDialogueFlowEvent } =
+    useDialogueFlow();
 
   useEffect(
     () =>
-      onNodeDialogueEvent((event) => {
-        if (event.type === "MOVE_DIALOGUE_CARD") {
-          setNodes((nodes) =>
-            nodes.map((node) => {
-              if (node.id === event.dialogueId) {
-                return {
-                  ...node,
-                  position: event.position,
-                  dragging: event.dragging,
-                };
-              }
-
-              return node;
-            })
-          );
-        }
-
-        if (event.type === "DIMENSION_DIALOGUE_CARD") {
-          setNodes((nodes) =>
-            nodes.map((node) => {
-              if (node.id === event.dialogueId) {
-                return {
-                  ...node,
-                  measured: event.dimensions,
-                };
-              }
-
-              return node;
-            })
-          );
-        }
+      onNodeDialogueFlowEvent((event) => {
+        setNodes((nodes) => applyDialogueNodeFlowEvent(event, nodes));
       }),
-    [onNodeDialogueEvent, setNodes]
+    [onNodeDialogueFlowEvent, setNodes]
   );
 
   // const onEdgesChange = useCallback(
@@ -113,7 +86,6 @@ export function DialogueFlowDashboard() {
   return (
     <div style={{ width: "100%", height: "90vh" }}>
       <ReactFlow
-        onChange={console.log}
         nodes={nodes}
         edges={edges}
         onNodesChange={notifyNodeReactFlowEvent}

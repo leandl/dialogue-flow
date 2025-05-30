@@ -29,19 +29,19 @@ export const dialogueDataGodot: DialogueNodeGodots = {
     text: "Testando",
     choices: [
       { text: "Sim, preciso de ajuda.", next: "help_yes" },
-      { text: "Não, estou bem.", next: null },
+      { text: "Não, estou bem.", next: "help_no" },
     ],
   },
   help_yes: {
     type: "DIALOGUE",
     character: "BENNEDETTE",
     text: "Mais imposto?",
-    next: "MAIN",
+    next: "MAIN1",
   },
   help_no: {
     type: "DIALOGUE",
     character: "CHRIS",
     text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-    next: "MAIN",
+    next: "MAIN1",
   },
 };

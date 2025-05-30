@@ -12,13 +12,22 @@ import {
   type ReactNode,
 } from "react";
 import type { DialogueNodeFlowEvent } from "../entities/dialogue-node-flow-event";
+import { convertNodeReactFlowEventToNodeDialogueFlowEvent } from "../converts/convert-node-react-flow-event-to-node-dialogue-flow-event";
+import { allDialogueNodeFlowTypes } from "../entities/dialogue-node-flow";
 
 type DialogueFlowData = {
+  allCharacters: string[];
+  allDialogueTypes: string[];
   notifyNodeReactFlowEvent(e: NodeChange[]): void;
-  onNodeDialogueEvent(
+  notifyNodeDialogueFlowEvent(e: DialogueNodeFlowEvent): void;
+  onNodeDialogueFlowEvent(
     l: ObserverListener<DialogueNodeFlowEvent>
   ): UnsubscribeFunction;
 };
+
+function readonlyArrayRemove<T>(array: readonly T[]): T[] {
+  return array.map((e) => e);
+}
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const DialogueFlowContext = createContext<DialogueFlowData>(
@@ -34,55 +43,54 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
     () => new Observer<NodeChange[]>(),
     []
   );
-  const nodeDialogueEventObserver = useMemo(
+  const nodeDialogueFlowEventObserver = useMemo(
     () => new Observer<DialogueNodeFlowEvent>(),
+    []
+  );
+
+  const allDialogueTypes = useMemo(
+    () => readonlyArrayRemove(allDialogueNodeFlowTypes),
     []
   );
 
   useEffect(() => {
     const unsubscribe = nodeReactFlowEventObserver.subscribe((events) => {
-      events.forEach((event) => {
-        if (event.type === "position" && event.position) {
-          console.log(event);
-          nodeDialogueEventObserver.publish({
-            dialogueId: event.id,
-            type: "MOVE_DIALOGUE_CARD",
-            dragging: event.dragging,
-            position: {
-              x: event.position.x,
-              y: event.position.y,
-            },
-          });
-        }
-
-        if (event.type === "dimensions" && event.dimensions) {
-          console.log(event);
-          nodeDialogueEventObserver.publish({
-            dialogueId: event.id,
-            type: "DIMENSION_DIALOGUE_CARD",
-            dimensions: event.dimensions,
-          });
-        }
-      });
+      events
+        .map(convertNodeReactFlowEventToNodeDialogueFlowEvent)
+        .forEach((event) => {
+          if (event) {
+            nodeDialogueFlowEventObserver.publish(event);
+          }
+        });
     });
-
     return unsubscribe;
-  }, [nodeDialogueEventObserver, nodeReactFlowEventObserver]);
+  }, [nodeDialogueFlowEventObserver, nodeReactFlowEventObserver]);
 
   const notifyNodeReactFlowEvent = useCallback(
     (e: NodeChange[]) => nodeReactFlowEventObserver.publish(e),
     [nodeReactFlowEventObserver]
   );
 
-  const onNodeDialogueEvent = useCallback(
+  const notifyNodeDialogueFlowEvent = useCallback(
+    (e: DialogueNodeFlowEvent) => nodeDialogueFlowEventObserver.publish(e),
+    [nodeDialogueFlowEventObserver]
+  );
+
+  const onNodeDialogueFlowEvent = useCallback(
     (listener: ObserverListener<DialogueNodeFlowEvent>) =>
-      nodeDialogueEventObserver.subscribe(listener),
-    [nodeDialogueEventObserver]
+      nodeDialogueFlowEventObserver.subscribe(listener),
+    [nodeDialogueFlowEventObserver]
   );
 
   return (
     <DialogueFlowContext.Provider
-      value={{ notifyNodeReactFlowEvent, onNodeDialogueEvent }}
+      value={{
+        notifyNodeReactFlowEvent,
+        onNodeDialogueFlowEvent,
+        notifyNodeDialogueFlowEvent,
+        allCharacters: ["CHRIS", "BENNEDETTE"],
+        allDialogueTypes,
+      }}
     >
       {children}
     </DialogueFlowContext.Provider>

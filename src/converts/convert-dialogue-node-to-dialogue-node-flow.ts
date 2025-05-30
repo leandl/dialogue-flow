@@ -40,7 +40,7 @@ export function convertDialogueNodeIdToNodeFlowSubSourceId(
 export function convertDialogueNodeControlRandomOptionToDialogueNodeFlowControlRandomOption(
   dialogueNodeControlRandomId: string,
   dialogueNodeControlRandomOptionId: number,
-  dialogueNodeControlRandomOption: string
+  dialogueNodeControlRandomOption: string | null
 ): DialogueNodeFlowControlRandomOption {
   return {
     sourceId: convertDialogueNodeIdToNodeFlowSubSourceId(

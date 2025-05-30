@@ -1,34 +1,17 @@
+export const allDialogueNodeFlowTypes = [
+  "CONTROL.RANDOM",
+  "DIALOGUE",
+  "CHOICE",
+] as const;
+
+export type DialogueNodeFlowType = (typeof allDialogueNodeFlowTypes)[number];
+
 export type NodeFlowTargetId = `target-${string}`;
 export type NodeFlowSourceId = `source-${string}`;
 export type NodeFlowSubSourceId = `sub-source-${string}-${number}`;
-
-export type NodeFlow<D> = {
-  id: string;
-  type: string;
-  data: D;
-  dragging?: boolean;
-  dragHandle: ".dialogue-node-flow-drag-handle";
-  measured?: {
-    width: number;
-    height: number;
-  };
-  position: {
-    x: number;
-    y: number;
-  };
-};
-
 export type NodeFlowEdgeId = `edge-${
   | NodeFlowSourceId
   | NodeFlowSubSourceId}-${NodeFlowTargetId}`;
-
-export type EdgeFlow = {
-  id: NodeFlowEdgeId;
-  source: string;
-  sourceHandle: NodeFlowSourceId | NodeFlowSubSourceId;
-  target: string;
-  targetHandle: NodeFlowTargetId;
-};
 
 export type DialogueNodeFlowControlRandomOption = {
   sourceId: NodeFlowSubSourceId;
@@ -67,10 +50,36 @@ export type DialogueNodeFlowChoice = {
   choices: DialogueNodeFlowChoiceOption[];
 };
 
-export type DialogueNodeFlow = NodeFlow<
-  | DialogueNodeFlowControlRandom
-  | DialogueNodeFlowDialogue
-  | DialogueNodeFlowChoice
->;
+type DialogueNodeFlowByType = {
+  CHOICE: DialogueNodeFlowChoice;
+  DIALOGUE: DialogueNodeFlowDialogue;
+  "CONTROL.RANDOM": DialogueNodeFlowControlRandom;
+};
 
-export type DialogueNodeFlowType = DialogueNodeFlow["type"];
+export type NodeFlow<T extends DialogueNodeFlowType = DialogueNodeFlowType> = {
+  id: string;
+  type: T;
+  data: DialogueNodeFlowByType[T];
+  dragging?: boolean;
+  dragHandle: ".dialogue-node-flow-drag-handle";
+  measured?: {
+    width: number;
+    height: number;
+  };
+  position: {
+    x: number;
+    y: number;
+  };
+};
+
+export type EdgeFlow = {
+  id: NodeFlowEdgeId;
+  source: string;
+  sourceHandle: NodeFlowSourceId | NodeFlowSubSourceId;
+  target: string;
+  targetHandle: NodeFlowTargetId;
+};
+
+export type DialogueNodeFlow<
+  T extends DialogueNodeFlowType = DialogueNodeFlowType
+> = NodeFlow<T>;

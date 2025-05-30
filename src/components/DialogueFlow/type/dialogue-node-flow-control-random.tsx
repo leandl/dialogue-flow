@@ -11,7 +11,7 @@ export function DialogueNodeFlowControlRandom({
 }: DialogueNodeFlowControlRandom) {
   return (
     <DialogueNodeFlow.Container id={data.id} targetId={data.targetId}>
-      <DialogueNodeFlow.Header dialogueType={data.type} />
+      <DialogueNodeFlow.Header dialogId={data.id} dialogueType={data.type} />
 
       <div className="dialogue-node-flow-control-random-content">
         {data.nexts.map((nextOption, index) => (
