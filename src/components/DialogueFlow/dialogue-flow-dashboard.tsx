@@ -20,6 +20,7 @@ import { DialogueNodeFlowControlRandom } from "./type/dialogue-node-flow-control
 import "./dialogue-node-flow.css";
 import { useDialogueFlow } from "../../hooks/useDialogueFlow";
 import { applyDialogueNodeFlowEvent } from "./utils/apply-dialogue-node-flow-event";
+import { applyDialogueEdgeFlowEvent } from "./utils/apply-dialogue-edge-flow-event";
 
 const nodeTypes = {
   DIALOGUE: DialogueNodeFlowDialogue,
@@ -49,7 +50,7 @@ console.log({
 
 export function DialogueFlowDashboard() {
   const [nodes, setNodes] = useNodesState(dialogueNodeFlows);
-  const [edges, _setEdges] = useEdgesState(dialogueEdgeFlows);
+  const [edges, setEdges] = useEdgesState(dialogueEdgeFlows);
 
   const { notifyNodeReactFlowEvent, onNodeDialogueFlowEvent } =
     useDialogueFlow();
@@ -58,30 +59,10 @@ export function DialogueFlowDashboard() {
     () =>
       onNodeDialogueFlowEvent((event) => {
         setNodes((nodes) => applyDialogueNodeFlowEvent(event, nodes));
+        setEdges((edges) => applyDialogueEdgeFlowEvent(event, edges));
       }),
     [onNodeDialogueFlowEvent, setNodes]
   );
-
-  // const onEdgesChange = useCallback(
-  //   (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-  //   [setEdges]
-  // );
-  // const onConnect = useCallback(
-  //   (connection) =>
-  //     setEdges((eds) => {
-  //       // if (
-  //       //   eds.some(
-  //       //     (ed) =>
-  //       //       ed.sourceHandle === connection.sourceHandle &&
-  //       //       ed.targetHandle === connection.targetHandle
-  //       //   )
-  //       // ) {
-  //       //   return eds;
-  //       // }
-  //       return addEdge(connection, eds);
-  //     }),
-  //   [setEdges]
-  // );
 
   return (
     <div style={{ width: "100%", height: "90vh" }}>
@@ -91,7 +72,7 @@ export function DialogueFlowDashboard() {
         onNodesChange={notifyNodeReactFlowEvent}
         // onNodesChange={onNodesChange}
         // onEdgesChange={onEdgesChange}
-        // onConnect={onConnect}
+        onConnect={console.log}
         nodeTypes={nodeTypes}
         fitView
       >

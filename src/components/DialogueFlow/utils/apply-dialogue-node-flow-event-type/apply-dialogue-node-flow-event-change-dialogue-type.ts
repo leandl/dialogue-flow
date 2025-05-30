@@ -38,6 +38,19 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
     }
 
     if (event.dialogueType === "DIALOGUE") {
+      let data = {
+        character: "",
+        text: "",
+      }
+
+      if (node.data.type === "CHOICE") {
+        data = {
+          character: node.data.character,
+          text: node.data.text,
+        }
+      }
+
+
       return {
         id: node.id,
         type: "DIALOGUE",
@@ -48,8 +61,7 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
         data: {
           id: node.data.id,
           type: "DIALOGUE",
-          character: "",
-          text: "",
+          ...data,
           targetId: createNodeFlowTargetId(node.id),
           sourceId: createNodeFlowSourceId(node.id),
           next: null,
@@ -58,6 +70,18 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
     }
 
     if (event.dialogueType === "CHOICE") {
+      let data = {
+        character: "",
+        text: "",
+      }
+
+      if (node.data.type === "DIALOGUE") {
+        data = {
+          character: node.data.character,
+          text: node.data.text,
+        }
+      }
+
       return {
         id: node.id,
         type: "CHOICE",
@@ -68,8 +92,7 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
         data: {
           id: node.data.id,
           type: "CHOICE",
-          character: "",
-          text: "",
+          ...data,
           targetId: createNodeFlowTargetId(node.id),
           choices: [],
         },
