@@ -33,17 +33,23 @@ export function isDialogueNodeFlow<T extends DialogueNodeFlowType>(
   return node.data.type === type;
 }
 
+export function updateData<T extends Record<string, unknown>>(
+  data: T,
+  newData: Partial<T>
+): T {
+  return {
+    ...data,
+    ...newData,
+  };
+}
+
 export function updateDialogueNodeFlowData<T extends DialogueNodeFlowType>(
   node: DialogueNodeFlow<T>,
   newData: Partial<DialogueNodeFlow<T>["data"]>
 ): DialogueNodeFlow<T> {
-  return {
-    ...node,
-    data: {
-      ...node.data,
-      ...newData,
-    },
-  };
+  return updateData(node, {
+    data: updateData(node.data, newData),
+  });
 }
 
 export function convertNodeFlowSubSourceIdToIndex(

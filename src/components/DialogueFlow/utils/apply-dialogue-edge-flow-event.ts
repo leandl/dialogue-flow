@@ -37,6 +37,8 @@ const applyDialogueEdgeFlowEventByEventType: {
     applyNothingDialogueEdgeFlowEvent,
   [DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD]:
     applyDialogueEdgeFlowEventRemoveOptionInDialogueCard,
+  [DialogueNodeFlowEventType.CHANGE_OPTION_TEXT_IN_DIALOGUE_CARD]:
+    applyNothingDialogueEdgeFlowEvent,
 };
 
 export function applyDialogueEdgeFlowEvent<T extends DialogueNodeFlowEventType>(

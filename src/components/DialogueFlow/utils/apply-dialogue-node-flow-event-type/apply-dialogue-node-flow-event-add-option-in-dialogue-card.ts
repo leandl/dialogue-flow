@@ -8,6 +8,11 @@ import {
   isDialogueNodeFlow,
   updateDialogueNodeFlowData,
 } from "../functions";
+
+function addItemInArray<T>(array: T[], newData: T) {
+  return [...array, newData];
+}
+
 export function applyDialogueNodeFlowEventAddOptionInDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD>,
   nodes: DialogueNodeFlow[]
@@ -19,32 +24,26 @@ export function applyDialogueNodeFlowEventAddOptionInDialogueCard(
 
     if (isDialogueNodeFlow("CHOICE", node)) {
       return updateDialogueNodeFlowData(node, {
-        choices: [
-          ...node.data.choices,
-          {
-            sourceId: createNodeFlowSubSourceId(
-              node.data.id,
-              node.data.choices.length
-            ),
-            text: "",
-            next: null,
-          },
-        ],
+        choices: addItemInArray(node.data.choices, {
+          sourceId: createNodeFlowSubSourceId(
+            node.data.id,
+            node.data.choices.length
+          ),
+          text: "",
+          next: null,
+        }),
       });
     }
 
     if (isDialogueNodeFlow("CONTROL.RANDOM", node)) {
       return updateDialogueNodeFlowData(node, {
-        nexts: [
-          ...node.data.nexts,
-          {
-            sourceId: createNodeFlowSubSourceId(
-              node.data.id,
-              node.data.nexts.length
-            ),
-            next: null,
-          },
-        ],
+        nexts: addItemInArray(node.data.nexts, {
+          sourceId: createNodeFlowSubSourceId(
+            node.data.id,
+            node.data.nexts.length
+          ),
+          next: null,
+        }),
       });
     }
 

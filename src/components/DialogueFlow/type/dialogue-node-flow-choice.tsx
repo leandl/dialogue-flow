@@ -58,6 +58,18 @@ export function DialogueNodeFlowChoice({
     [notifyNodeDialogueFlowEvent, data.id]
   );
 
+  const handleChangeOptionText = useCallback(
+    (sourceId: NodeFlowSubSourceId, index: number, newText: string) =>
+      notifyNodeDialogueFlowEvent({
+        dialogueId: data.id,
+        type: DialogueNodeFlowEventType.CHANGE_OPTION_TEXT_IN_DIALOGUE_CARD,
+        sourceId,
+        index,
+        text: newText,
+      }),
+    [notifyNodeDialogueFlowEvent, data.id]
+  );
+
   return (
     <DialogueNodeFlow.Container id={data.id} targetId={data.targetId}>
       <DialogueNodeFlow.Header dialogId={data.id} dialogueType={data.type}>
@@ -79,7 +91,12 @@ export function DialogueNodeFlowChoice({
             className="dialogue-node-flow-choice-option"
             key={choice.sourceId}
           >
-            <textarea value={choice.text} />
+            <textarea
+              value={choice.text}
+              onChange={(e) =>
+                handleChangeOptionText(choice.sourceId, index, e.target.value)
+              }
+            />
             <button onClick={() => handleRemoveOption(choice.sourceId, index)}>
               remove
             </button>

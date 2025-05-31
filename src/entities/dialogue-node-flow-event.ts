@@ -18,6 +18,7 @@ export enum DialogueNodeFlowEventType {
 
   ADD_OPTION_IN_DIALOGUE_CARD = "ADD_OPTION_IN_DIALOGUE_CARD",
   REMOVE_OPTION_IN_DIALOGUE_CARD = "REMOVE_OPTION_IN_DIALOGUE_CARD",
+  CHANGE_OPTION_TEXT_IN_DIALOGUE_CARD = "CHANGE_OPTION_TEXT_IN_DIALOGUE_CARD",
 }
 
 type DialogueNodeFlowEventMoveDialogueCard = {
@@ -83,6 +84,14 @@ type DialogueNodeFlowEventRemoveOptionInDialogueCard = {
   index: number;
 };
 
+type DialogueNodeFlowEventChangeOptionTextInDialogueCard = {
+  dialogueId: string;
+  type: DialogueNodeFlowEventType.CHANGE_OPTION_TEXT_IN_DIALOGUE_CARD;
+  sourceId: NodeFlowSubSourceId;
+  index: number;
+  text: string;
+};
+
 type DialogueNodeFlowEventByType = {
   /// ReactFlow
   [DialogueNodeFlowEventType.MOVE_DIALOGUE_CARD]: DialogueNodeFlowEventMoveDialogueCard;
@@ -91,12 +100,13 @@ type DialogueNodeFlowEventByType = {
 
   // Dialogue
   [DialogueNodeFlowEventType.ADD_DIALOGUE_CARD]: DialogueNodeFlowEventAddDialogueCard;
-  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]: DialogueNodeFlowEventChangeDialogueCharacter;
-  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]: DialogueNodeFlowEventChangeDialogueText;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE]: DialogueNodeFlowEventChangeDialogueType;
+  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]: DialogueNodeFlowEventChangeDialogueText;
+  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]: DialogueNodeFlowEventChangeDialogueCharacter;
 
   [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]: DialogueNodeFlowEventAddOptionInDialogueCard;
   [DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD]: DialogueNodeFlowEventRemoveOptionInDialogueCard;
+  [DialogueNodeFlowEventType.CHANGE_OPTION_TEXT_IN_DIALOGUE_CARD]: DialogueNodeFlowEventChangeOptionTextInDialogueCard;
 };
 
 export type DialogueNodeFlowEvent<
