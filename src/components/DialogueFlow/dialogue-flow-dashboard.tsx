@@ -65,13 +65,6 @@ export function DialogueFlowDashboard() {
     onNodeDialogueFlowEvent,
   } = useDialogueFlow();
 
-  console.log({
-    nodes,
-    edges,
-
-    a: 1,
-  });
-
   useEffect(
     () =>
       onNodeDialogueFlowEvent((event) => {

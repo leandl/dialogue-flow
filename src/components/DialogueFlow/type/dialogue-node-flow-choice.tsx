@@ -1,5 +1,8 @@
 import { Handle, Position, type NodeProps } from "@xyflow/react";
-import type { DialogueNodeFlowChoice as DialogueNodeFlowChoiceEntity } from "../../../entities/dialogue-node-flow";
+import type {
+  DialogueNodeFlowChoice as DialogueNodeFlowChoiceEntity,
+  NodeFlowSubSourceId,
+} from "../../../entities/dialogue-node-flow";
 import { DialogueNodeFlow } from "../dialogue-node-flow";
 import { useCallback } from "react";
 import { useDialogueFlow } from "../../../hooks/useDialogueFlow";
@@ -44,6 +47,17 @@ export function DialogueNodeFlowChoice({
     [notifyNodeDialogueFlowEvent, data.id]
   );
 
+  const handleRemoveOption = useCallback(
+    (sourceId: NodeFlowSubSourceId, index: number) =>
+      notifyNodeDialogueFlowEvent({
+        dialogueId: data.id,
+        type: DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD,
+        sourceId,
+        index,
+      }),
+    [notifyNodeDialogueFlowEvent, data.id]
+  );
+
   return (
     <DialogueNodeFlow.Container id={data.id} targetId={data.targetId}>
       <DialogueNodeFlow.Header dialogId={data.id} dialogueType={data.type}>
@@ -60,12 +74,15 @@ export function DialogueNodeFlowChoice({
       </div>
       <div className="dialogue-node-flow-choice-content-options">
         <button onClick={handleAddOption}>Add Choice</button>
-        {data.choices.map((choice) => (
+        {data.choices.map((choice, index) => (
           <div
             className="dialogue-node-flow-choice-option"
             key={choice.sourceId}
           >
             <textarea value={choice.text} />
+            <button onClick={() => handleRemoveOption(choice.sourceId, index)}>
+              remove
+            </button>
             <Handle
               id={choice.sourceId}
               type="source"

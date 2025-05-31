@@ -12,10 +12,12 @@ export enum DialogueNodeFlowEventType {
   CONNECTION_DIALOGUE_CARD = "CONNECTION_DIALOGUE_CARD",
 
   ADD_DIALOGUE_CARD = "ADD_DIALOGUE_CARD",
-  ADD_OPTION_IN_DIALOGUE_CARD = "ADD_OPTION_IN_DIALOGUE_CARD",
   CHANGE_DIALOGUE_TEXT = "CHANGE_DIALOGUE_TEXT",
   CHANGE_DIALOGUE_CHARACTER = "CHANGE_DIALOGUE_CHARACTER",
   CHANGE_DIALOGUE_TYPE = "CHANGE_DIALOGUE_TYPE",
+
+  ADD_OPTION_IN_DIALOGUE_CARD = "ADD_OPTION_IN_DIALOGUE_CARD",
+  REMOVE_OPTION_IN_DIALOGUE_CARD = "REMOVE_OPTION_IN_DIALOGUE_CARD",
 }
 
 type DialogueNodeFlowEventMoveDialogueCard = {
@@ -51,11 +53,6 @@ type DialogueNodeFlowEventAddDialogueCard = {
   };
 };
 
-type DialogueNodeFlowEventAddOptionInDialogueCard = {
-  type: DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD;
-  dialogueId: string;
-};
-
 type DialogueNodeFlowEventChangeDialogueText = {
   dialogueId: string;
   type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT;
@@ -74,6 +71,18 @@ type DialogueNodeFlowEventChangeDialogueType = {
   dialogueType: DialogueNodeFlowType;
 };
 
+type DialogueNodeFlowEventAddOptionInDialogueCard = {
+  type: DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD;
+  dialogueId: string;
+};
+
+type DialogueNodeFlowEventRemoveOptionInDialogueCard = {
+  type: DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD;
+  dialogueId: string;
+  sourceId: NodeFlowSubSourceId;
+  index: number;
+};
+
 type DialogueNodeFlowEventByType = {
   /// ReactFlow
   [DialogueNodeFlowEventType.MOVE_DIALOGUE_CARD]: DialogueNodeFlowEventMoveDialogueCard;
@@ -82,10 +91,12 @@ type DialogueNodeFlowEventByType = {
 
   // Dialogue
   [DialogueNodeFlowEventType.ADD_DIALOGUE_CARD]: DialogueNodeFlowEventAddDialogueCard;
-  [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]: DialogueNodeFlowEventAddOptionInDialogueCard;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]: DialogueNodeFlowEventChangeDialogueCharacter;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]: DialogueNodeFlowEventChangeDialogueText;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE]: DialogueNodeFlowEventChangeDialogueType;
+
+  [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]: DialogueNodeFlowEventAddOptionInDialogueCard;
+  [DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD]: DialogueNodeFlowEventRemoveOptionInDialogueCard;
 };
 
 export type DialogueNodeFlowEvent<

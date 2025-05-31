@@ -11,6 +11,7 @@ import { applyDialogueNodeFlowEventChangeDialogueType } from "./apply-dialogue-n
 import { applyDialogueNodeFlowEventConnectionDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-connection-dialogue-card";
 import { applyDialogueNodeFlowEventDimensionDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-dimension-dialogue-card";
 import { applyDialogueNodeFlowEventMoveDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-move-dialogue-card";
+import { applyDialogueNodeFlowEventRemoveOptionInDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-remove-option-in-dialogue-card";
 // import { applyNothingDialogueNodeFlowEvent } from "./apply-dialogue-node-flow-event-type/apply-nothing-dialogue-node-flow-event";
 
 type FunctionApplyDialogueNodeFlowEvent<T extends DialogueNodeFlowEventType> = (
@@ -31,14 +32,18 @@ const applyDialogueNodeFlowEventByEventType: {
   // Dialogue
   [DialogueNodeFlowEventType.ADD_DIALOGUE_CARD]:
     applyDialogueNodeFlowEventAddDialogueCard,
-  [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]:
-    applyDialogueNodeFlowEventAddOptionInDialogueCard,
+
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]:
     applyDialogueNodeFlowEventChangeDialogueCharacter,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]:
     applyDialogueNodeFlowEventChangeDialogueText,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE]:
     applyDialogueNodeFlowEventChangeDialogueType,
+
+  [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]:
+    applyDialogueNodeFlowEventAddOptionInDialogueCard,
+  [DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD]:
+    applyDialogueNodeFlowEventRemoveOptionInDialogueCard,
 };
 
 export function applyDialogueNodeFlowEvent<T extends DialogueNodeFlowEventType>(

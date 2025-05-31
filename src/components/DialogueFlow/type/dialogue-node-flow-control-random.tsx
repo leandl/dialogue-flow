@@ -1,5 +1,8 @@
 import { Handle, Position, type NodeProps } from "@xyflow/react";
-import type { DialogueNodeFlowControlRandom as DialogueNodeFlowControlRandomEntity } from "../../../entities/dialogue-node-flow";
+import type {
+  DialogueNodeFlowControlRandom as DialogueNodeFlowControlRandomEntity,
+  NodeFlowSubSourceId,
+} from "../../../entities/dialogue-node-flow";
 import { DialogueNodeFlow } from "../dialogue-node-flow";
 import { useCallback } from "react";
 import { useDialogueFlow } from "../../../hooks/useDialogueFlow";
@@ -13,6 +16,7 @@ export function DialogueNodeFlowControlRandom({
   data,
 }: DialogueNodeFlowControlRandom) {
   const { notifyNodeDialogueFlowEvent } = useDialogueFlow();
+
   const handleAddOption = useCallback(
     () =>
       notifyNodeDialogueFlowEvent({
@@ -21,6 +25,18 @@ export function DialogueNodeFlowControlRandom({
       }),
     [notifyNodeDialogueFlowEvent, data.id]
   );
+
+  const handleRemoveOption = useCallback(
+    (sourceId: NodeFlowSubSourceId, index: number) =>
+      notifyNodeDialogueFlowEvent({
+        dialogueId: data.id,
+        type: DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD,
+        sourceId,
+        index,
+      }),
+    [notifyNodeDialogueFlowEvent, data.id]
+  );
+
   return (
     <DialogueNodeFlow.Container id={data.id} targetId={data.targetId}>
       <DialogueNodeFlow.Header dialogId={data.id} dialogueType={data.type} />
@@ -33,6 +49,11 @@ export function DialogueNodeFlowControlRandom({
             key={nextOption.sourceId}
           >
             Option {index + 1}
+            <button
+              onClick={() => handleRemoveOption(nextOption.sourceId, index)}
+            >
+              remove
+            </button>
             <Handle
               id={nextOption.sourceId}
               type="source"

@@ -13,9 +13,7 @@ export function applyDialogueNodeFlowEventAddDialogueCard(
   nodes: DialogueNodeFlow[]
 ): DialogueNodeFlow[] {
   const dateNow = Date.now();
-  const randomNumber = Math.random();
-  const nodeId =
-    nodes.length === 0 ? "MAIN" : `node-${dateNow}-${randomNumber}`;
+  const nodeId = nodes.length === 0 ? "MAIN" : `node-${dateNow}`;
 
   const newNode: DialogueNodeFlow<DialogueNodeFlowType> = {
     id: nodeId,

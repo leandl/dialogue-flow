@@ -22,6 +22,7 @@ export function createNodeFlowSubSourceId(
   dialogueNodeId: string,
   id: number
 ): NodeFlowSubSourceId {
+  console.log(dialogueNodeId);
   return `sub-source-${dialogueNodeId}-${id}`;
 }
 
@@ -43,4 +44,17 @@ export function updateDialogueNodeFlowData<T extends DialogueNodeFlowType>(
       ...newData,
     },
   };
+}
+
+export function convertNodeFlowSubSourceIdToIndex(
+  sourceId: NodeFlowSubSourceId
+): number {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_sub, _source, _id, indexInString] = sourceId.split("-") as [
+    "sub",
+    "source",
+    string,
+    string
+  ];
+  return Number(indexInString);
 }

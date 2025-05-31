@@ -27,5 +27,9 @@ export function convertNodeReactFlowEventToNodeDialogueFlowEvent(
     };
   }
 
+  if (event.type === "select") {
+    console.log(event);
+  }
+
   return null;
 }
