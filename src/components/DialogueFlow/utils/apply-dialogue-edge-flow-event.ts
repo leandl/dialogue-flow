@@ -25,6 +25,8 @@ const applyDialogueEdgeFlowEventByEventType: {
   // Dialogue
   [DialogueNodeFlowEventType.ADD_DIALOGUE_CARD]:
     applyNothingDialogueEdgeFlowEvent,
+  [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]:
+    applyNothingDialogueEdgeFlowEvent,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]:
     applyNothingDialogueEdgeFlowEvent,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]:

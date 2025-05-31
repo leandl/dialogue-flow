@@ -35,6 +35,15 @@ export function DialogueNodeFlowChoice({
     [notifyNodeDialogueFlowEvent, data.id]
   );
 
+  const handleAddOption = useCallback(
+    () =>
+      notifyNodeDialogueFlowEvent({
+        dialogueId: data.id,
+        type: DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD,
+      }),
+    [notifyNodeDialogueFlowEvent, data.id]
+  );
+
   return (
     <DialogueNodeFlow.Container id={data.id} targetId={data.targetId}>
       <DialogueNodeFlow.Header dialogId={data.id} dialogueType={data.type}>
@@ -50,12 +59,13 @@ export function DialogueNodeFlowChoice({
         <DialogueNodeFlow.Input value={data.text} onChange={handleChangeText} />
       </div>
       <div className="dialogue-node-flow-choice-content-options">
+        <button onClick={handleAddOption}>Add Choice</button>
         {data.choices.map((choice) => (
           <div
             className="dialogue-node-flow-choice-option"
             key={choice.sourceId}
           >
-            {choice.text}
+            <textarea value={choice.text} />
             <Handle
               id={choice.sourceId}
               type="source"

@@ -20,9 +20,9 @@ export function createNodeFlowSourceId(
 
 export function createNodeFlowSubSourceId(
   dialogueNodeId: string,
-  index: number
+  id: number
 ): NodeFlowSubSourceId {
-  return `sub-source-${dialogueNodeId}-${index}`;
+  return `sub-source-${dialogueNodeId}-${id}`;
 }
 
 export function isDialogueNodeFlow<T extends DialogueNodeFlowType>(

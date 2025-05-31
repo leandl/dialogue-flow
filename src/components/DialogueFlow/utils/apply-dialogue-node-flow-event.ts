@@ -4,6 +4,7 @@ import {
   DialogueNodeFlowEventType,
 } from "../../../entities/dialogue-node-flow-event";
 import { applyDialogueNodeFlowEventAddDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-add-dialogue-card";
+import { applyDialogueNodeFlowEventAddOptionInDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-add-option-in-dialogue-card";
 import { applyDialogueNodeFlowEventChangeDialogueCharacter } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-character";
 import { applyDialogueNodeFlowEventChangeDialogueText } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-text";
 import { applyDialogueNodeFlowEventChangeDialogueType } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-type";
@@ -30,6 +31,8 @@ const applyDialogueNodeFlowEventByEventType: {
   // Dialogue
   [DialogueNodeFlowEventType.ADD_DIALOGUE_CARD]:
     applyDialogueNodeFlowEventAddDialogueCard,
+  [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]:
+    applyDialogueNodeFlowEventAddOptionInDialogueCard,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]:
     applyDialogueNodeFlowEventChangeDialogueCharacter,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]:
