@@ -1,22 +1,22 @@
 import type { DialogueNodeGodots } from "../entities/dialogue-node-godot";
 
 export const dialogueDataGodot: DialogueNodeGodots = {
-  MAIN: {
-    type: "CONTROL.RANDOM",
-    nexts: ["INITIAL-CHRIS", "INITIAL-BENNEDETTE"],
-  },
-  "INITIAL-CHRIS": {
-    type: "DIALOGUE",
-    character: "CHRIS",
-    text: "Olá, Lula da silvassauro!",
-    next: "DIALOGUE-TEST",
-  },
-  "INITIAL-BENNEDETTE": {
-    type: "DIALOGUE",
-    character: "BENNEDETTE",
-    text: "Olá, Lula da silvassauro!",
-    next: "DIALOGUE-TEST",
-  },
+  // MAIN: {
+  //   type: "CONTROL.RANDOM",
+  //   nexts: ["INITIAL-CHRIS", "INITIAL-BENNEDETTE"],
+  // },
+  // "INITIAL-CHRIS": {
+  //   type: "DIALOGUE",
+  //   character: "CHRIS",
+  //   text: "Olá, Lula da silvassauro!",
+  //   next: "DIALOGUE-TEST",
+  // },
+  // "INITIAL-BENNEDETTE": {
+  //   type: "DIALOGUE",
+  //   character: "BENNEDETTE",
+  //   text: "Olá, Lula da silvassauro!",
+  //   next: "DIALOGUE-TEST",
+  // },
   // "DIALOGUE-TEST": {
   //   type: "DIALOGUE",
   //   character: "CHRIS",

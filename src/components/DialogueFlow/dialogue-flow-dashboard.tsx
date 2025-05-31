@@ -1,3 +1,4 @@
+import { useCallback, useEffect } from "react";
 import {
   ReactFlow,
   Background,
@@ -5,22 +6,25 @@ import {
   MiniMap,
   useNodesState,
   useEdgesState,
+  useReactFlow,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
+
 import { DialogueNodeFlowDialogue } from "./type/dialogue-node-flow-dialogue";
 import { convertDialogueNodeGodotsToDialogueNodes } from "../../converts/convert-dialogue-node-godot-to-dialogue-node";
 import { dialogueDataGodot } from "../../data/dialogue";
 import { convertDialogueNodesToDialogueNodeFlows } from "../../converts/convert-dialogue-node-to-dialogue-node-flow";
 import { convertDialogueNodeFlowsToEdgeFlows } from "../../converts/convert-dialogue-node-flow-to-edge-flows";
 import type { DialogueNodeFlow } from "../../entities/dialogue-node-flow";
-import { useEffect } from "react";
 import { DialogueNodeFlowChoice } from "./type/dialogue-node-flow-choice";
 import { DialogueNodeFlowControlRandom } from "./type/dialogue-node-flow-control-random";
 
-import "./dialogue-node-flow.css";
 import { useDialogueFlow } from "../../hooks/useDialogueFlow";
 import { applyDialogueNodeFlowEvent } from "./utils/apply-dialogue-node-flow-event";
 import { applyDialogueEdgeFlowEvent } from "./utils/apply-dialogue-edge-flow-event";
+
+import "./dialogue-node-flow.css";
+import { DialogueNodeFlowEventType } from "../../entities/dialogue-node-flow-event";
 
 const nodeTypes = {
   DIALOGUE: DialogueNodeFlowDialogue,
@@ -49,17 +53,15 @@ console.log({
 });
 
 export function DialogueFlowDashboard() {
+  const { getViewport } = useReactFlow();
+
   const [nodes, setNodes] = useNodesState(dialogueNodeFlows);
   const [edges, setEdges] = useEdgesState(dialogueEdgeFlows);
-
-  console.log({
-    nodes,
-    edges,
-  });
 
   const {
     notifyNodeReactFlowEvent,
     notifyConnectionReactFlowEvent,
+    notifyNodeDialogueFlowEvent,
     onNodeDialogueFlowEvent,
   } = useDialogueFlow();
 
@@ -71,6 +73,24 @@ export function DialogueFlowDashboard() {
       }),
     [onNodeDialogueFlowEvent, setNodes, setEdges]
   );
+
+  const handleAddDialogueNodeFlow = useCallback(() => {
+    const viewport = getViewport(); // { x, y, zoom }
+
+    // Centro da tela visível
+    const centerX =
+      -viewport.x / viewport.zoom + window.innerWidth / 2 / viewport.zoom;
+    const centerY =
+      -viewport.y / viewport.zoom + window.innerHeight / 2 / viewport.zoom;
+
+    return notifyNodeDialogueFlowEvent({
+      type: DialogueNodeFlowEventType.ADD_DIALOGUE_CARD,
+      position: {
+        x: centerX,
+        y: centerY,
+      },
+    });
+  }, [notifyNodeDialogueFlowEvent, getViewport]);
 
   return (
     <div style={{ width: "100%", height: "90vh" }}>
@@ -85,6 +105,12 @@ export function DialogueFlowDashboard() {
         <MiniMap />
         <Controls />
         <Background gap={12} size={1} />
+        <button
+          className="dialogue-flow-buton-add"
+          onClick={handleAddDialogueNodeFlow}
+        >
+          +<span>Node</span>
+        </button>
       </ReactFlow>
     </div>
   );

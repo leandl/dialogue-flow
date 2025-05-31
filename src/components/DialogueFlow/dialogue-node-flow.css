@@ -113,3 +113,47 @@
     }
   }
 }
+
+.dialogue-flow-buton-add {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  font-size: 1, 2rem;
+  font-weight: bold;
+  cursor: pointer;
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); */
+  transition: background-color 0.3s ease, width 0.3s ease,
+    border-radius 0.3s ease, padding 0.3s ease;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    opacity: 0;
+    width: 0;
+    overflow-x: hidden;
+    transition: opacity 0.3s ease, width 0.3s ease;
+  }
+
+  &:hover {
+    width: 5rem;
+    border-radius: 40px;
+    background-color: #59be5d;
+    /* justify-content: flex-start; */
+
+    span {
+      opacity: 1;
+      width: 2.1rem;
+    }
+  }
+}

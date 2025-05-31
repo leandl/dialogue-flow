@@ -1,32 +1,9 @@
-import type {
-  DialogueNodeFlow,
-  NodeFlowSourceId,
-  NodeFlowSubSourceId,
-  NodeFlowTargetId,
-} from "../../../../entities/dialogue-node-flow";
+import type { DialogueNodeFlow } from "../../../../entities/dialogue-node-flow";
 import type {
   DialogueNodeFlowEvent,
   DialogueNodeFlowEventType,
 } from "../../../../entities/dialogue-node-flow-event";
-
-export function createNodeFlowTargetId(
-  dialogueNodeId: string
-): NodeFlowTargetId {
-  return `target-${dialogueNodeId}`;
-}
-
-export function createNodeFlowSourceId(
-  dialogueNodeId: string
-): NodeFlowSourceId {
-  return `source-${dialogueNodeId}`;
-}
-
-export function createNodeFlowSubSourceId(
-  dialogueNodeId: string,
-  index: number
-): NodeFlowSubSourceId {
-  return `sub-source-${dialogueNodeId}-${index}`;
-}
+import { createNodeFlowSourceId, createNodeFlowTargetId } from "../functions";
 
 export function applyDialogueNodeFlowEventChangeDialogueType(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE>,
@@ -41,15 +18,14 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
       let data = {
         character: "",
         text: "",
-      }
+      };
 
       if (node.data.type === "CHOICE") {
         data = {
           character: node.data.character,
           text: node.data.text,
-        }
+        };
       }
-
 
       return {
         id: node.id,
@@ -73,13 +49,13 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
       let data = {
         character: "",
         text: "",
-      }
+      };
 
       if (node.data.type === "DIALOGUE") {
         data = {
           character: node.data.character,
           text: node.data.text,
-        }
+        };
       }
 
       return {

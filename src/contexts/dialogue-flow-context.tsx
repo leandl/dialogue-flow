@@ -1,4 +1,8 @@
-import type { Connection, NodeChange } from "@xyflow/react";
+import {
+  ReactFlowProvider,
+  type Connection,
+  type NodeChange,
+} from "@xyflow/react";
 import {
   Observer,
   type ObserverListener,
@@ -121,7 +125,7 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
         allDialogueTypes,
       }}
     >
-      {children}
+      <ReactFlowProvider>{children}</ReactFlowProvider>
     </DialogueFlowContext.Provider>
   );
 }

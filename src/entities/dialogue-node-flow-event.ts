@@ -11,6 +11,7 @@ export enum DialogueNodeFlowEventType {
   DIMENSION_DIALOGUE_CARD = "DIMENSION_DIALOGUE_CARD",
   CONNECTION_DIALOGUE_CARD = "CONNECTION_DIALOGUE_CARD",
 
+  ADD_DIALOGUE_CARD = "ADD_DIALOGUE_CARD",
   CHANGE_DIALOGUE_TEXT = "CHANGE_DIALOGUE_TEXT",
   CHANGE_DIALOGUE_CHARACTER = "CHANGE_DIALOGUE_CHARACTER",
   CHANGE_DIALOGUE_TYPE = "CHANGE_DIALOGUE_TYPE",
@@ -41,6 +42,14 @@ type DialogueNodeFlowEventConnectionDialogueCard = {
   targetId: NodeFlowTargetId;
 };
 
+type DialogueNodeFlowEventAddDialogueCard = {
+  type: DialogueNodeFlowEventType.ADD_DIALOGUE_CARD;
+  position: {
+    x: number;
+    y: number;
+  };
+};
+
 type DialogueNodeFlowEventChangeDialogueText = {
   dialogueId: string;
   type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT;
@@ -66,6 +75,7 @@ type DialogueNodeFlowEventByType = {
   [DialogueNodeFlowEventType.CONNECTION_DIALOGUE_CARD]: DialogueNodeFlowEventConnectionDialogueCard;
 
   // Dialogue
+  [DialogueNodeFlowEventType.ADD_DIALOGUE_CARD]: DialogueNodeFlowEventAddDialogueCard;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]: DialogueNodeFlowEventChangeDialogueCharacter;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]: DialogueNodeFlowEventChangeDialogueText;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE]: DialogueNodeFlowEventChangeDialogueType;
