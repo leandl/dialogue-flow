@@ -1,4 +1,7 @@
-import type { NodeFlow } from "../../../entities/dialogue-node-flow";
+import type {
+  DialogueNodeFlow,
+  NodeFlow,
+} from "../../../entities/dialogue-node-flow";
 import {
   type DialogueNodeFlowEvent,
   DialogueNodeFlowEventType,
@@ -51,8 +54,8 @@ const applyDialogueNodeFlowEventByEventType: {
 
 export function applyDialogueNodeFlowEvent<T extends DialogueNodeFlowEventType>(
   event: DialogueNodeFlowEvent<T>,
-  nodes: NodeFlow[]
-): NodeFlow[] {
+  nodes: DialogueNodeFlow[]
+): DialogueNodeFlow[] {
   const functionApplyDialogueNodeFlowEvent =
     applyDialogueNodeFlowEventByEventType[
       event.type

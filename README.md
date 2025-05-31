@@ -4,8 +4,9 @@
 
 - [ ] Importa/export do json do dialogo
 
-  - [ ] Importa do json do dialogo
-  - [ ] Export do json do dialogo
+  - [x] Importa do json do dialogo
+  - [x] Export do json do dialogo
+  - [ ] Melhorar estilização
 
 - [x] Adiconar Node
 - [ ] Remover Node

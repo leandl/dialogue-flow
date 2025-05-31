@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import {
   ReactFlow,
   Background,
@@ -12,10 +12,12 @@ import "@xyflow/react/dist/style.css";
 
 import { DialogueNodeFlowDialogue } from "./type/dialogue-node-flow-dialogue";
 import { convertDialogueNodeGodotsToDialogueNodes } from "../../converts/convert-dialogue-node-godot-to-dialogue-node";
-import { dialogueDataGodot } from "../../data/dialogue";
 import { convertDialogueNodesToDialogueNodeFlows } from "../../converts/convert-dialogue-node-to-dialogue-node-flow";
 import { convertDialogueNodeFlowsToEdgeFlows } from "../../converts/convert-dialogue-node-flow-to-edge-flows";
-import type { DialogueNodeFlow } from "../../entities/dialogue-node-flow";
+import type {
+  DialogueNodeFlow,
+  EdgeFlow,
+} from "../../entities/dialogue-node-flow";
 import { DialogueNodeFlowChoice } from "./type/dialogue-node-flow-choice";
 import { DialogueNodeFlowControlRandom } from "./type/dialogue-node-flow-control-random";
 
@@ -25,6 +27,8 @@ import { applyDialogueEdgeFlowEvent } from "./utils/apply-dialogue-edge-flow-eve
 
 import "./dialogue-node-flow.css";
 import { DialogueNodeFlowEventType } from "../../entities/dialogue-node-flow-event";
+import { convertDialogueNodesToDialogueNodeGodots } from "../../converts/convert-dialogue-node-to-dialogue-node-godot";
+import { convertDialogueNodeFlowsToDialogueNodes } from "../../converts/convert-dialogue-node-flow-to-dialogue-node";
 
 const nodeTypes = {
   DIALOGUE: DialogueNodeFlowDialogue,
@@ -40,23 +44,13 @@ function calcPositionDialogueNodeFlows(dialogueNodeFlows: DialogueNodeFlow[]) {
   return dialogueNodeFlows;
 }
 
-const dialogueData =
-  convertDialogueNodeGodotsToDialogueNodes(dialogueDataGodot);
-const dialogueNodeFlows = calcPositionDialogueNodeFlows(
-  convertDialogueNodesToDialogueNodeFlows(dialogueData)
-);
-const dialogueEdgeFlows =
-  convertDialogueNodeFlowsToEdgeFlows(dialogueNodeFlows);
-console.log({
-  dialogueNodeFlows,
-  dialogueEdgeFlows,
-});
-
 export function DialogueFlowDashboard() {
-  const { getViewport } = useReactFlow();
+  const refImportFileInput = useRef<HTMLInputElement>(null);
 
-  const [nodes, setNodes] = useNodesState(dialogueNodeFlows);
-  const [edges, setEdges] = useEdgesState(dialogueEdgeFlows);
+  const { getViewport, getNodes } = useReactFlow();
+
+  const [nodes, setNodes] = useNodesState([] as DialogueNodeFlow[]);
+  const [edges, setEdges] = useEdgesState([] as EdgeFlow[]);
 
   const {
     notifyNodeReactFlowEvent,
@@ -92,8 +86,73 @@ export function DialogueFlowDashboard() {
     });
   }, [notifyNodeDialogueFlowEvent, getViewport]);
 
+  const handleFileChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        try {
+          const dialogueDataGodotJSON = JSON.parse(e.target?.result as string);
+
+          const dialogueData = convertDialogueNodeGodotsToDialogueNodes(
+            dialogueDataGodotJSON
+          );
+          const dialogueNodeFlows = calcPositionDialogueNodeFlows(
+            convertDialogueNodesToDialogueNodeFlows(dialogueData)
+          );
+          const dialogueEdgeFlows =
+            convertDialogueNodeFlowsToEdgeFlows(dialogueNodeFlows);
+
+          setNodes(dialogueNodeFlows);
+          setEdges(dialogueEdgeFlows);
+        } catch (error) {
+          alert("Erro ao ler o JSON");
+          console.error(error);
+        }
+      };
+
+      reader.readAsText(file);
+    },
+    [setEdges, setNodes]
+  );
+
+  const handleExport = useCallback(() => {
+    const nodeFlows = getNodes() as DialogueNodeFlow[];
+
+    const dialogueNodes = convertDialogueNodeFlowsToDialogueNodes(nodeFlows);
+    const dialogueNodeGodots =
+      convertDialogueNodesToDialogueNodeGodots(dialogueNodes);
+
+    const dataStr = JSON.stringify(dialogueNodeGodots, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "flow-export.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+  }, [getNodes]);
+
   return (
     <div style={{ width: "100%", height: "90vh" }}>
+      <div style={{ marginBottom: 8 }}>
+        <button onClick={() => refImportFileInput.current?.click()}>
+          Importar JSON Dialogue
+        </button>
+        <input
+          ref={refImportFileInput}
+          type="file"
+          accept="application/json"
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+        <button onClick={handleExport}>Exportar JSON Dialogue</button>
+      </div>
       <ReactFlow
         nodes={nodes}
         edges={edges}
