@@ -16,7 +16,8 @@ export function DialogueNodeFlowChoice({
   data,
   isConnectable,
 }: DialogueNodeFlowChoice) {
-  const { notifyNodeDialogueFlowEvent, allCharacters } = useDialogueFlow();
+  const { notifyNodeDialogueFlowEvent, selectCharacterOptions } =
+    useDialogueFlow();
 
   const handleChangeText = useCallback(
     (text: string) =>
@@ -77,7 +78,7 @@ export function DialogueNodeFlowChoice({
           clasName="right"
           value={data.character}
           onChange={handleChangeCharacter}
-          options={allCharacters}
+          options={selectCharacterOptions}
         />
       </DialogueNodeFlow.Header>
 

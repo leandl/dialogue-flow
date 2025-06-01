@@ -1,18 +1,18 @@
 export type DialogueNodeGodotControlRandom = {
   type: "CONTROL.RANDOM";
-  nexts: string[];
+  nexts: Array<string | null>;
 };
 
 export type DialogueNodeGodotDialogue = {
   type: "DIALOGUE";
   character: string;
   text: string;
-  next: string;
+  next: string | null;
 };
 
 export type DialogueNodeGodotChoiceOption = {
   text: string;
-  next: string;
+  next: string | null;
 };
 
 export type DialogueNodeGodotChoice = {

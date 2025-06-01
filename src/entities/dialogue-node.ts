@@ -7,7 +7,7 @@ export type DialogueNodeControlRandom = {
 export type DialogueNodeDialogue = {
   id: string;
   type: "DIALOGUE";
-  character: string;
+  character: string | null;
   text: string;
   next: string | null;
 };
@@ -20,7 +20,7 @@ export type DialogueNodeChoiceOption = {
 export type DialogueNodeChoice = {
   id: string;
   type: "CHOICE";
-  character: string;
+  character: string | null;
   text: string;
   choices: DialogueNodeChoiceOption[];
 };

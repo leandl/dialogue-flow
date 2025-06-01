@@ -17,12 +17,20 @@ import {
 } from "react";
 import type { DialogueNodeFlowEvent } from "../entities/dialogue-node-flow-event";
 import { convertNodeReactFlowEventToNodeDialogueFlowEvent } from "../converts/convert-node-react-flow-event-to-node-dialogue-flow-event";
-import { allDialogueNodeFlowTypes } from "../entities/dialogue-node-flow";
+import {
+  allDialogueNodeFlowTypes,
+  type DialogueNodeFlowType,
+} from "../entities/dialogue-node-flow";
 import { convertConnectionReactFlowEventToNodeDialogueFlowEvent } from "../converts/convert-connection-react-flow-event-to-node-dialogue-flow-event";
+import type { DialogueNodeFlowSelectOption } from "../components/DialogueFlow/dialogue-node-flow/dialogue-node-flow-select";
+import {
+  convertCharacterToSelectOption,
+  convertDialogueTypeToSelectOption,
+} from "../components/DialogueFlow/utils/converts";
 
 type DialogueFlowData = {
-  allCharacters: string[];
-  allDialogueTypes: string[];
+  selectCharacterOptions: DialogueNodeFlowSelectOption<string>[];
+  selectDialogueTypeOptions: DialogueNodeFlowSelectOption<DialogueNodeFlowType>[];
   notifyNodeReactFlowEvent(e: NodeChange[]): void;
   notifyConnectionReactFlowEvent(e: Connection): void;
   notifyNodeDialogueFlowEvent(e: DialogueNodeFlowEvent): void;
@@ -30,10 +38,6 @@ type DialogueFlowData = {
     l: ObserverListener<DialogueNodeFlowEvent>
   ): UnsubscribeFunction;
 };
-
-function readonlyArrayRemove<T>(array: readonly T[]): T[] {
-  return array.map((e) => e);
-}
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const DialogueFlowContext = createContext<DialogueFlowData>(
@@ -58,10 +62,15 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
     []
   );
 
-  const allDialogueTypes = useMemo(
-    () => readonlyArrayRemove(allDialogueNodeFlowTypes),
+  const selectDialogueTypeOptions = useMemo(
+    () => allDialogueNodeFlowTypes.map(convertDialogueTypeToSelectOption),
     []
   );
+
+  const selectCharacterOptions = useMemo(() => {
+    const allCharacters = ["CHRIS", "BENNEDETTE"];
+    return allCharacters.map(convertCharacterToSelectOption);
+  }, []);
 
   useEffect(() => {
     const unsubscribeNodeReactFlowEvent = nodeReactFlowEventObserver.subscribe(
@@ -121,8 +130,8 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
         onNodeDialogueFlowEvent,
         notifyNodeDialogueFlowEvent,
         notifyConnectionReactFlowEvent,
-        allCharacters: ["CHRIS", "BENNEDETTE"],
-        allDialogueTypes,
+        selectCharacterOptions,
+        selectDialogueTypeOptions,
       }}
     >
       <ReactFlowProvider>{children}</ReactFlowProvider>

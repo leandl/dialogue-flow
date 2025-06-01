@@ -29,7 +29,7 @@ export type DialogueNodeFlowDialogue = {
   id: string;
   targetId: NodeFlowTargetId;
   type: "DIALOGUE";
-  character: string;
+  character: string | null;
   text: string;
   sourceId: NodeFlowSourceId;
   next: string | null;
@@ -45,7 +45,7 @@ export type DialogueNodeFlowChoice = {
   id: string;
   targetId: NodeFlowTargetId;
   type: "CHOICE";
-  character: string;
+  character: string | null;
   text: string;
   choices: DialogueNodeFlowChoiceOption[];
 };

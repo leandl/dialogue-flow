@@ -16,7 +16,9 @@ export function DialogueNodeFlowHeader({
   dialogueType,
   children,
 }: DialogueNodeFlowHeaderProps) {
-  const { notifyNodeDialogueFlowEvent, allDialogueTypes } = useDialogueFlow();
+  const { notifyNodeDialogueFlowEvent, selectDialogueTypeOptions } =
+    useDialogueFlow();
+
   const handleChangeType = useCallback(
     (dialogueType: DialogueNodeFlowType) =>
       notifyNodeDialogueFlowEvent({
@@ -32,7 +34,7 @@ export function DialogueNodeFlowHeader({
       <DialogueNodeFlowSelect
         value={dialogueType}
         onChange={handleChangeType}
-        options={allDialogueTypes}
+        options={selectDialogueTypeOptions}
       />
       {children}
     </div>

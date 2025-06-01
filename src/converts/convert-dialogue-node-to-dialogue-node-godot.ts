@@ -20,7 +20,7 @@ export function convertDialogueNodeControlRandomToDialogueNodeGodotControlRandom
 ): DialogueNodeGodotControlRandom {
   return {
     type: "CONTROL.RANDOM",
-    nexts: node.nexts as string[],
+    nexts: node.nexts,
   };
 }
 
@@ -29,9 +29,9 @@ export function convertDialogueNodeDialogueToDialogueNodeGodotDialogue(
 ): DialogueNodeGodotDialogue {
   return {
     type: "DIALOGUE",
-    character: node.character,
+    character: node.character as string,
     text: node.text,
-    next: node.next as string,
+    next: node.next,
   };
 }
 
@@ -40,7 +40,7 @@ export function convertDialogueNodeChoiceOptionToDialogueNodeGodotChoiceOption(
 ): DialogueNodeGodotChoiceOption {
   return {
     text: option.text,
-    next: option.next as string,
+    next: option.next,
   };
 }
 
@@ -49,7 +49,7 @@ export function convertDialogueNodeChoiceToDialogueNodeGodotChoice(
 ): DialogueNodeGodotChoice {
   return {
     type: "CHOICE",
-    character: node.character,
+    character: node.character as string,
     text: node.text,
     choices: node.choices.map(
       convertDialogueNodeChoiceOptionToDialogueNodeGodotChoiceOption

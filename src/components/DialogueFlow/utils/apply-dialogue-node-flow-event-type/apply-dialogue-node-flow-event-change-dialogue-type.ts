@@ -15,8 +15,11 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
     }
 
     if (event.dialogueType === "DIALOGUE") {
-      let data = {
-        character: "",
+      let data: {
+        character: string | null;
+        text: string;
+      } = {
+        character: null,
         text: "",
       };
 
@@ -46,8 +49,11 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
     }
 
     if (event.dialogueType === "CHOICE") {
-      let data = {
-        character: "",
+      let data: {
+        character: string | null;
+        text: string;
+      } = {
+        character: null,
         text: "",
       };
 
