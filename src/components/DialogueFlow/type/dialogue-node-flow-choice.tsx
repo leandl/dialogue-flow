@@ -85,8 +85,12 @@ export function DialogueNodeFlowChoice({
       <div className="dialogue-node-flow-choice-content-message">
         <DialogueNodeFlow.Input value={data.text} onChange={handleChangeText} />
       </div>
-      <div className="dialogue-node-flow-choice-content-options">
+
+      <div className="dialogue-node-flow-choice-add-option">
         <button onClick={handleAddOption}>Add Choice</button>
+      </div>
+
+      <div className="dialogue-node-flow-choice-content-options">
         {data.choices.map((choice, index) => (
           <div
             className="dialogue-node-flow-choice-option"
@@ -98,9 +102,13 @@ export function DialogueNodeFlowChoice({
                 handleChangeOptionText(choice.sourceId, index, e.target.value)
               }
             />
-            <button onClick={() => handleRemoveOption(choice.sourceId, index)}>
-              remove
-            </button>
+            <div className="dialogue-node-flow-choice-option-remove">
+              <button
+                onClick={() => handleRemoveOption(choice.sourceId, index)}
+              >
+                x
+              </button>
+            </div>
             <Handle
               id={choice.sourceId}
               type="source"

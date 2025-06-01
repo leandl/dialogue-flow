@@ -11,15 +11,15 @@
 - [x] Adiconar Node
 - [ ] Remover Node
 
-- [ ] DialogueControlRandom
+- [x] DialogueControlRandom
 
   - [x] Adicionar opção
   - [x] Remover opção
-  - [ ] Melhorar estilização
+  - [x] Melhorar estilização
 
-- [ ] DialogueChoice
+- [x] DialogueChoice
 
   - [x] Adicionar opção
   - [x] Remover opção
   - [x] Editar texto da opção
-  - [ ] Melhorar estilização
+  - [x] Melhorar estilização

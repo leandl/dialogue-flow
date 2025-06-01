@@ -41,19 +41,23 @@ export function DialogueNodeFlowControlRandom({
     <DialogueNodeFlow.Container id={data.id} targetId={data.targetId}>
       <DialogueNodeFlow.Header dialogId={data.id} dialogueType={data.type} />
 
-      <div className="dialogue-node-flow-control-random-content">
+      <div className="dialogue-node-flow-control-random-add-option">
         <button onClick={handleAddOption}>Add Option</button>
+      </div>
+      <div className="dialogue-node-flow-control-random-content">
         {data.nexts.map((nextOption, index) => (
           <div
             className="dialogue-node-flow-control-random-option"
             key={nextOption.sourceId}
           >
             Option {index + 1}
-            <button
-              onClick={() => handleRemoveOption(nextOption.sourceId, index)}
-            >
-              remove
-            </button>
+            <div className="dialogue-node-flow-control-random-option-remove">
+              <button
+                onClick={() => handleRemoveOption(nextOption.sourceId, index)}
+              >
+                x
+              </button>
+            </div>
             <Handle
               id={nextOption.sourceId}
               type="source"
