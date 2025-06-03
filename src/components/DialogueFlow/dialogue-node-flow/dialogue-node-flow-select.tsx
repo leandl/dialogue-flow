@@ -9,14 +9,14 @@ type DialogueNodeFlowSelectProps<T = string> = {
   value: T;
   onChange?(newValue: T): void;
   options: DialogueNodeFlowSelectOption<T>[];
-  clasName?: string;
+  className?: string;
 };
 
 export function DialogueNodeFlowSelect<T = string>({
   onChange,
   value,
   options,
-  clasName = "",
+  className = "",
 }: DialogueNodeFlowSelectProps<T>) {
   const indexOption = useMemo(
     () => options.findIndex((option) => option.value === value),
@@ -42,7 +42,7 @@ export function DialogueNodeFlowSelect<T = string>({
   return (
     <div className="dialogue-node-flow-select">
       <select
-        className={clasName}
+        className={className}
         value={indexOption!}
         onChange={handleOnChange}
       >

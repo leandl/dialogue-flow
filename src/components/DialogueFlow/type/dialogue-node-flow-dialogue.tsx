@@ -40,7 +40,7 @@ export function DialogueNodeFlowDialogue({
     <DialogueNodeFlow.Container id={data.id} targetId={data.targetId}>
       <DialogueNodeFlow.Header dialogId={data.id} dialogueType={data.type}>
         <DialogueNodeFlow.Select
-          clasName="right"
+          className="right"
           value={data.character}
           onChange={handleChangeCharacter}
           options={selectCharacterOptions}
