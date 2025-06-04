@@ -1,3 +1,4 @@
+import type { DialogueOperator } from "./dialogue-logic";
 import type {
   DialogueNodeFlowType,
   NodeFlowSourceId,
@@ -12,9 +13,10 @@ export enum DialogueNodeFlowEventType {
   CONNECTION_DIALOGUE_CARD = "CONNECTION_DIALOGUE_CARD",
 
   ADD_DIALOGUE_CARD = "ADD_DIALOGUE_CARD",
+  CHANGE_DIALOGUE_TYPE = "CHANGE_DIALOGUE_TYPE",
   CHANGE_DIALOGUE_TEXT = "CHANGE_DIALOGUE_TEXT",
   CHANGE_DIALOGUE_CHARACTER = "CHANGE_DIALOGUE_CHARACTER",
-  CHANGE_DIALOGUE_TYPE = "CHANGE_DIALOGUE_TYPE",
+  CHANGE_DIALOGUE_CONDITION = "CHANGE_DIALOGUE_CONDITION",
 
   ADD_OPTION_IN_DIALOGUE_CARD = "ADD_OPTION_IN_DIALOGUE_CARD",
   REMOVE_OPTION_IN_DIALOGUE_CARD = "REMOVE_OPTION_IN_DIALOGUE_CARD",
@@ -66,6 +68,12 @@ type DialogueNodeFlowEventChangeDialogueCharacter = {
   character: string;
 };
 
+type DialogueNodeFlowEventChangeDialogueCondition = {
+  type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_CONDITION;
+  dialogueId: string;
+  condition: DialogueOperator;
+};
+
 type DialogueNodeFlowEventChangeDialogueType = {
   type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE;
   dialogueId: string;
@@ -103,6 +111,7 @@ type DialogueNodeFlowEventByType = {
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE]: DialogueNodeFlowEventChangeDialogueType;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]: DialogueNodeFlowEventChangeDialogueText;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]: DialogueNodeFlowEventChangeDialogueCharacter;
+  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CONDITION]: DialogueNodeFlowEventChangeDialogueCondition;
 
   [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]: DialogueNodeFlowEventAddOptionInDialogueCard;
   [DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD]: DialogueNodeFlowEventRemoveOptionInDialogueCard;

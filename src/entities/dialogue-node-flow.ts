@@ -1,5 +1,8 @@
+import type { DialogueOperator } from "./dialogue-logic";
+
 export const allDialogueNodeFlowTypes = [
   "CONTROL.RANDOM",
+  "CONTROL.IF",
   "DIALOGUE",
   "CHOICE",
 ] as const;
@@ -8,7 +11,7 @@ export type DialogueNodeFlowType = (typeof allDialogueNodeFlowTypes)[number];
 
 export type NodeFlowTargetId = `target-${string}`;
 export type NodeFlowSourceId = `source-${string}`;
-export type NodeFlowSubSourceId = `sub-source-${string}-${number}`;
+export type NodeFlowSubSourceId = `sub-source-${string}-${number | string}`;
 export type NodeFlowEdgeId = `edge-${
   | NodeFlowSourceId
   | NodeFlowSubSourceId}-${NodeFlowTargetId}`;
@@ -23,6 +26,19 @@ export type DialogueNodeFlowControlRandom = {
   targetId: NodeFlowTargetId;
   type: "CONTROL.RANDOM";
   nexts: DialogueNodeFlowControlRandomOption[];
+};
+
+export type DialogueNodeFlowControlIF = {
+  id: string;
+  targetId: NodeFlowTargetId;
+  type: "CONTROL.IF";
+  condition: DialogueOperator;
+  next: {
+    sourceTrueId: NodeFlowSubSourceId;
+    true: string | null;
+    sourceFalseId: NodeFlowSubSourceId;
+    false: string | null;
+  };
 };
 
 export type DialogueNodeFlowDialogue = {
@@ -54,6 +70,7 @@ type DialogueNodeFlowByType = {
   CHOICE: DialogueNodeFlowChoice;
   DIALOGUE: DialogueNodeFlowDialogue;
   "CONTROL.RANDOM": DialogueNodeFlowControlRandom;
+  "CONTROL.IF": DialogueNodeFlowControlIF;
 };
 
 export type NodeFlow<T extends DialogueNodeFlowType = DialogueNodeFlowType> = {

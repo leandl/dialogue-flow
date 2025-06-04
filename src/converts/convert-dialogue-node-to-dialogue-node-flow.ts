@@ -2,6 +2,7 @@ import type {
   DialogueNode,
   DialogueNodeChoice,
   DialogueNodeChoiceOption,
+  DialogueNodeControlIF,
   DialogueNodeControlRandom,
   DialogueNodeDialogue,
   DialogueNodes,
@@ -10,6 +11,7 @@ import type {
   DialogueNodeFlow,
   DialogueNodeFlowChoice,
   DialogueNodeFlowChoiceOption,
+  DialogueNodeFlowControlIF,
   DialogueNodeFlowControlRandom,
   DialogueNodeFlowControlRandomOption,
   DialogueNodeFlowDialogue,
@@ -32,9 +34,9 @@ export function convertDialogueNodeIdToNodeFlowSourceId(
 
 export function convertDialogueNodeIdToNodeFlowSubSourceId(
   dialogueNodeId: string,
-  index: number
+  id: number | string
 ): NodeFlowSubSourceId {
-  return `sub-source-${dialogueNodeId}-${index}`;
+  return `sub-source-${dialogueNodeId}-${id}`;
 }
 
 export function convertDialogueNodeControlRandomOptionToDialogueNodeFlowControlRandomOption(
@@ -68,6 +70,29 @@ export function convertDialogueNodeControlRandomToDialogueNodeFlowControlRandom(
           dialogueNodeControlRandomOption
         )
     ),
+  };
+}
+
+export function convertDialogueNodeControlIFToDialogueNodeFlowControlIF(
+  dialogueNodeControlIF: DialogueNodeControlIF
+): DialogueNodeFlowControlIF {
+  return {
+    id: dialogueNodeControlIF.id,
+    targetId: convertDialogueNodeIdToNodeFlowTargetId(dialogueNodeControlIF.id),
+    type: "CONTROL.IF",
+    condition: dialogueNodeControlIF.condition,
+    next: {
+      false: dialogueNodeControlIF.next.false,
+      sourceFalseId: convertDialogueNodeIdToNodeFlowSubSourceId(
+        dialogueNodeControlIF.id,
+        "FALSE"
+      ),
+      true: dialogueNodeControlIF.next.true,
+      sourceTrueId: convertDialogueNodeIdToNodeFlowSubSourceId(
+        dialogueNodeControlIF.id,
+        "TRUE"
+      ),
+    },
   };
 }
 
@@ -128,6 +153,9 @@ export function convertDialogueNodeToDialogueNodeFlow(
       convertDialogueNodeControlRandomToDialogueNodeFlowControlRandom(
         dialogueNode
       );
+  } else if (dialogueNode.type === "CONTROL.IF") {
+    data =
+      convertDialogueNodeControlIFToDialogueNodeFlowControlIF(dialogueNode);
   } else if (dialogueNode.type === "CHOICE") {
     data = convertDialogueNodeChoiceToDialogueNodeFlowChoice(dialogueNode);
   } else {

@@ -3,12 +3,20 @@ import type {
   DialogueNodeFlowEvent,
   DialogueNodeFlowEventType,
 } from "../../../../entities/dialogue-node-flow-event";
-import { isDialogueNodeFlow, updateDialogueNodeFlowData } from "../functions";
+import {
+  isDialogueNodeFlow,
+  updateData,
+  updateDialogueNodeFlowData,
+} from "../functions";
 
 export function applyDialogueNodeFlowEventConnectionDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.CONNECTION_DIALOGUE_CARD>,
   nodes: NodeFlow[]
 ): NodeFlow[] {
+  if (event.from === event.to) {
+    return nodes;
+  }
+
   return nodes.map((node) => {
     if (node.id !== event.from) {
       return node;
@@ -43,6 +51,21 @@ export function applyDialogueNodeFlowEventConnectionDialogueCard(
                 next: event.to,
               }
         ),
+      });
+    }
+
+    if (isDialogueNodeFlow("CONTROL.IF", node)) {
+      return updateDialogueNodeFlowData(node, {
+        next: updateData(node.data.next, {
+          false:
+            node.data.next.sourceFalseId === event.sourceId
+              ? event.to
+              : node.data.next.false,
+          true:
+            node.data.next.sourceTrueId === event.sourceId
+              ? event.to
+              : node.data.next.true,
+        }),
       });
     }
 

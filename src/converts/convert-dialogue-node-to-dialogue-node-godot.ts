@@ -2,6 +2,7 @@ import type {
   DialogueNode,
   DialogueNodeChoice,
   DialogueNodeChoiceOption,
+  DialogueNodeControlIF,
   DialogueNodeControlRandom,
   DialogueNodeDialogue,
   DialogueNodes,
@@ -10,6 +11,7 @@ import type {
   DialogueNodeGodot,
   DialogueNodeGodotChoice,
   DialogueNodeGodotChoiceOption,
+  DialogueNodeGodotControlIF,
   DialogueNodeGodotControlRandom,
   DialogueNodeGodotDialogue,
   DialogueNodeGodots,
@@ -21,6 +23,17 @@ export function convertDialogueNodeControlRandomToDialogueNodeGodotControlRandom
   return {
     type: "CONTROL.RANDOM",
     nexts: node.nexts,
+  };
+}
+
+export function convertDialogueNodeControlIFToDialogueNodeGodotControlIF(
+  node: DialogueNodeControlIF
+): DialogueNodeGodotControlIF {
+  return {
+    type: "CONTROL.IF",
+    condition: node.condition,
+    next_false: node.next.false,
+    next_true: node.next.true,
   };
 }
 
@@ -60,17 +73,18 @@ export function convertDialogueNodeChoiceToDialogueNodeGodotChoice(
 export function convertDialogueNodeToDialogueNodeGodot(
   node: DialogueNode
 ): DialogueNodeGodot {
-  if (node.type === "CONTROL.RANDOM") {
-    return convertDialogueNodeControlRandomToDialogueNodeGodotControlRandom(
-      node
-    );
+  switch (node.type) {
+    case "CONTROL.RANDOM":
+      return convertDialogueNodeControlRandomToDialogueNodeGodotControlRandom(
+        node
+      );
+    case "CONTROL.IF":
+      return convertDialogueNodeControlIFToDialogueNodeGodotControlIF(node);
+    case "CHOICE":
+      return convertDialogueNodeChoiceToDialogueNodeGodotChoice(node);
+    case "DIALOGUE":
+      return convertDialogueNodeDialogueToDialogueNodeGodotDialogue(node);
   }
-
-  if (node.type === "CHOICE") {
-    return convertDialogueNodeChoiceToDialogueNodeGodotChoice(node);
-  }
-
-  return convertDialogueNodeDialogueToDialogueNodeGodotDialogue(node);
 }
 
 export function convertDialogueNodesToDialogueNodeGodots(

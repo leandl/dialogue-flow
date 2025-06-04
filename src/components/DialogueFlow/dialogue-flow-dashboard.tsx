@@ -29,11 +29,13 @@ import "./dialogue-node-flow.css";
 import { DialogueNodeFlowEventType } from "../../entities/dialogue-node-flow-event";
 import { convertDialogueNodesToDialogueNodeGodots } from "../../converts/convert-dialogue-node-to-dialogue-node-godot";
 import { convertDialogueNodeFlowsToDialogueNodes } from "../../converts/convert-dialogue-node-flow-to-dialogue-node";
+import { DialogueNodeFlowControlIF } from "./type/dialogue-node-flow-control-if";
 
 const nodeTypes = {
   DIALOGUE: DialogueNodeFlowDialogue,
   CHOICE: DialogueNodeFlowChoice,
   "CONTROL.RANDOM": DialogueNodeFlowControlRandom,
+  "CONTROL.IF": DialogueNodeFlowControlIF,
 };
 
 function calcPositionDialogueNodeFlows(dialogueNodeFlows: DialogueNodeFlow[]) {

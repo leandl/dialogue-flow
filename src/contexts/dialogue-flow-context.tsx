@@ -22,15 +22,19 @@ import {
   type DialogueNodeFlowType,
 } from "../entities/dialogue-node-flow";
 import { convertConnectionReactFlowEventToNodeDialogueFlowEvent } from "../converts/convert-connection-react-flow-event-to-node-dialogue-flow-event";
-import type { DialogueNodeFlowSelectOption } from "../components/DialogueFlow/dialogue-node-flow/dialogue-node-flow-select";
 import {
   convertCharacterToSelectOption,
   convertDialogueTypeToSelectOption,
+  convertVarCharacterToSelectOption,
+  convertVarGameToSelectOption,
 } from "../components/DialogueFlow/utils/converts";
+import type { SelectOption } from "../components/select/select";
 
 type DialogueFlowData = {
-  selectCharacterOptions: DialogueNodeFlowSelectOption<string>[];
-  selectDialogueTypeOptions: DialogueNodeFlowSelectOption<DialogueNodeFlowType>[];
+  selectCharacterOptions: SelectOption<string>[];
+  selectDialogueTypeOptions: SelectOption<DialogueNodeFlowType>[];
+  selectVarGameOptions: SelectOption<string>[];
+  selectVarCharacterOptions: SelectOption<string>[];
   notifyNodeReactFlowEvent(e: NodeChange[]): void;
   notifyConnectionReactFlowEvent(e: Connection): void;
   notifyNodeDialogueFlowEvent(e: DialogueNodeFlowEvent): void;
@@ -70,6 +74,16 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
   const selectCharacterOptions = useMemo(() => {
     const allCharacters = ["CHRIS", "BENNEDETTE"];
     return allCharacters.map(convertCharacterToSelectOption);
+  }, []);
+
+  const selectVarGameOptions = useMemo(() => {
+    const allVarGames = ["day"];
+    return allVarGames.map(convertVarGameToSelectOption);
+  }, []);
+
+  const selectVarCharacterOptions = useMemo(() => {
+    const allVarCharacters = ["heart"];
+    return allVarCharacters.map(convertVarCharacterToSelectOption);
   }, []);
 
   useEffect(() => {
@@ -132,6 +146,8 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
         notifyConnectionReactFlowEvent,
         selectCharacterOptions,
         selectDialogueTypeOptions,
+        selectVarGameOptions,
+        selectVarCharacterOptions,
       }}
     >
       <ReactFlowProvider>{children}</ReactFlowProvider>

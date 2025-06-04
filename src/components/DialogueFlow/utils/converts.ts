@@ -18,3 +18,21 @@ export function convertDialogueTypeToSelectOption<
     value: value,
   };
 }
+
+export function convertVarGameToSelectOption<T extends string>(
+  value: T
+): DialogueNodeFlowSelectOption<T> {
+  return {
+    label: value.toUpperCase(),
+    value: value,
+  };
+}
+
+export function convertVarCharacterToSelectOption<T extends string>(
+  value: T
+): DialogueNodeFlowSelectOption<T> {
+  return {
+    label: value.toUpperCase(),
+    value: value,
+  };
+}

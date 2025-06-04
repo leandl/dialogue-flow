@@ -1,6 +1,15 @@
+import type { DialogueOperator } from "./dialogue-logic";
+
 export type DialogueNodeGodotControlRandom = {
   type: "CONTROL.RANDOM";
   nexts: Array<string | null>;
+};
+
+export type DialogueNodeGodotControlIF = {
+  type: "CONTROL.IF";
+  condition: DialogueOperator;
+  next_true: string | null;
+  next_false: string | null;
 };
 
 export type DialogueNodeGodotDialogue = {
@@ -24,6 +33,7 @@ export type DialogueNodeGodotChoice = {
 
 export type DialogueNodeGodot =
   | DialogueNodeGodotControlRandom
+  | DialogueNodeGodotControlIF
   | DialogueNodeGodotDialogue
   | DialogueNodeGodotChoice;
 

@@ -6,46 +6,79 @@
   "INITIAL-CHRIS": {
     "type": "DIALOGUE",
     "character": "CHRIS",
-    "text": "Olá, Lula da silvassauro!",
-    "next": "DIALOGUE-TEST"
+    "text": "Pedro, você viu que a porta do elevador tá travando de novo?",
+    "next": "CHRIS-CHECK"
   },
   "INITIAL-BENNEDETTE": {
     "type": "DIALOGUE",
     "character": "BENNEDETTE",
-    "text": "Olá, Lula da silvassauro!",
-    "next": "DIALOGUE-TEST"
+    "text": "Pedro, aquele vazamento no corredor ainda tá pingando, viu?",
+    "next": "BENNEDETTE-CHECK"
   },
-  "DIALOGUE-TEST": {
+  "CHRIS-CHECK": {
     "type": "DIALOGUE",
     "character": "CHRIS",
-    "text": "Precisa de ajuda?",
-    "next": "CHOICE-TEST"
+    "text": "Você consegue dar uma olhada hoje ainda?",
+    "next": "CHOICE-CHRIS"
   },
-  "CHOICE-TEST": {
+  "BENNEDETTE-CHECK": {
+    "type": "DIALOGUE",
+    "character": "BENNEDETTE",
+    "text": "Será que dá pra resolver isso antes do final do dia?",
+    "next": "CHOICE-BENNEDETTE"
+  },
+  "CHOICE-CHRIS": {
     "type": "CHOICE",
     "character": "CHRIS",
-    "text": "Testando",
+    "text": "Quer que eu avise na administração também?",
     "choices": [
       {
-        "text": "Sim, preciso de ajuda.",
-        "next": "help_yes"
+        "text": "Sim, melhor avisar.",
+        "next": "CHRIS-NOTE-YES"
       },
       {
-        "text": "Não, estou bem.",
-        "next": "help_no"
+        "text": "Não precisa, você resolve rápido.",
+        "next": "CHRIS-NOTE-NO"
       }
     ]
   },
-  "help_yes": {
-    "type": "DIALOGUE",
+  "CHOICE-BENNEDETTE": {
+    "type": "CHOICE",
     "character": "BENNEDETTE",
-    "text": "Mais imposto?",
-    "next": "MAIN"
+    "text": "Precisa de alguma ajuda com isso?",
+    "choices": [
+      {
+        "text": "Sim, pode pegar o balde na minha varanda.",
+        "next": "BENNEDETTE-HELP-YES"
+      },
+      {
+        "text": "Não, sei que você dá conta.",
+        "next": "BENNEDETTE-HELP-NO"
+      }
+    ]
   },
-  "help_no": {
+  "CHRIS-NOTE-YES": {
     "type": "DIALOGUE",
     "character": "CHRIS",
-    "text": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500",
+    "text": "Certo, vou falar com eles agora. Obrigado, Pedro!",
+    "next": "MAIN"
+  },
+  "CHRIS-NOTE-NO": {
+    "type": "DIALOGUE",
+    "character": "CHRIS",
+    "text": "Sabia que podia contar contigo. Valeu!",
+    "next": "MAIN"
+  },
+  "BENNEDETTE-HELP-YES": {
+    "type": "DIALOGUE",
+    "character": "BENNEDETTE",
+    "text": "Tá na varanda da direita, pode pegar à vontade!",
+    "next": "MAIN"
+  },
+  "BENNEDETTE-HELP-NO": {
+    "type": "DIALOGUE",
+    "character": "BENNEDETTE",
+    "text": "Confio no seu talento, Pedro. Obrigada!",
     "next": "MAIN"
   }
 }

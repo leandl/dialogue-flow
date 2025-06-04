@@ -20,9 +20,8 @@ export function createNodeFlowSourceId(
 
 export function createNodeFlowSubSourceId(
   dialogueNodeId: string,
-  id: number
+  id: number | string
 ): NodeFlowSubSourceId {
-  console.log(dialogueNodeId);
   return `sub-source-${dialogueNodeId}-${id}`;
 }
 

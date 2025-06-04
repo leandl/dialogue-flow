@@ -1,7 +1,19 @@
+import type { DialogueOperator } from "./dialogue-logic";
+
 export type DialogueNodeControlRandom = {
   id: string;
   type: "CONTROL.RANDOM";
   nexts: Array<string | null>;
+};
+
+export type DialogueNodeControlIF = {
+  id: string;
+  type: "CONTROL.IF";
+  condition: DialogueOperator;
+  next: {
+    true: string | null;
+    false: string | null;
+  };
 };
 
 export type DialogueNodeDialogue = {
@@ -27,6 +39,7 @@ export type DialogueNodeChoice = {
 
 export type DialogueNode =
   | DialogueNodeControlRandom
+  | DialogueNodeControlIF
   | DialogueNodeDialogue
   | DialogueNodeChoice;
 

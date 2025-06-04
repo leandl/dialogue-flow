@@ -69,6 +69,40 @@ function convertDialogueNodeFlowToEdgeFlows(
     }, new Array<EdgeFlow>());
   }
 
+  if (dialogueNodeFlow.data.type === "CONTROL.IF") {
+    const edges: EdgeFlow[] = [];
+
+    if (dialogueNodeFlow.data.next.false) {
+      const dialogueNodeFlowTargetId = convertDialogueNodeIdToNodeFlowTargetId(
+        dialogueNodeFlow.data.next.false
+      );
+
+      edges.push({
+        id: `edge-${dialogueNodeFlow.data.next.sourceFalseId}-${dialogueNodeFlowTargetId}`,
+        source: dialogueNodeFlow.data.id,
+        sourceHandle: dialogueNodeFlow.data.next.sourceFalseId,
+        target: dialogueNodeFlow.data.next.false,
+        targetHandle: dialogueNodeFlowTargetId,
+      });
+    }
+
+    if (dialogueNodeFlow.data.next.true) {
+      const dialogueNodeFlowTargetId = convertDialogueNodeIdToNodeFlowTargetId(
+        dialogueNodeFlow.data.next.true
+      );
+
+      edges.push({
+        id: `edge-${dialogueNodeFlow.data.next.sourceTrueId}-${dialogueNodeFlowTargetId}`,
+        source: dialogueNodeFlow.data.id,
+        sourceHandle: dialogueNodeFlow.data.next.sourceTrueId,
+        target: dialogueNodeFlow.data.next.true,
+        targetHandle: dialogueNodeFlowTargetId,
+      });
+    }
+
+    return edges;
+  }
+
   return [];
 }
 
