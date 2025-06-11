@@ -10,6 +10,7 @@ import { applyDialogueNodeFlowEventAddDialogueCard } from "./apply-dialogue-node
 import { applyDialogueNodeFlowEventAddOptionInDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-add-option-in-dialogue-card";
 import { applyDialogueNodeFlowEventChangeDialogueCharacter } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-character";
 import { applyDialogueNodeFlowEventChangeDialogueCondition } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-condition";
+import { applyDialogueNodeFlowEventChangeDialogueEventName } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-event-name";
 import { applyDialogueNodeFlowEventChangeDialogueText } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-text";
 import { applyDialogueNodeFlowEventChangeDialogueType } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-dialogue-type";
 import { applyDialogueNodeFlowEventChangeOptionTextInDialogueCard } from "./apply-dialogue-node-flow-event-type/apply-dialogue-node-flow-event-change-option-text-in-dialogue-card";
@@ -46,6 +47,8 @@ const applyDialogueNodeFlowEventByEventType: {
     applyDialogueNodeFlowEventChangeDialogueText,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CONDITION]:
     applyDialogueNodeFlowEventChangeDialogueCondition,
+  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_EVENT_NAME]:
+    applyDialogueNodeFlowEventChangeDialogueEventName,
 
   [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]:
     applyDialogueNodeFlowEventAddOptionInDialogueCard,

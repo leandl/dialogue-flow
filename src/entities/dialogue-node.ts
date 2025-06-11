@@ -16,6 +16,13 @@ export type DialogueNodeControlIF = {
   };
 };
 
+export type DialogueNodeControlEvent = {
+  id: string;
+  type: "CONTROL.EVENT";
+  eventName: string;
+  next: string | null;
+};
+
 export type DialogueNodeDialogue = {
   id: string;
   type: "DIALOGUE";
@@ -40,6 +47,7 @@ export type DialogueNodeChoice = {
 export type DialogueNode =
   | DialogueNodeControlRandom
   | DialogueNodeControlIF
+  | DialogueNodeControlEvent
   | DialogueNodeDialogue
   | DialogueNodeChoice;
 

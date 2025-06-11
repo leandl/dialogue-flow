@@ -47,7 +47,11 @@ export function DialogueNodeFlowDialogue({
         />
       </DialogueNodeFlow.Header>
 
-      <DialogueNodeFlow.Input value={data.text} onChange={handleChangeText} />
+      <DialogueNodeFlow.Input
+        type="TEXTAREA"
+        value={data.text}
+        onChange={handleChangeText}
+      />
       <Handle
         id={data.sourceId}
         type="source"

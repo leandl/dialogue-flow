@@ -30,12 +30,14 @@ import { DialogueNodeFlowEventType } from "../../entities/dialogue-node-flow-eve
 import { convertDialogueNodesToDialogueNodeGodots } from "../../converts/convert-dialogue-node-to-dialogue-node-godot";
 import { convertDialogueNodeFlowsToDialogueNodes } from "../../converts/convert-dialogue-node-flow-to-dialogue-node";
 import { DialogueNodeFlowControlIF } from "./type/dialogue-node-flow-control-if";
+import { DialogueNodeFlowControlEvent } from "./type/dialogue-node-flow-control-event";
 
 const nodeTypes = {
   DIALOGUE: DialogueNodeFlowDialogue,
   CHOICE: DialogueNodeFlowChoice,
   "CONTROL.RANDOM": DialogueNodeFlowControlRandom,
   "CONTROL.IF": DialogueNodeFlowControlIF,
+  "CONTROL.EVENT": DialogueNodeFlowControlEvent,
 };
 
 function calcPositionDialogueNodeFlows(dialogueNodeFlows: DialogueNodeFlow[]) {

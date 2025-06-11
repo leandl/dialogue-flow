@@ -83,7 +83,11 @@ export function DialogueNodeFlowChoice({
       </DialogueNodeFlow.Header>
 
       <div className="dialogue-node-flow-choice-content-message">
-        <DialogueNodeFlow.Input value={data.text} onChange={handleChangeText} />
+        <DialogueNodeFlow.Input
+          type="TEXTAREA"
+          value={data.text}
+          onChange={handleChangeText}
+        />
       </div>
 
       <div className="dialogue-node-flow-choice-add-option">

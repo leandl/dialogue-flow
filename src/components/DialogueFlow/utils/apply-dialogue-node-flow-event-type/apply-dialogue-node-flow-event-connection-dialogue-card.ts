@@ -22,7 +22,10 @@ export function applyDialogueNodeFlowEventConnectionDialogueCard(
       return node;
     }
 
-    if (isDialogueNodeFlow("DIALOGUE", node)) {
+    if (
+      isDialogueNodeFlow("DIALOGUE", node) ||
+      isDialogueNodeFlow("CONTROL.EVENT", node)
+    ) {
       return updateDialogueNodeFlowData(node, {
         next: event.to,
       });

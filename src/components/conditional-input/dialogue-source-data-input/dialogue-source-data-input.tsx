@@ -93,7 +93,6 @@ export function DialogueSourceDataInput<
         onChange={handleTypeChange}
         options={selectDialogueSourceDataTypeOptions}
       />
-
       <ComponentDialogueSourceDataInput value={value} onChange={onChange} />
     </div>
   );

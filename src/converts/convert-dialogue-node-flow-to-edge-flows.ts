@@ -7,7 +7,10 @@ import { convertDialogueNodeIdToNodeFlowTargetId } from "./convert-dialogue-node
 function convertDialogueNodeFlowToEdgeFlows(
   dialogueNodeFlow: DialogueNodeFlow
 ): EdgeFlow[] {
-  if (dialogueNodeFlow.data.type === "DIALOGUE") {
+  if (
+    dialogueNodeFlow.data.type === "DIALOGUE" ||
+    dialogueNodeFlow.data.type === "CONTROL.EVENT"
+  ) {
     if (dialogueNodeFlow.data.next === null) {
       return [];
     }

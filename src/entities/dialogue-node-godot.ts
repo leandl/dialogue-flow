@@ -5,6 +5,12 @@ export type DialogueNodeGodotControlRandom = {
   nexts: Array<string | null>;
 };
 
+export type DialogueNodeGodotControlEvent = {
+  type: "CONTROL.EVENT";
+  "event-name": string;
+  next: string | null;
+};
+
 export type DialogueNodeGodotControlIF = {
   type: "CONTROL.IF";
   condition: DialogueOperator;
@@ -34,6 +40,7 @@ export type DialogueNodeGodotChoice = {
 export type DialogueNodeGodot =
   | DialogueNodeGodotControlRandom
   | DialogueNodeGodotControlIF
+  | DialogueNodeGodotControlEvent
   | DialogueNodeGodotDialogue
   | DialogueNodeGodotChoice;
 

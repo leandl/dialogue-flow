@@ -2,6 +2,7 @@ import type {
   DialogueNode,
   DialogueNodeChoice,
   DialogueNodeChoiceOption,
+  DialogueNodeControlEvent,
   DialogueNodeControlIF,
   DialogueNodeControlRandom,
   DialogueNodeDialogue,
@@ -11,6 +12,7 @@ import type {
   DialogueNodeFlow,
   DialogueNodeFlowChoice,
   DialogueNodeFlowChoiceOption,
+  DialogueNodeFlowControlEvent,
   DialogueNodeFlowControlIF,
   DialogueNodeFlowControlRandom,
   DialogueNodeFlowControlRandomOption,
@@ -96,6 +98,23 @@ export function convertDialogueNodeControlIFToDialogueNodeFlowControlIF(
   };
 }
 
+export function convertDialogueNodeControlEventToDialogueNodeFlowControlEvent(
+  dialogueNodeControlEvent: DialogueNodeControlEvent
+): DialogueNodeFlowControlEvent {
+  return {
+    id: dialogueNodeControlEvent.id,
+    targetId: convertDialogueNodeIdToNodeFlowTargetId(
+      dialogueNodeControlEvent.id
+    ),
+    type: "CONTROL.EVENT",
+    eventName: dialogueNodeControlEvent.eventName,
+    sourceId: convertDialogueNodeIdToNodeFlowSourceId(
+      dialogueNodeControlEvent.id
+    ),
+    next: dialogueNodeControlEvent.next,
+  };
+}
+
 export function convertDialogueNodeDialogueToDialogueNodeFlowDialogue(
   dialogueNodeDialogue: DialogueNodeDialogue
 ): DialogueNodeFlowDialogue {
@@ -156,6 +175,11 @@ export function convertDialogueNodeToDialogueNodeFlow(
   } else if (dialogueNode.type === "CONTROL.IF") {
     data =
       convertDialogueNodeControlIFToDialogueNodeFlowControlIF(dialogueNode);
+  } else if (dialogueNode.type === "CONTROL.EVENT") {
+    data =
+      convertDialogueNodeControlEventToDialogueNodeFlowControlEvent(
+        dialogueNode
+      );
   } else if (dialogueNode.type === "CHOICE") {
     data = convertDialogueNodeChoiceToDialogueNodeFlowChoice(dialogueNode);
   } else {

@@ -134,6 +134,25 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
       } as DialogueNodeFlow<"CONTROL.IF">;
     }
 
+    if (event.dialogueType === "CONTROL.EVENT") {
+      return {
+        id: node.id,
+        type: "CONTROL.EVENT",
+        dragHandle: ".dialogue-node-flow-drag-handle",
+        position: node.position,
+        dragging: node.dragging,
+        measured: node.measured,
+        data: {
+          id: node.data.id,
+          type: "CONTROL.EVENT",
+          eventName: "",
+          targetId: createNodeFlowTargetId(node.id),
+          sourceId: createNodeFlowSourceId(node.id),
+          next: null,
+        },
+      } as DialogueNodeFlow<"CONTROL.EVENT">;
+    }
+
     return node;
   });
 }
