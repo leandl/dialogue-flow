@@ -88,3 +88,36 @@ type DialogueOperatorByDialogueOperatorType = {
 export type DialogueOperator<
   T extends DialogueOperatorType = DialogueOperatorType
 > = DialogueOperatorByDialogueOperatorType[T];
+
+// ============================
+
+export enum DialogueActionType {
+  SET = "SET",
+  INCREMENT = "INCREMENT",
+  DECREMENT = "DECREMENT",
+}
+
+export type DialogueActionSet = [
+  DialogueActionType.SET,
+  DialogueVarValue,
+  DialogueDataValue
+];
+export type DialogueActionIncrement = [
+  DialogueActionType.INCREMENT,
+  DialogueVarValue,
+  DialogueDataInterger
+];
+export type DialogueActionDecrement = [
+  DialogueActionType.DECREMENT,
+  DialogueVarValue,
+  DialogueDataInterger
+];
+
+type DialogueActionByDialogueActionType = {
+  [DialogueActionType.SET]: DialogueActionSet;
+  [DialogueActionType.INCREMENT]: DialogueActionIncrement;
+  [DialogueActionType.DECREMENT]: DialogueActionDecrement;
+};
+
+export type DialogueAction<T extends DialogueActionType = DialogueActionType> =
+  DialogueActionByDialogueActionType[T];

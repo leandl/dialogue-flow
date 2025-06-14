@@ -32,9 +32,7 @@ const applyDialogueEdgeFlowEventByEventType: {
     applyNothingDialogueEdgeFlowEvent,
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]:
     applyNothingDialogueEdgeFlowEvent,
-  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CONDITION]:
-    applyNothingDialogueEdgeFlowEvent,
-  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_EVENT_NAME]:
+  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_UNIQUE_DATA]:
     applyNothingDialogueEdgeFlowEvent,
 
   [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]:

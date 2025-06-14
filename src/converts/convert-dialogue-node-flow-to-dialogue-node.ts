@@ -2,6 +2,7 @@ import type {
   DialogueNode,
   DialogueNodeChoice,
   DialogueNodeChoiceOption,
+  DialogueNodeControlAction,
   DialogueNodeControlEvent,
   DialogueNodeControlIF,
   DialogueNodeControlRandom,
@@ -12,6 +13,7 @@ import type {
   DialogueNodeFlow,
   DialogueNodeFlowChoice,
   DialogueNodeFlowChoiceOption,
+  DialogueNodeFlowControlAction,
   DialogueNodeFlowControlEvent,
   DialogueNodeFlowControlIF,
   DialogueNodeFlowControlRandom,
@@ -55,6 +57,17 @@ export function convertDialogueNodeFlowControlIFToDialogueNodeControlIF(
       false: node.next.false,
       true: node.next.true,
     },
+  };
+}
+
+export function convertDialogueNodeFlowControlActionToDialogueNodeControlAction(
+  node: DialogueNodeFlowControlAction
+): DialogueNodeControlAction {
+  return {
+    id: extractDialogueNodeIdFromNodeFlowTargetId(node.targetId),
+    type: "CONTROL.ACTION",
+    action: node.action,
+    next: node.next,
   };
 }
 
@@ -115,6 +128,10 @@ export function convertDialogueNodeFlowToDialogueNode(
     case "CONTROL.IF":
       return convertDialogueNodeFlowControlIFToDialogueNodeControlIF(
         nodeFlow.data as DialogueNodeFlowControlIF
+      );
+    case "CONTROL.ACTION":
+      return convertDialogueNodeFlowControlActionToDialogueNodeControlAction(
+        nodeFlow.data as DialogueNodeFlowControlAction
       );
     case "CONTROL.EVENT":
       return convertDialogueNodeFlowControlEventToDialogueNodeControlEvent(

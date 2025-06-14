@@ -1,17 +1,36 @@
-import {
-  DialogueDataType,
-  DialogueOperatorType,
-} from "../../../../entities/dialogue-logic";
-import type { DialogueNodeFlow } from "../../../../entities/dialogue-node-flow";
+import type {
+  DialogueNodeFlow,
+  DialogueNodeFlowType,
+} from "../../../../entities/dialogue-node-flow";
 import type {
   DialogueNodeFlowEvent,
   DialogueNodeFlowEventType,
 } from "../../../../entities/dialogue-node-flow-event";
-import {
-  createNodeFlowSourceId,
-  createNodeFlowSubSourceId,
-  createNodeFlowTargetId,
-} from "../functions";
+import { createDialogueNodeFlowChoice } from "../create-dialogue-node-flow/create-dialogue-node-flow-choice";
+import { createDialogueNodeFlowControlAction } from "../create-dialogue-node-flow/create-dialogue-node-flow-control-action";
+import { createDialogueNodeFlowControlEvent } from "../create-dialogue-node-flow/create-dialogue-node-flow-control-event";
+import { createDialogueNodeFlowControlIF } from "../create-dialogue-node-flow/create-dialogue-node-flow-control-if";
+import { createDialogueNodeFlowControlRandom } from "../create-dialogue-node-flow/create-dialogue-node-flow-control-random";
+import { createDialogueNodeFlowDialogue } from "../create-dialogue-node-flow/create-dialogue-node-flow-dialogue";
+import { isDialogueNodeFlow, updateDialogueNodeFlowData } from "../functions";
+import type { DialogueNodeFlowOptions } from "../types";
+
+type FunctionCreateDailogueNodeFlow<T extends DialogueNodeFlowType> = (
+  nodeId: string,
+  options?: DialogueNodeFlowOptions
+) => DialogueNodeFlow<T>;
+
+const createDailogueNodeFlowByType: {
+  [T in DialogueNodeFlowType]: FunctionCreateDailogueNodeFlow<T>;
+} = {
+  "CONTROL.ACTION": createDialogueNodeFlowControlAction,
+  "CONTROL.IF": createDialogueNodeFlowControlIF,
+  "CONTROL.EVENT": createDialogueNodeFlowControlEvent,
+  "CONTROL.RANDOM": createDialogueNodeFlowControlRandom,
+
+  CHOICE: createDialogueNodeFlowChoice,
+  DIALOGUE: createDialogueNodeFlowDialogue,
+};
 
 export function applyDialogueNodeFlowEventChangeDialogueType(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE>,
@@ -22,137 +41,25 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
       return node;
     }
 
-    if (event.dialogueType === "DIALOGUE") {
-      let data: {
-        character: string | null;
-        text: string;
-      } = {
-        character: null,
-        text: "",
-      };
+    const createDailogueNodeFlow =
+      createDailogueNodeFlowByType[event.dialogueType];
+    const newNode = createDailogueNodeFlow(node.id, {
+      dragging: node.dragging,
+      measured: node.measured,
+      position: node.position,
+    });
 
-      if (node.data.type === "CHOICE") {
-        data = {
-          character: node.data.character,
-          text: node.data.text,
-        };
-      }
-
-      return {
-        id: node.id,
-        type: "DIALOGUE",
-        dragHandle: ".dialogue-node-flow-drag-handle",
-        position: node.position,
-        dragging: node.dragging,
-        measured: node.measured,
-        data: {
-          id: node.data.id,
-          type: "DIALOGUE",
-          ...data,
-          targetId: createNodeFlowTargetId(node.id),
-          sourceId: createNodeFlowSourceId(node.id),
-          next: null,
-        },
-      } as DialogueNodeFlow<"DIALOGUE">;
+    if (
+      (isDialogueNodeFlow("DIALOGUE", newNode) &&
+        node.data.type === "CHOICE") ||
+      (isDialogueNodeFlow("CHOICE", newNode) && node.data.type === "DIALOGUE")
+    ) {
+      return updateDialogueNodeFlowData(newNode, {
+        character: node.data.character,
+        text: node.data.text,
+      });
     }
 
-    if (event.dialogueType === "CHOICE") {
-      let data: {
-        character: string | null;
-        text: string;
-      } = {
-        character: null,
-        text: "",
-      };
-
-      if (node.data.type === "DIALOGUE") {
-        data = {
-          character: node.data.character,
-          text: node.data.text,
-        };
-      }
-
-      return {
-        id: node.id,
-        type: "CHOICE",
-        dragHandle: ".dialogue-node-flow-drag-handle",
-        position: node.position,
-        dragging: node.dragging,
-        measured: node.measured,
-        data: {
-          id: node.data.id,
-          type: "CHOICE",
-          ...data,
-          targetId: createNodeFlowTargetId(node.id),
-          choices: [],
-        },
-      } as DialogueNodeFlow<"CHOICE">;
-    }
-
-    if (event.dialogueType === "CONTROL.RANDOM") {
-      return {
-        id: node.id,
-        type: "CONTROL.RANDOM",
-        dragHandle: ".dialogue-node-flow-drag-handle",
-        position: node.position,
-        dragging: node.dragging,
-        measured: node.measured,
-        data: {
-          id: node.data.id,
-          type: "CONTROL.RANDOM",
-          targetId: createNodeFlowTargetId(node.id),
-          nexts: [],
-        },
-      } as DialogueNodeFlow<"CONTROL.RANDOM">;
-    }
-
-    if (event.dialogueType === "CONTROL.IF") {
-      return {
-        id: node.id,
-        type: "CONTROL.IF",
-        dragHandle: ".dialogue-node-flow-drag-handle",
-        position: node.position,
-        dragging: node.dragging,
-        measured: node.measured,
-        data: {
-          id: node.data.id,
-          type: "CONTROL.IF",
-          condition: [
-            DialogueOperatorType.COMPARATOR,
-            "EQUAL",
-            [DialogueDataType.INTERGER, 0],
-            [DialogueDataType.INTERGER, 0],
-          ],
-          targetId: createNodeFlowTargetId(node.id),
-          next: {
-            false: null,
-            sourceFalseId: createNodeFlowSubSourceId(node.id, "FALSE"),
-            true: null,
-            sourceTrueId: createNodeFlowSubSourceId(node.id, "TRUE"),
-          },
-        },
-      } as DialogueNodeFlow<"CONTROL.IF">;
-    }
-
-    if (event.dialogueType === "CONTROL.EVENT") {
-      return {
-        id: node.id,
-        type: "CONTROL.EVENT",
-        dragHandle: ".dialogue-node-flow-drag-handle",
-        position: node.position,
-        dragging: node.dragging,
-        measured: node.measured,
-        data: {
-          id: node.data.id,
-          type: "CONTROL.EVENT",
-          eventName: "",
-          targetId: createNodeFlowTargetId(node.id),
-          sourceId: createNodeFlowSourceId(node.id),
-          next: null,
-        },
-      } as DialogueNodeFlow<"CONTROL.EVENT">;
-    }
-
-    return node;
+    return newNode;
   });
 }

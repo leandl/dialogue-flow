@@ -22,15 +22,6 @@ export function applyDialogueNodeFlowEventConnectionDialogueCard(
       return node;
     }
 
-    if (
-      isDialogueNodeFlow("DIALOGUE", node) ||
-      isDialogueNodeFlow("CONTROL.EVENT", node)
-    ) {
-      return updateDialogueNodeFlowData(node, {
-        next: event.to,
-      });
-    }
-
     if (isDialogueNodeFlow("CHOICE", node)) {
       return updateDialogueNodeFlowData(node, {
         choices: node.data.choices.map((choice) =>
@@ -72,6 +63,8 @@ export function applyDialogueNodeFlowEventConnectionDialogueCard(
       });
     }
 
-    return node;
+    return updateDialogueNodeFlowData(node, {
+      next: event.to,
+    });
   });
 }

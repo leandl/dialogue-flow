@@ -1,4 +1,4 @@
-import type { DialogueOperator } from "./dialogue-logic";
+import type { DialogueAction, DialogueOperator } from "./dialogue-logic";
 import type {
   DialogueNodeFlowType,
   NodeFlowSourceId,
@@ -16,8 +16,7 @@ export enum DialogueNodeFlowEventType {
   CHANGE_DIALOGUE_TYPE = "CHANGE_DIALOGUE_TYPE",
   CHANGE_DIALOGUE_TEXT = "CHANGE_DIALOGUE_TEXT",
   CHANGE_DIALOGUE_CHARACTER = "CHANGE_DIALOGUE_CHARACTER",
-  CHANGE_DIALOGUE_CONDITION = "CHANGE_DIALOGUE_CONDITION",
-  CHANGE_DIALOGUE_EVENT_NAME = "CHANGE_DIALOGUE_EVENT_NAME",
+  CHANGE_DIALOGUE_UNIQUE_DATA = "CHANGE_DIALOGUE_UNIQUE_DATA",
 
   ADD_OPTION_IN_DIALOGUE_CARD = "ADD_OPTION_IN_DIALOGUE_CARD",
   REMOVE_OPTION_IN_DIALOGUE_CARD = "REMOVE_OPTION_IN_DIALOGUE_CARD",
@@ -75,16 +74,31 @@ type DialogueNodeFlowEventChangeDialogueCharacter = {
   character: string;
 };
 
-type DialogueNodeFlowEventChangeDialogueCondition = {
-  type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_CONDITION;
-  dialogueId: string;
-  condition: DialogueOperator;
-};
+export enum UniqueDataType {
+  ACTION = "ACTION",
+  CONDITION = "CONDITION",
+  EVENT_NAME = "EVENT_NAME",
+}
 
-type DialogueNodeFlowEventChangeDialogueEventName = {
-  type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_EVENT_NAME;
+export type UniqueDataAction = { action: DialogueAction };
+export type UniqueDataCondition = { condition: DialogueOperator };
+export type UniqueDataEventName = { eventName: string };
+
+type UniqueDataByUniqueDataType = {
+  [UniqueDataType.ACTION]: UniqueDataAction;
+  [UniqueDataType.CONDITION]: UniqueDataCondition;
+  [UniqueDataType.EVENT_NAME]: UniqueDataEventName;
+};
+type UniqueData<T extends UniqueDataType = UniqueDataType> =
+  UniqueDataByUniqueDataType[T];
+
+export type DialogueNodeFlowEventChangeDialogueUniqueData<
+  T extends UniqueDataType = UniqueDataType
+> = {
+  type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_UNIQUE_DATA;
   dialogueId: string;
-  eventName: string;
+  uniqueDataType: T;
+  data: UniqueData<T>;
 };
 
 type DialogueNodeFlowEventAddOptionInDialogueCard = {
@@ -118,8 +132,7 @@ type DialogueNodeFlowEventByType = {
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE]: DialogueNodeFlowEventChangeDialogueType;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT]: DialogueNodeFlowEventChangeDialogueText;
   [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER]: DialogueNodeFlowEventChangeDialogueCharacter;
-  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_CONDITION]: DialogueNodeFlowEventChangeDialogueCondition;
-  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_EVENT_NAME]: DialogueNodeFlowEventChangeDialogueEventName;
+  [DialogueNodeFlowEventType.CHANGE_DIALOGUE_UNIQUE_DATA]: DialogueNodeFlowEventChangeDialogueUniqueData;
 
   [DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD]: DialogueNodeFlowEventAddOptionInDialogueCard;
   [DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD]: DialogueNodeFlowEventRemoveOptionInDialogueCard;

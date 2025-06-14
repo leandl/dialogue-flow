@@ -2,6 +2,7 @@ import type {
   DialogueNode,
   DialogueNodeChoice,
   DialogueNodeChoiceOption,
+  DialogueNodeControlAction,
   DialogueNodeControlEvent,
   DialogueNodeControlIF,
   DialogueNodeControlRandom,
@@ -12,6 +13,7 @@ import type {
   DialogueNodeGodot,
   DialogueNodeGodotChoice,
   DialogueNodeGodotChoiceOption,
+  DialogueNodeGodotControlAction,
   DialogueNodeGodotControlEvent,
   DialogueNodeGodotControlIF,
   DialogueNodeGodotControlRandom,
@@ -36,6 +38,16 @@ export function convertDialogueNodeControlIFToDialogueNodeGodotControlIF(
     condition: node.condition,
     next_false: node.next.false,
     next_true: node.next.true,
+  };
+}
+
+export function convertDialogueNodeControlActionToDialogueNodeGodotControlAction(
+  node: DialogueNodeControlAction
+): DialogueNodeGodotControlAction {
+  return {
+    type: "CONTROL.ACTION",
+    action: node.action,
+    next: node.next,
   };
 }
 
@@ -92,6 +104,11 @@ export function convertDialogueNodeToDialogueNodeGodot(
       );
     case "CONTROL.IF":
       return convertDialogueNodeControlIFToDialogueNodeGodotControlIF(node);
+    case "CONTROL.ACTION":
+      return convertDialogueNodeControlActionToDialogueNodeGodotControlAction(
+        node
+      );
+
     case "CONTROL.EVENT":
       return convertDialogueNodeControlEventToDialogueNodeGodotControlEvent(
         node

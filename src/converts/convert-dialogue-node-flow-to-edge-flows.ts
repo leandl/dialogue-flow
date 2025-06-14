@@ -9,7 +9,8 @@ function convertDialogueNodeFlowToEdgeFlows(
 ): EdgeFlow[] {
   if (
     dialogueNodeFlow.data.type === "DIALOGUE" ||
-    dialogueNodeFlow.data.type === "CONTROL.EVENT"
+    dialogueNodeFlow.data.type === "CONTROL.EVENT" ||
+    dialogueNodeFlow.data.type === "CONTROL.ACTION"
   ) {
     if (dialogueNodeFlow.data.next === null) {
       return [];

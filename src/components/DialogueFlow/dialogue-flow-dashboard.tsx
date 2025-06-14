@@ -31,12 +31,14 @@ import { convertDialogueNodesToDialogueNodeGodots } from "../../converts/convert
 import { convertDialogueNodeFlowsToDialogueNodes } from "../../converts/convert-dialogue-node-flow-to-dialogue-node";
 import { DialogueNodeFlowControlIF } from "./type/dialogue-node-flow-control-if";
 import { DialogueNodeFlowControlEvent } from "./type/dialogue-node-flow-control-event";
+import { DialogueNodeFlowControlAction } from "./type/dialogue-node-flow-control-action";
 
 const nodeTypes = {
   DIALOGUE: DialogueNodeFlowDialogue,
   CHOICE: DialogueNodeFlowChoice,
   "CONTROL.RANDOM": DialogueNodeFlowControlRandom,
   "CONTROL.IF": DialogueNodeFlowControlIF,
+  "CONTROL.ACTION": DialogueNodeFlowControlAction,
   "CONTROL.EVENT": DialogueNodeFlowControlEvent,
 };
 

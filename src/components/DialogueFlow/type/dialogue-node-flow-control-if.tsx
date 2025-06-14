@@ -5,7 +5,10 @@ import { DialogueOperatorComparatorInput } from "../../conditional-input/dialogu
 import { useDialogueFlow } from "../../../hooks/useDialogueFlow";
 import { useCallback } from "react";
 import type { DialogueOperator } from "../../../entities/dialogue-logic";
-import { DialogueNodeFlowEventType } from "../../../entities/dialogue-node-flow-event";
+import {
+  DialogueNodeFlowEventType,
+  UniqueDataType,
+} from "../../../entities/dialogue-node-flow-event";
 
 type DialogueNodeFlowControlIF = NodeProps & {
   data: DialogueNodeFlowControlIFEntity;
@@ -17,9 +20,12 @@ export function DialogueNodeFlowControlIF({ data }: DialogueNodeFlowControlIF) {
   const handleChangeCondition = useCallback(
     (condition: DialogueOperator) =>
       notifyNodeDialogueFlowEvent({
-        type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_CONDITION,
+        type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_UNIQUE_DATA,
         dialogueId: data.id,
-        condition,
+        uniqueDataType: UniqueDataType.CONDITION,
+        data: {
+          condition,
+        },
       }),
     [data.id, notifyNodeDialogueFlowEvent]
   );

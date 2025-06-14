@@ -1,12 +1,9 @@
-import type {
-  DialogueNodeFlow,
-  DialogueNodeFlowType,
-} from "../../../../entities/dialogue-node-flow";
+import type { DialogueNodeFlow } from "../../../../entities/dialogue-node-flow";
 import type {
   DialogueNodeFlowEvent,
   DialogueNodeFlowEventType,
 } from "../../../../entities/dialogue-node-flow-event";
-import { createNodeFlowSourceId, createNodeFlowTargetId } from "../functions";
+import { createDialogueNodeFlowDialogue } from "../create-dialogue-node-flow/create-dialogue-node-flow-dialogue";
 
 export function applyDialogueNodeFlowEventAddDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.ADD_DIALOGUE_CARD>,
@@ -15,21 +12,9 @@ export function applyDialogueNodeFlowEventAddDialogueCard(
   const dateNow = Date.now();
   const nodeId = nodes.length === 0 ? "MAIN" : `node-${dateNow}`;
 
-  const newNode: DialogueNodeFlow<DialogueNodeFlowType> = {
-    id: nodeId,
+  const newNode = createDialogueNodeFlowDialogue(nodeId, {
     position: event.position,
-    dragHandle: ".dialogue-node-flow-drag-handle",
-    type: "DIALOGUE",
-    data: {
-      id: nodeId,
-      type: "DIALOGUE",
-      text: "",
-      character: "",
-      targetId: createNodeFlowTargetId(nodeId),
-      sourceId: createNodeFlowSourceId(nodeId),
-      next: null,
-    },
-  };
+  });
 
   return [...nodes, newNode];
 }

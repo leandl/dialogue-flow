@@ -1,4 +1,4 @@
-import type { DialogueOperator } from "./dialogue-logic";
+import type { DialogueAction, DialogueOperator } from "./dialogue-logic";
 
 export type DialogueNodeControlRandom = {
   id: string;
@@ -20,6 +20,13 @@ export type DialogueNodeControlEvent = {
   id: string;
   type: "CONTROL.EVENT";
   eventName: string;
+  next: string | null;
+};
+
+export type DialogueNodeControlAction = {
+  id: string;
+  type: "CONTROL.ACTION";
+  action: DialogueAction;
   next: string | null;
 };
 
@@ -47,6 +54,7 @@ export type DialogueNodeChoice = {
 export type DialogueNode =
   | DialogueNodeControlRandom
   | DialogueNodeControlIF
+  | DialogueNodeControlAction
   | DialogueNodeControlEvent
   | DialogueNodeDialogue
   | DialogueNodeChoice;

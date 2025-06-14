@@ -1,9 +1,10 @@
-import type { DialogueOperator } from "./dialogue-logic";
+import type { DialogueAction, DialogueOperator } from "./dialogue-logic";
 
 export const allDialogueNodeFlowTypes = [
   "CONTROL.RANDOM",
   "CONTROL.IF",
   "CONTROL.EVENT",
+  "CONTROL.ACTION",
   "DIALOGUE",
   "CHOICE",
 ] as const;
@@ -51,6 +52,15 @@ export type DialogueNodeFlowControlEvent = {
   next: string | null;
 };
 
+export type DialogueNodeFlowControlAction = {
+  id: string;
+  targetId: NodeFlowTargetId;
+  type: "CONTROL.ACTION";
+  action: DialogueAction;
+  sourceId: NodeFlowSourceId;
+  next: string | null;
+};
+
 export type DialogueNodeFlowDialogue = {
   id: string;
   targetId: NodeFlowTargetId;
@@ -82,6 +92,7 @@ type DialogueNodeFlowByType = {
   "CONTROL.RANDOM": DialogueNodeFlowControlRandom;
   "CONTROL.IF": DialogueNodeFlowControlIF;
   "CONTROL.EVENT": DialogueNodeFlowControlEvent;
+  "CONTROL.ACTION": DialogueNodeFlowControlAction;
 };
 
 export type NodeFlow<T extends DialogueNodeFlowType = DialogueNodeFlowType> = {

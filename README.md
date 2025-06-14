@@ -11,15 +11,15 @@
 - [x] Adiconar Node
 - [ ] Remover Node
 
-- [x] DialogueControlRandom
-
-  - [x] Adicionar opção
-  - [x] Remover opção
-  - [x] Melhorar estilização
-
-- [x] DialogueChoice
-
-  - [x] Adicionar opção
-  - [x] Remover opção
-  - [x] Editar texto da opção
-  - [x] Melhorar estilização
+- [] Nodes
+  - [x] Dialogue
+  - [x] Choice
+  - [] VoiceOver
+  - [x] Control.Random
+  - [] Control.IF
+    - [x] COMPARATOR
+    - [] AND
+    - [] OR
+    - [] NOT
+  - [x] Control.Event
+  - [] Control.Action

@@ -5,6 +5,10 @@ import type {
   NodeFlowSubSourceId,
   NodeFlowTargetId,
 } from "../../../entities/dialogue-node-flow";
+import {
+  UniqueDataType,
+  type DialogueNodeFlowEventChangeDialogueUniqueData,
+} from "../../../entities/dialogue-node-flow-event";
 
 export function createNodeFlowTargetId(
   dialogueNodeId: string
@@ -30,6 +34,13 @@ export function isDialogueNodeFlow<T extends DialogueNodeFlowType>(
   node: DialogueNodeFlow<DialogueNodeFlowType>
 ): node is DialogueNodeFlow<T> {
   return node.data.type === type;
+}
+
+export function isUniqueData<T extends UniqueDataType>(
+  type: T,
+  event: DialogueNodeFlowEventChangeDialogueUniqueData
+): event is DialogueNodeFlowEventChangeDialogueUniqueData<T> {
+  return event.uniqueDataType === type;
 }
 
 export function updateData<T extends Record<string, unknown>>(
