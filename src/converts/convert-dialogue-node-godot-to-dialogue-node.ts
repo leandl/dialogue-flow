@@ -8,6 +8,7 @@ import type {
   DialogueNodeControlRandom,
   DialogueNodeDialogue,
   DialogueNodes,
+  DialogueNodeVoiceOver,
 } from "../entities/dialogue-node";
 import type {
   DialogueNodeGodot,
@@ -19,6 +20,7 @@ import type {
   DialogueNodeGodotControlRandom,
   DialogueNodeGodotDialogue,
   DialogueNodeGodots,
+  DialogueNodeGodotVoiceOver,
 } from "../entities/dialogue-node-godot";
 
 export function convertDialogueNodeGodotControlRandomToDialogueNodeControlRandom(
@@ -108,41 +110,32 @@ export function convertDialogueNodeGodotChoiceToDialogueNodeChoice(
   };
 }
 
+
+export function convertDialogueNodeGodotVoiceOverToDialogueNodeVoiceOver(
+  dialogueNodeVoiceOverId: string,
+  dialogueNodeVoiceOverGodot: DialogueNodeGodotVoiceOver
+): DialogueNodeVoiceOver {
+  return {
+    id: dialogueNodeVoiceOverId,
+    type: "VOICE-OVER",
+    voiceOverType: dialogueNodeVoiceOverGodot.voiceOverType,
+    data: dialogueNodeVoiceOverGodot.data,
+    next: dialogueNodeVoiceOverGodot.next
+  };
+}
 export function convertDialogueNodeGodotToDialogueNode(
   dialogueNodeId: string,
   dialogueNodeGodot: DialogueNodeGodot
 ): DialogueNode {
   switch (dialogueNodeGodot.type) {
-    case "CONTROL.RANDOM":
-      return convertDialogueNodeGodotControlRandomToDialogueNodeControlRandom(
-        dialogueNodeId,
-        dialogueNodeGodot
-      );
-    case "CONTROL.IF":
-      return convertDialogueNodeGodotControlIFToDialogueNodeControlIF(
-        dialogueNodeId,
-        dialogueNodeGodot
-      );
-    case "CONTROL.ACTION":
-      return convertDialogueNodeGodotControlActionToDialogueNodeControlAction(
-        dialogueNodeId,
-        dialogueNodeGodot
-      );
-    case "CONTROL.EVENT":
-      return convertDialogueNodeGodotControlEventToDialogueNodeControlEvent(
-        dialogueNodeId,
-        dialogueNodeGodot
-      );
-    case "CHOICE":
-      return convertDialogueNodeGodotChoiceToDialogueNodeChoice(
-        dialogueNodeId,
-        dialogueNodeGodot
-      );
-    case "DIALOGUE":
-      return convertDialogueNodeGodotDialogueToDialogueNodeDialogue(
-        dialogueNodeId,
-        dialogueNodeGodot
-      );
+    case "CONTROL.RANDOM": return convertDialogueNodeGodotControlRandomToDialogueNodeControlRandom(dialogueNodeId, dialogueNodeGodot);
+    case "CONTROL.IF": return convertDialogueNodeGodotControlIFToDialogueNodeControlIF(dialogueNodeId, dialogueNodeGodot);
+    case "CONTROL.ACTION": return convertDialogueNodeGodotControlActionToDialogueNodeControlAction(dialogueNodeId, dialogueNodeGodot);
+    case "CONTROL.EVENT": return convertDialogueNodeGodotControlEventToDialogueNodeControlEvent(dialogueNodeId, dialogueNodeGodot);
+    
+    case "DIALOGUE": return convertDialogueNodeGodotDialogueToDialogueNodeDialogue(dialogueNodeId, dialogueNodeGodot);
+    case "CHOICE": return convertDialogueNodeGodotChoiceToDialogueNodeChoice(dialogueNodeId, dialogueNodeGodot);
+    case "VOICE-OVER": return convertDialogueNodeGodotVoiceOverToDialogueNodeVoiceOver(dialogueNodeId, dialogueNodeGodot);
   }
 }
 

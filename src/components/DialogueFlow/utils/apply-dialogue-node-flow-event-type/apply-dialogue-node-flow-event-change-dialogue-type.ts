@@ -6,13 +6,15 @@ import type {
   DialogueNodeFlowEvent,
   DialogueNodeFlowEventType,
 } from "../../../../entities/dialogue-node-flow-event";
+import { VoiceOverType } from "../../../../entities/voice-over";
 import { createDialogueNodeFlowChoice } from "../create-dialogue-node-flow/create-dialogue-node-flow-choice";
 import { createDialogueNodeFlowControlAction } from "../create-dialogue-node-flow/create-dialogue-node-flow-control-action";
 import { createDialogueNodeFlowControlEvent } from "../create-dialogue-node-flow/create-dialogue-node-flow-control-event";
 import { createDialogueNodeFlowControlIF } from "../create-dialogue-node-flow/create-dialogue-node-flow-control-if";
 import { createDialogueNodeFlowControlRandom } from "../create-dialogue-node-flow/create-dialogue-node-flow-control-random";
 import { createDialogueNodeFlowDialogue } from "../create-dialogue-node-flow/create-dialogue-node-flow-dialogue";
-import { isDialogueNodeFlow, updateDialogueNodeFlowData } from "../functions";
+import { createDialogueNodeFlowVoiceOver } from "../create-dialogue-node-flow/create-dialogue-node-flow-voice-over";
+import { isDialogueNodeFlow, isDialogueNodeFlowVoiceOver, updateData, updateDialogueNodeFlowData } from "../functions";
 import type { DialogueNodeFlowOptions } from "../types";
 
 type FunctionCreateDailogueNodeFlow<T extends DialogueNodeFlowType> = (
@@ -28,8 +30,9 @@ const createDailogueNodeFlowByType: {
   "CONTROL.EVENT": createDialogueNodeFlowControlEvent,
   "CONTROL.RANDOM": createDialogueNodeFlowControlRandom,
 
-  CHOICE: createDialogueNodeFlowChoice,
   DIALOGUE: createDialogueNodeFlowDialogue,
+  CHOICE: createDialogueNodeFlowChoice,
+  "VOICE-OVER": createDialogueNodeFlowVoiceOver
 };
 
 export function applyDialogueNodeFlowEventChangeDialogueType(
@@ -50,13 +53,35 @@ export function applyDialogueNodeFlowEventChangeDialogueType(
     });
 
     if (
-      (isDialogueNodeFlow("DIALOGUE", newNode) &&
-        node.data.type === "CHOICE") ||
-      (isDialogueNodeFlow("CHOICE", newNode) && node.data.type === "DIALOGUE")
+      (isDialogueNodeFlow("CHOICE", node) && isDialogueNodeFlow("DIALOGUE", newNode)) ||
+      (isDialogueNodeFlow("DIALOGUE", node) && isDialogueNodeFlow("CHOICE", newNode))
     ) {
       return updateDialogueNodeFlowData(newNode, {
         character: node.data.character,
         text: node.data.text,
+      });
+    }
+
+    if (
+      (isDialogueNodeFlow("CHOICE", node) && isDialogueNodeFlowVoiceOver(VoiceOverType.CHARACTER, newNode)) ||
+      (isDialogueNodeFlow("DIALOGUE", node) && isDialogueNodeFlowVoiceOver(VoiceOverType.CHARACTER, newNode))
+    ) {
+      return updateDialogueNodeFlowData(newNode, {
+        content: updateData(newNode.data.content, {
+          character: node.data.character,
+          text: node.data.text,
+        })
+      });
+    }
+
+
+    if (
+      (isDialogueNodeFlowVoiceOver(VoiceOverType.CHARACTER, node) && isDialogueNodeFlow("CHOICE", newNode)) ||
+      (isDialogueNodeFlowVoiceOver(VoiceOverType.CHARACTER, node) && isDialogueNodeFlow("DIALOGUE", newNode))
+    ) {
+      return updateDialogueNodeFlowData(newNode, {
+        character: node.data.content.character,
+        text: node.data.content.text,
       });
     }
 

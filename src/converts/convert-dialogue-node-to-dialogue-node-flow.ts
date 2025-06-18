@@ -8,6 +8,7 @@ import type {
   DialogueNodeControlRandom,
   DialogueNodeDialogue,
   DialogueNodes,
+  DialogueNodeVoiceOver,
 } from "../entities/dialogue-node";
 import type {
   DialogueNodeFlow,
@@ -19,6 +20,7 @@ import type {
   DialogueNodeFlowControlRandom,
   DialogueNodeFlowControlRandomOption,
   DialogueNodeFlowDialogue,
+  DialogueNodeFlowVoiceOver,
   NodeFlowSourceId,
   NodeFlowSubSourceId,
   NodeFlowTargetId,
@@ -182,38 +184,41 @@ export function convertDialogueNodeChoiceToDialogueNodeFlowChoice(
   };
 }
 
+
+export function convertDialogueNodeVoiceOverToDialogueNodeFlowVoiceOver(
+  dialogueNodeVoiceOver: DialogueNodeVoiceOver
+): DialogueNodeFlowVoiceOver {
+  return {
+    id: dialogueNodeVoiceOver.id,
+    targetId: convertDialogueNodeIdToNodeFlowTargetId(dialogueNodeVoiceOver.id),
+    type: "VOICE-OVER",
+    voiceOverType: dialogueNodeVoiceOver.voiceOverType,
+    content: dialogueNodeVoiceOver.data,
+    sourceId: convertDialogueNodeIdToNodeFlowSourceId(dialogueNodeVoiceOver.id),
+    next: dialogueNodeVoiceOver.next,
+  };
+}
+
+function convertDialogueNodeToDialogueNodeFlowData(dialogueNode: DialogueNode): DialogueNodeFlow["data"] {
+  switch (dialogueNode.type) {
+    case "CONTROL.RANDOM": return convertDialogueNodeControlRandomToDialogueNodeFlowControlRandom(dialogueNode);
+    case "CONTROL.IF": return convertDialogueNodeControlIFToDialogueNodeFlowControlIF(dialogueNode);
+    case "CONTROL.ACTION": return  convertDialogueNodeControlActionToDialogueNodeFlowControlAction(dialogueNode);
+    case "CONTROL.EVENT": return convertDialogueNodeControlEventToDialogueNodeFlowControlEvent(dialogueNode);
+
+    case "DIALOGUE": return convertDialogueNodeDialogueToDialogueNodeFlowDialogue(dialogueNode);
+    case "CHOICE": return convertDialogueNodeChoiceToDialogueNodeFlowChoice(dialogueNode);
+    case "VOICE-OVER": return convertDialogueNodeVoiceOverToDialogueNodeFlowVoiceOver(dialogueNode)
+  }
+}
+
 export function convertDialogueNodeToDialogueNodeFlow(
   dialogueNode: DialogueNode
 ): DialogueNodeFlow {
-  let data: DialogueNodeFlow["data"];
-  if (dialogueNode.type === "CONTROL.RANDOM") {
-    data =
-      convertDialogueNodeControlRandomToDialogueNodeFlowControlRandom(
-        dialogueNode
-      );
-  } else if (dialogueNode.type === "CONTROL.IF") {
-    data =
-      convertDialogueNodeControlIFToDialogueNodeFlowControlIF(dialogueNode);
-  } else if (dialogueNode.type === "CONTROL.ACTION") {
-    data =
-      convertDialogueNodeControlActionToDialogueNodeFlowControlAction(
-        dialogueNode
-      );
-  } else if (dialogueNode.type === "CONTROL.EVENT") {
-    data =
-      convertDialogueNodeControlEventToDialogueNodeFlowControlEvent(
-        dialogueNode
-      );
-  } else if (dialogueNode.type === "CHOICE") {
-    data = convertDialogueNodeChoiceToDialogueNodeFlowChoice(dialogueNode);
-  } else {
-    data = convertDialogueNodeDialogueToDialogueNodeFlowDialogue(dialogueNode);
-  }
-
   return {
     id: dialogueNode.id,
     type: dialogueNode.type,
-    data,
+    data: convertDialogueNodeToDialogueNodeFlowData(dialogueNode),
     dragHandle: ".dialogue-node-flow-drag-handle",
     position: {
       x: 0,

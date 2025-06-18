@@ -1,4 +1,5 @@
 import type { DialogueAction, DialogueOperator } from "./dialogue-logic";
+import type { VoiceOverType } from "./voice-over";
 
 export const allDialogueNodeFlowTypes = [
   "CONTROL.RANDOM",
@@ -7,6 +8,7 @@ export const allDialogueNodeFlowTypes = [
   "CONTROL.ACTION",
   "DIALOGUE",
   "CHOICE",
+  "VOICE-OVER"
 ] as const;
 
 export type DialogueNodeFlowType = (typeof allDialogueNodeFlowTypes)[number];
@@ -86,9 +88,31 @@ export type DialogueNodeFlowChoice = {
   choices: DialogueNodeFlowChoiceOption[];
 };
 
+type DialogueNodeFlowVoiceOverData = {
+  character: string | null;
+  text: string;
+}
+
+type DialogueNodeFlowVoiceOverDataByVoiceOverType = {
+  [VoiceOverType.CHARACTER]: DialogueNodeFlowVoiceOverData
+}
+
+export type DialogueNodeFlowVoiceOver<T extends VoiceOverType = VoiceOverType> = {
+  id: string;
+  targetId: NodeFlowTargetId;
+  type: "VOICE-OVER";
+  voiceOverType: T;
+  content: DialogueNodeFlowVoiceOverDataByVoiceOverType[T]
+  sourceId: NodeFlowSourceId;
+  next: string | null;
+};
+
+
 type DialogueNodeFlowByType = {
   CHOICE: DialogueNodeFlowChoice;
   DIALOGUE: DialogueNodeFlowDialogue;
+  "VOICE-OVER": DialogueNodeFlowVoiceOver;
+
   "CONTROL.RANDOM": DialogueNodeFlowControlRandom;
   "CONTROL.IF": DialogueNodeFlowControlIF;
   "CONTROL.EVENT": DialogueNodeFlowControlEvent;

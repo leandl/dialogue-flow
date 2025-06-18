@@ -1,6 +1,7 @@
 import type {
   DialogueNodeFlow,
   DialogueNodeFlowType,
+  DialogueNodeFlowVoiceOver,
   NodeFlowSourceId,
   NodeFlowSubSourceId,
   NodeFlowTargetId,
@@ -9,6 +10,7 @@ import {
   UniqueDataType,
   type DialogueNodeFlowEventChangeDialogueUniqueData,
 } from "../../../entities/dialogue-node-flow-event";
+import { VoiceOverType } from "../../../entities/voice-over";
 
 export function createNodeFlowTargetId(
   dialogueNodeId: string
@@ -34,6 +36,13 @@ export function isDialogueNodeFlow<T extends DialogueNodeFlowType>(
   node: DialogueNodeFlow<DialogueNodeFlowType>
 ): node is DialogueNodeFlow<T> {
   return node.data.type === type;
+}
+
+export function isDialogueNodeFlowVoiceOver<T extends VoiceOverType>(
+  type: T,
+  node: DialogueNodeFlow<DialogueNodeFlowType>
+): node is DialogueNodeFlow<"VOICE-OVER"> & { data: DialogueNodeFlowVoiceOver<T> }{
+  return isDialogueNodeFlow("VOICE-OVER", node) && node.data.voiceOverType === type;
 }
 
 export function isUniqueData<T extends UniqueDataType>(

@@ -10,7 +10,8 @@ function convertDialogueNodeFlowToEdgeFlows(
   if (
     dialogueNodeFlow.data.type === "DIALOGUE" ||
     dialogueNodeFlow.data.type === "CONTROL.EVENT" ||
-    dialogueNodeFlow.data.type === "CONTROL.ACTION"
+    dialogueNodeFlow.data.type === "CONTROL.ACTION" ||
+    dialogueNodeFlow.data.type === "VOICE-OVER"
   ) {
     if (dialogueNodeFlow.data.next === null) {
       return [];

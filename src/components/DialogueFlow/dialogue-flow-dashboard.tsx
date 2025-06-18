@@ -32,10 +32,13 @@ import { convertDialogueNodeFlowsToDialogueNodes } from "../../converts/convert-
 import { DialogueNodeFlowControlIF } from "./type/dialogue-node-flow-control-if";
 import { DialogueNodeFlowControlEvent } from "./type/dialogue-node-flow-control-event";
 import { DialogueNodeFlowControlAction } from "./type/dialogue-node-flow-control-action";
+import { DialogueNodeFlowVoiceOver } from "./type/dialogue-node-flow-voice-over";
 
 const nodeTypes = {
   DIALOGUE: DialogueNodeFlowDialogue,
   CHOICE: DialogueNodeFlowChoice,
+  "VOICE-OVER": DialogueNodeFlowVoiceOver,
+
   "CONTROL.RANDOM": DialogueNodeFlowControlRandom,
   "CONTROL.IF": DialogueNodeFlowControlIF,
   "CONTROL.ACTION": DialogueNodeFlowControlAction,

@@ -1,4 +1,5 @@
 import type { DialogueAction, DialogueOperator } from "./dialogue-logic";
+import type { VoiceOverType } from "./voice-over";
 
 export type DialogueNodeGodotControlRandom = {
   type: "CONTROL.RANDOM";
@@ -43,12 +44,30 @@ export type DialogueNodeGodotChoice = {
   choices: DialogueNodeGodotChoiceOption[];
 };
 
+
+type DialogueNodeGodotVoiceOverData = {
+  character: string | null;
+  text: string;
+}
+
+type DialogueNodeGodotVoiceOverDataByVoiceOverType = {
+  [VoiceOverType.CHARACTER]: DialogueNodeGodotVoiceOverData
+}
+
+export type DialogueNodeGodotVoiceOver<T extends VoiceOverType = VoiceOverType> = {
+  type: "VOICE-OVER";
+  voiceOverType: T;
+  data: DialogueNodeGodotVoiceOverDataByVoiceOverType[T]
+  next: string | null;
+};
+
 export type DialogueNodeGodot =
   | DialogueNodeGodotControlRandom
   | DialogueNodeGodotControlEvent
   | DialogueNodeGodotControlIF
   | DialogueNodeGodotControlAction
   | DialogueNodeGodotDialogue
-  | DialogueNodeGodotChoice;
+  | DialogueNodeGodotChoice
+  | DialogueNodeGodotVoiceOver;
 
 export type DialogueNodeGodots = Record<string, DialogueNodeGodot>;

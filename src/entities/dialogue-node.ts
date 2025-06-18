@@ -1,4 +1,5 @@
 import type { DialogueAction, DialogueOperator } from "./dialogue-logic";
+import type { VoiceOverType } from "./voice-over";
 
 export type DialogueNodeControlRandom = {
   id: string;
@@ -51,12 +52,30 @@ export type DialogueNodeChoice = {
   choices: DialogueNodeChoiceOption[];
 };
 
+type DialogueNodeVoiceOverData = {
+  character: string | null;
+  text: string;
+}
+
+type DialogueNodeVoiceOverDataByVoiceOverType = {
+  [VoiceOverType.CHARACTER]: DialogueNodeVoiceOverData
+}
+
+export type DialogueNodeVoiceOver<T extends VoiceOverType = VoiceOverType> = {
+  id: string;
+  type: "VOICE-OVER";
+  voiceOverType: T;
+  data: DialogueNodeVoiceOverDataByVoiceOverType[T]
+  next: string | null;
+};
+
 export type DialogueNode =
   | DialogueNodeControlRandom
   | DialogueNodeControlIF
   | DialogueNodeControlAction
   | DialogueNodeControlEvent
   | DialogueNodeDialogue
-  | DialogueNodeChoice;
+  | DialogueNodeChoice
+  | DialogueNodeVoiceOver;
 
 export type DialogueNodes = Record<string, DialogueNode>;

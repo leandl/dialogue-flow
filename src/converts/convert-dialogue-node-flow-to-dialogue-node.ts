@@ -8,6 +8,7 @@ import type {
   DialogueNodeControlRandom,
   DialogueNodeDialogue,
   DialogueNodes,
+  DialogueNodeVoiceOver,
 } from "../entities/dialogue-node";
 import type {
   DialogueNodeFlow,
@@ -19,6 +20,7 @@ import type {
   DialogueNodeFlowControlRandom,
   DialogueNodeFlowControlRandomOption,
   DialogueNodeFlowDialogue,
+  DialogueNodeFlowVoiceOver,
   NodeFlowTargetId,
 } from "../entities/dialogue-node-flow";
 
@@ -117,35 +119,30 @@ export function convertDialogueNodeFlowChoiceToDialogueNodeChoice(
   };
 }
 
+export function convertDialogueNodeFlowVoiceOverToDialogueNodeVoiceOver(
+  node: DialogueNodeFlowVoiceOver
+): DialogueNodeVoiceOver {
+  return {
+    id: extractDialogueNodeIdFromNodeFlowTargetId(node.targetId),
+    type: "VOICE-OVER",
+    voiceOverType: node.voiceOverType,
+    data: node.content,
+    next: node.next
+  };
+}
+
 export function convertDialogueNodeFlowToDialogueNode(
   nodeFlow: DialogueNodeFlow
 ): DialogueNode {
   switch (nodeFlow.type) {
-    case "CONTROL.RANDOM":
-      return convertDialogueNodeFlowControlRandomToDialogueNodeControlRandom(
-        nodeFlow.data as DialogueNodeFlowControlRandom
-      );
-    case "CONTROL.IF":
-      return convertDialogueNodeFlowControlIFToDialogueNodeControlIF(
-        nodeFlow.data as DialogueNodeFlowControlIF
-      );
-    case "CONTROL.ACTION":
-      return convertDialogueNodeFlowControlActionToDialogueNodeControlAction(
-        nodeFlow.data as DialogueNodeFlowControlAction
-      );
-    case "CONTROL.EVENT":
-      return convertDialogueNodeFlowControlEventToDialogueNodeControlEvent(
-        nodeFlow.data as DialogueNodeFlowControlEvent
-      );
+    case "CONTROL.RANDOM": return convertDialogueNodeFlowControlRandomToDialogueNodeControlRandom(nodeFlow.data as DialogueNodeFlowControlRandom);
+    case "CONTROL.IF": return convertDialogueNodeFlowControlIFToDialogueNodeControlIF(nodeFlow.data as DialogueNodeFlowControlIF);
+    case "CONTROL.ACTION": return convertDialogueNodeFlowControlActionToDialogueNodeControlAction(nodeFlow.data as DialogueNodeFlowControlAction);
+    case "CONTROL.EVENT": return convertDialogueNodeFlowControlEventToDialogueNodeControlEvent(nodeFlow.data as DialogueNodeFlowControlEvent);
 
-    case "CHOICE":
-      return convertDialogueNodeFlowChoiceToDialogueNodeChoice(
-        nodeFlow.data as DialogueNodeFlowChoice
-      );
-    case "DIALOGUE":
-      return convertDialogueNodeFlowDialogueToDialogueNodeDialogue(
-        nodeFlow.data as DialogueNodeFlowDialogue
-      );
+    case "DIALOGUE": return convertDialogueNodeFlowDialogueToDialogueNodeDialogue(nodeFlow.data as DialogueNodeFlowDialogue);
+    case "CHOICE": return convertDialogueNodeFlowChoiceToDialogueNodeChoice(nodeFlow.data as DialogueNodeFlowChoice);
+    case "VOICE-OVER": return convertDialogueNodeFlowVoiceOverToDialogueNodeVoiceOver(nodeFlow.data as DialogueNodeFlowVoiceOver);
   }
 }
 
