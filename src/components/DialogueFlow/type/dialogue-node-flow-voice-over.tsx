@@ -1,4 +1,4 @@
-import type { NodeProps } from "@xyflow/react";
+import { Handle, Position, type NodeProps } from "@xyflow/react";
 import type { DialogueNodeFlowVoiceOver as DialogueNodeFlowVoiceOverEntity } from "../../../entities/dialogue-node-flow";
 import { DialogueNodeFlow } from "../dialogue-node-flow";
 import { useCallback } from "react";
@@ -9,7 +9,10 @@ type DialogueNodeFlowVoiceOver = NodeProps & {
   data: DialogueNodeFlowVoiceOverEntity;
 };
 
-export function DialogueNodeFlowVoiceOver({ data }: DialogueNodeFlowVoiceOver) {
+export function DialogueNodeFlowVoiceOver({
+  data,
+  isConnectable,
+}: DialogueNodeFlowVoiceOver) {
   const { notifyNodeDialogueFlowEvent, selectCharacterOptions } =
     useDialogueFlow();
 
@@ -20,7 +23,7 @@ export function DialogueNodeFlowVoiceOver({ data }: DialogueNodeFlowVoiceOver) {
         type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT,
         text,
       }),
-    [notifyNodeDialogueFlowEvent, data.id],
+    [notifyNodeDialogueFlowEvent, data.id]
   );
 
   const handleChangeCharacter = useCallback(
@@ -30,7 +33,7 @@ export function DialogueNodeFlowVoiceOver({ data }: DialogueNodeFlowVoiceOver) {
         type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER,
         character,
       }),
-    [notifyNodeDialogueFlowEvent, data.id],
+    [notifyNodeDialogueFlowEvent, data.id]
   );
 
   return (
@@ -48,6 +51,13 @@ export function DialogueNodeFlowVoiceOver({ data }: DialogueNodeFlowVoiceOver) {
         type="TEXTAREA"
         value={data.content.text}
         onChange={handleChangeText}
+      />
+
+      <Handle
+        id={data.sourceId}
+        type="source"
+        position={Position.Bottom}
+        isConnectable={isConnectable}
       />
     </DialogueNodeFlow.Container>
   );
