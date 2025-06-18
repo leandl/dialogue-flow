@@ -22,7 +22,7 @@ export function Select<T = string>({
 }: SelectProps<T>) {
   const indexOption = useMemo(
     () => options.findIndex((option) => option.value === value),
-    [options, value]
+    [options, value],
   );
 
   const handleOnChange = useCallback(
@@ -38,7 +38,7 @@ export function Select<T = string>({
       const valueOptionItem = options[indexOptionItem].value;
       onChange(valueOptionItem);
     },
-    [onChange, options]
+    [onChange, options],
   );
 
   return (

@@ -9,7 +9,7 @@ import type { DialogueNodeFlowOptions } from "../types";
 
 export function createDialogueNodeFlowControlAction(
   nodeId: string,
-  options?: DialogueNodeFlowOptions
+  options?: DialogueNodeFlowOptions,
 ): DialogueNodeFlow<"CONTROL.ACTION"> {
   return {
     id: nodeId,

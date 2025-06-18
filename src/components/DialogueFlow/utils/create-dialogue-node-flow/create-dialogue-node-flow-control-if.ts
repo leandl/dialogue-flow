@@ -11,7 +11,7 @@ import type { DialogueNodeFlowOptions } from "../types";
 
 export function createDialogueNodeFlowControlIF(
   nodeId: string,
-  options?: DialogueNodeFlowOptions
+  options?: DialogueNodeFlowOptions,
 ): DialogueNodeFlow<"CONTROL.IF"> {
   return {
     id: nodeId,

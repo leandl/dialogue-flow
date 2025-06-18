@@ -11,7 +11,7 @@ import {
 
 export function applyDialogueNodeFlowEventChangeOptionTextInDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.CHANGE_OPTION_TEXT_IN_DIALOGUE_CARD>,
-  nodes: DialogueNodeFlow[]
+  nodes: DialogueNodeFlow[],
 ): DialogueNodeFlow[] {
   return nodes.map((node) => {
     if (node.id !== event.dialogueId) return node;

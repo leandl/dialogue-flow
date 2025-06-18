@@ -6,14 +6,14 @@ import type {
 
 export function applyDialogueEdgeFlowEventConnectionDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.CONNECTION_DIALOGUE_CARD>,
-  edges: EdgeFlow[]
+  edges: EdgeFlow[],
 ): EdgeFlow[] {
   if (event.from === event.to) {
     return edges;
   }
 
   const edgeFiltered = edges.filter(
-    (edge) => edge.sourceHandle !== event.sourceId
+    (edge) => edge.sourceHandle !== event.sourceId,
   );
 
   return [

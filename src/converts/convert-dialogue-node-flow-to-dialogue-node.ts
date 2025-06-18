@@ -25,31 +25,31 @@ import type {
 } from "../entities/dialogue-node-flow";
 
 function extractDialogueNodeIdFromNodeFlowTargetId(
-  targetId: NodeFlowTargetId
+  targetId: NodeFlowTargetId,
 ): string {
   return targetId.replace(/^target-/, "");
 }
 
 export function convertDialogueNodeFlowControlRandomOptionToDialogueNodeControlRandomOption(
-  option: DialogueNodeFlowControlRandomOption
+  option: DialogueNodeFlowControlRandomOption,
 ): string | null {
   return option.next;
 }
 
 export function convertDialogueNodeFlowControlRandomToDialogueNodeControlRandom(
-  node: DialogueNodeFlowControlRandom
+  node: DialogueNodeFlowControlRandom,
 ): DialogueNodeControlRandom {
   return {
     id: extractDialogueNodeIdFromNodeFlowTargetId(node.targetId),
     type: "CONTROL.RANDOM",
     nexts: node.nexts.map(
-      convertDialogueNodeFlowControlRandomOptionToDialogueNodeControlRandomOption
+      convertDialogueNodeFlowControlRandomOptionToDialogueNodeControlRandomOption,
     ),
   };
 }
 
 export function convertDialogueNodeFlowControlIFToDialogueNodeControlIF(
-  node: DialogueNodeFlowControlIF
+  node: DialogueNodeFlowControlIF,
 ): DialogueNodeControlIF {
   return {
     id: extractDialogueNodeIdFromNodeFlowTargetId(node.targetId),
@@ -63,7 +63,7 @@ export function convertDialogueNodeFlowControlIFToDialogueNodeControlIF(
 }
 
 export function convertDialogueNodeFlowControlActionToDialogueNodeControlAction(
-  node: DialogueNodeFlowControlAction
+  node: DialogueNodeFlowControlAction,
 ): DialogueNodeControlAction {
   return {
     id: extractDialogueNodeIdFromNodeFlowTargetId(node.targetId),
@@ -74,7 +74,7 @@ export function convertDialogueNodeFlowControlActionToDialogueNodeControlAction(
 }
 
 export function convertDialogueNodeFlowControlEventToDialogueNodeControlEvent(
-  node: DialogueNodeFlowControlEvent
+  node: DialogueNodeFlowControlEvent,
 ): DialogueNodeControlEvent {
   return {
     id: extractDialogueNodeIdFromNodeFlowTargetId(node.targetId),
@@ -85,7 +85,7 @@ export function convertDialogueNodeFlowControlEventToDialogueNodeControlEvent(
 }
 
 export function convertDialogueNodeFlowDialogueToDialogueNodeDialogue(
-  node: DialogueNodeFlowDialogue
+  node: DialogueNodeFlowDialogue,
 ): DialogueNodeDialogue {
   return {
     id: extractDialogueNodeIdFromNodeFlowTargetId(node.targetId),
@@ -97,7 +97,7 @@ export function convertDialogueNodeFlowDialogueToDialogueNodeDialogue(
 }
 
 export function convertDialogueNodeFlowChoiceOptionToDialogueNodeChoiceOption(
-  option: DialogueNodeFlowChoiceOption
+  option: DialogueNodeFlowChoiceOption,
 ): DialogueNodeChoiceOption {
   return {
     text: option.text,
@@ -106,7 +106,7 @@ export function convertDialogueNodeFlowChoiceOptionToDialogueNodeChoiceOption(
 }
 
 export function convertDialogueNodeFlowChoiceToDialogueNodeChoice(
-  node: DialogueNodeFlowChoice
+  node: DialogueNodeFlowChoice,
 ): DialogueNodeChoice {
   return {
     id: extractDialogueNodeIdFromNodeFlowTargetId(node.targetId),
@@ -114,42 +114,63 @@ export function convertDialogueNodeFlowChoiceToDialogueNodeChoice(
     character: node.character,
     text: node.text,
     choices: node.choices.map(
-      convertDialogueNodeFlowChoiceOptionToDialogueNodeChoiceOption
+      convertDialogueNodeFlowChoiceOptionToDialogueNodeChoiceOption,
     ),
   };
 }
 
 export function convertDialogueNodeFlowVoiceOverToDialogueNodeVoiceOver(
-  node: DialogueNodeFlowVoiceOver
+  node: DialogueNodeFlowVoiceOver,
 ): DialogueNodeVoiceOver {
   return {
     id: extractDialogueNodeIdFromNodeFlowTargetId(node.targetId),
     type: "VOICE-OVER",
     voiceOverType: node.voiceOverType,
     data: node.content,
-    next: node.next
+    next: node.next,
   };
 }
 
 export function convertDialogueNodeFlowToDialogueNode(
-  nodeFlow: DialogueNodeFlow
+  nodeFlow: DialogueNodeFlow,
 ): DialogueNode {
   switch (nodeFlow.type) {
-    case "CONTROL.RANDOM": return convertDialogueNodeFlowControlRandomToDialogueNodeControlRandom(nodeFlow.data as DialogueNodeFlowControlRandom);
-    case "CONTROL.IF": return convertDialogueNodeFlowControlIFToDialogueNodeControlIF(nodeFlow.data as DialogueNodeFlowControlIF);
-    case "CONTROL.ACTION": return convertDialogueNodeFlowControlActionToDialogueNodeControlAction(nodeFlow.data as DialogueNodeFlowControlAction);
-    case "CONTROL.EVENT": return convertDialogueNodeFlowControlEventToDialogueNodeControlEvent(nodeFlow.data as DialogueNodeFlowControlEvent);
+    case "CONTROL.RANDOM":
+      return convertDialogueNodeFlowControlRandomToDialogueNodeControlRandom(
+        nodeFlow.data as DialogueNodeFlowControlRandom,
+      );
+    case "CONTROL.IF":
+      return convertDialogueNodeFlowControlIFToDialogueNodeControlIF(
+        nodeFlow.data as DialogueNodeFlowControlIF,
+      );
+    case "CONTROL.ACTION":
+      return convertDialogueNodeFlowControlActionToDialogueNodeControlAction(
+        nodeFlow.data as DialogueNodeFlowControlAction,
+      );
+    case "CONTROL.EVENT":
+      return convertDialogueNodeFlowControlEventToDialogueNodeControlEvent(
+        nodeFlow.data as DialogueNodeFlowControlEvent,
+      );
 
-    case "DIALOGUE": return convertDialogueNodeFlowDialogueToDialogueNodeDialogue(nodeFlow.data as DialogueNodeFlowDialogue);
-    case "CHOICE": return convertDialogueNodeFlowChoiceToDialogueNodeChoice(nodeFlow.data as DialogueNodeFlowChoice);
-    case "VOICE-OVER": return convertDialogueNodeFlowVoiceOverToDialogueNodeVoiceOver(nodeFlow.data as DialogueNodeFlowVoiceOver);
+    case "DIALOGUE":
+      return convertDialogueNodeFlowDialogueToDialogueNodeDialogue(
+        nodeFlow.data as DialogueNodeFlowDialogue,
+      );
+    case "CHOICE":
+      return convertDialogueNodeFlowChoiceToDialogueNodeChoice(
+        nodeFlow.data as DialogueNodeFlowChoice,
+      );
+    case "VOICE-OVER":
+      return convertDialogueNodeFlowVoiceOverToDialogueNodeVoiceOver(
+        nodeFlow.data as DialogueNodeFlowVoiceOver,
+      );
   }
 }
 
 export function convertDialogueNodeFlowsToDialogueNodes(
-  flows: DialogueNodeFlow[]
+  flows: DialogueNodeFlow[],
 ): DialogueNodes {
   return Object.fromEntries(
-    flows.map((flow) => [flow.id, convertDialogueNodeFlowToDialogueNode(flow)])
+    flows.map((flow) => [flow.id, convertDialogueNodeFlowToDialogueNode(flow)]),
   );
 }

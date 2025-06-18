@@ -55,17 +55,17 @@ export type DialogueNodeChoice = {
 type DialogueNodeVoiceOverData = {
   character: string | null;
   text: string;
-}
+};
 
 type DialogueNodeVoiceOverDataByVoiceOverType = {
-  [VoiceOverType.CHARACTER]: DialogueNodeVoiceOverData
-}
+  [VoiceOverType.CHARACTER]: DialogueNodeVoiceOverData;
+};
 
 export type DialogueNodeVoiceOver<T extends VoiceOverType = VoiceOverType> = {
   id: string;
   type: "VOICE-OVER";
   voiceOverType: T;
-  data: DialogueNodeVoiceOverDataByVoiceOverType[T]
+  data: DialogueNodeVoiceOverDataByVoiceOverType[T];
   next: string | null;
 };
 

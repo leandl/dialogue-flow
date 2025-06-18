@@ -8,7 +8,7 @@ type Nullable<T> = T | null;
 export type DialogueVarCharacter = [
   "VAR_CHARACTER",
   Nullable<string>,
-  Nullable<string>
+  Nullable<string>,
 ];
 export type DialogueVarGame = ["VAR_GAME", Nullable<string>];
 
@@ -41,12 +41,12 @@ export type DialogueDataValue<T extends DialogueDataType = DialogueDataType> =
 
 export type DialogueSourceDataType = DialogueDataType | DialogueVarType;
 export type DialogueSourceData<
-  T extends DialogueSourceDataType = DialogueSourceDataType
+  T extends DialogueSourceDataType = DialogueSourceDataType,
 > = T extends DialogueDataType
   ? DialogueDataValue<T>
   : T extends DialogueVarType
-  ? DialogueVarValue<T>
-  : never;
+    ? DialogueVarValue<T>
+    : never;
 
 // =============================
 
@@ -69,7 +69,7 @@ export type DialogueOperatorComparator = [
   DialogueOperatorType.COMPARATOR,
   DialogueOperatorComparatorType,
   DialogueSourceData,
-  DialogueSourceData
+  DialogueSourceData,
 ];
 // export type DialogueOperatorAND = [
 //   DialogueOperatorType.AND,
@@ -86,7 +86,7 @@ type DialogueOperatorByDialogueOperatorType = {
 };
 
 export type DialogueOperator<
-  T extends DialogueOperatorType = DialogueOperatorType
+  T extends DialogueOperatorType = DialogueOperatorType,
 > = DialogueOperatorByDialogueOperatorType[T];
 
 // ============================
@@ -100,17 +100,17 @@ export enum DialogueActionType {
 export type DialogueActionSet = [
   DialogueActionType.SET,
   DialogueVarValue,
-  DialogueDataValue
+  DialogueDataValue,
 ];
 export type DialogueActionIncrement = [
   DialogueActionType.INCREMENT,
   DialogueVarValue,
-  DialogueDataInterger
+  DialogueDataInterger,
 ];
 export type DialogueActionDecrement = [
   DialogueActionType.DECREMENT,
   DialogueVarValue,
-  DialogueDataInterger
+  DialogueDataInterger,
 ];
 
 type DialogueActionByDialogueActionType = {

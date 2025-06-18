@@ -5,7 +5,7 @@ import type {
 } from "../../../../entities/dialogue-node-flow-event";
 
 export function applyNothingDialogueNodeFlowEvent<
-  T extends DialogueNodeFlowEventType
+  T extends DialogueNodeFlowEventType,
 >(_event: DialogueNodeFlowEvent<T>, nodes: NodeFlow[]): NodeFlow[] {
   return nodes;
 }

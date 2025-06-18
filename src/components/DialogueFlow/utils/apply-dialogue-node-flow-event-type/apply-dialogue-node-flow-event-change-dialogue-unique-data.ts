@@ -12,7 +12,7 @@ import {
 
 export function applyDialogueNodeFlowEventChangeDialogueUniqueData(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.CHANGE_DIALOGUE_UNIQUE_DATA>,
-  nodes: NodeFlow[]
+  nodes: NodeFlow[],
 ): NodeFlow[] {
   return nodes.map((node) => {
     if (node.data.id !== event.dialogueId) {

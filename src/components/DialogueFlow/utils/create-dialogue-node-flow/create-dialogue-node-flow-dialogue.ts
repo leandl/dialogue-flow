@@ -4,7 +4,7 @@ import type { DialogueNodeFlowOptions } from "../types";
 
 export function createDialogueNodeFlowDialogue(
   nodeId: string,
-  options?: DialogueNodeFlowOptions
+  options?: DialogueNodeFlowOptions,
 ): DialogueNodeFlow<"DIALOGUE"> {
   return {
     id: nodeId,

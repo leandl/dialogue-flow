@@ -15,7 +15,7 @@ function addItemInArray<T>(array: T[], newData: T) {
 
 export function applyDialogueNodeFlowEventAddOptionInDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD>,
-  nodes: DialogueNodeFlow[]
+  nodes: DialogueNodeFlow[],
 ): DialogueNodeFlow[] {
   return nodes.map((node) => {
     if (node.data.id !== event.dialogueId) {
@@ -27,7 +27,7 @@ export function applyDialogueNodeFlowEventAddOptionInDialogueCard(
         choices: addItemInArray(node.data.choices, {
           sourceId: createNodeFlowSubSourceId(
             node.data.id,
-            node.data.choices.length
+            node.data.choices.length,
           ),
           text: "",
           next: null,
@@ -40,7 +40,7 @@ export function applyDialogueNodeFlowEventAddOptionInDialogueCard(
         nexts: addItemInArray(node.data.nexts, {
           sourceId: createNodeFlowSubSourceId(
             node.data.id,
-            node.data.nexts.length
+            node.data.nexts.length,
           ),
           next: null,
         }),

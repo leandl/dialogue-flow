@@ -4,7 +4,7 @@ import type { DialogueNodeFlowOptions } from "../types";
 
 export function createDialogueNodeFlowControlRandom(
   nodeId: string,
-  options?: DialogueNodeFlowOptions
+  options?: DialogueNodeFlowOptions,
 ): DialogueNodeFlow<"CONTROL.RANDOM"> {
   return {
     id: nodeId,

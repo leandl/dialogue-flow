@@ -27,14 +27,14 @@ const dialogueSourceDataValueDefault: {
 };
 
 type ComponentDialogueSourceDataInputProps<
-  T extends DialogueSourceDataType = DialogueSourceDataType
+  T extends DialogueSourceDataType = DialogueSourceDataType,
 > = {
   value: DialogueSourceData<T>;
   onChange(newValue: DialogueSourceData<T>): void;
 };
 
 type FunctionComponentDialogueSourceDataInput<
-  T extends DialogueSourceDataType = DialogueSourceDataType
+  T extends DialogueSourceDataType = DialogueSourceDataType,
 > = (props: ComponentDialogueSourceDataInputProps<T>) => React.JSX.Element;
 
 const allComponentDialogueSourceDataInput: {
@@ -66,14 +66,14 @@ const selectDialogueSourceDataTypeOptions: SelectOption<DialogueSourceDataType>[
   }));
 
 type DialogueSourceDataInputProps<
-  T extends DialogueSourceDataType = DialogueSourceDataType
+  T extends DialogueSourceDataType = DialogueSourceDataType,
 > = {
   value: DialogueSourceData<T>;
   onChange: (newValue: DialogueSourceData) => void;
 };
 
 export function DialogueSourceDataInput<
-  T extends DialogueSourceDataType = DialogueSourceDataType
+  T extends DialogueSourceDataType = DialogueSourceDataType,
 >({ value, onChange }: DialogueSourceDataInputProps<T>) {
   const dataType = value[0];
   const ComponentDialogueSourceDataInput = allComponentDialogueSourceDataInput[

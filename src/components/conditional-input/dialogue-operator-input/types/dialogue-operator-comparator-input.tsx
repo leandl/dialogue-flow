@@ -38,21 +38,21 @@ export function DialogueOperatorComparatorInput({
     (newOp: DialogueOperatorComparatorType) => {
       onChange([DialogueOperatorType.COMPARATOR, newOp, left, right]);
     },
-    [onChange, left, right]
+    [onChange, left, right],
   );
 
   const handleLeftChange = useCallback(
     (newVal: DialogueSourceData) => {
       onChange([DialogueOperatorType.COMPARATOR, comparator, newVal, right]);
     },
-    [onChange, comparator, right]
+    [onChange, comparator, right],
   );
 
   const handleRightChange = useCallback(
     (newVal: DialogueSourceData) => {
       onChange([DialogueOperatorType.COMPARATOR, comparator, left, newVal]);
     },
-    [onChange, comparator, left]
+    [onChange, comparator, left],
   );
 
   return (

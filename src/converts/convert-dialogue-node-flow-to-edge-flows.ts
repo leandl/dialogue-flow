@@ -5,7 +5,7 @@ import type {
 import { convertDialogueNodeIdToNodeFlowTargetId } from "./convert-dialogue-node-to-dialogue-node-flow";
 
 function convertDialogueNodeFlowToEdgeFlows(
-  dialogueNodeFlow: DialogueNodeFlow
+  dialogueNodeFlow: DialogueNodeFlow,
 ): EdgeFlow[] {
   if (
     dialogueNodeFlow.data.type === "DIALOGUE" ||
@@ -18,7 +18,7 @@ function convertDialogueNodeFlowToEdgeFlows(
     }
 
     const dialogueNodeFlowTargetId = convertDialogueNodeIdToNodeFlowTargetId(
-      dialogueNodeFlow.data.next
+      dialogueNodeFlow.data.next,
     );
 
     return [
@@ -37,7 +37,7 @@ function convertDialogueNodeFlowToEdgeFlows(
       if (!choice.next) return acc;
 
       const dialogueNodeFlowTargetId = convertDialogueNodeIdToNodeFlowTargetId(
-        choice.next
+        choice.next,
       );
 
       return [
@@ -58,7 +58,7 @@ function convertDialogueNodeFlowToEdgeFlows(
       if (!nextOption.next) return acc;
 
       const dialogueNodeFlowTargetId = convertDialogueNodeIdToNodeFlowTargetId(
-        nextOption.next
+        nextOption.next,
       );
 
       return [
@@ -79,7 +79,7 @@ function convertDialogueNodeFlowToEdgeFlows(
 
     if (dialogueNodeFlow.data.next.false) {
       const dialogueNodeFlowTargetId = convertDialogueNodeIdToNodeFlowTargetId(
-        dialogueNodeFlow.data.next.false
+        dialogueNodeFlow.data.next.false,
       );
 
       edges.push({
@@ -93,7 +93,7 @@ function convertDialogueNodeFlowToEdgeFlows(
 
     if (dialogueNodeFlow.data.next.true) {
       const dialogueNodeFlowTargetId = convertDialogueNodeIdToNodeFlowTargetId(
-        dialogueNodeFlow.data.next.true
+        dialogueNodeFlow.data.next.true,
       );
 
       edges.push({
@@ -112,10 +112,10 @@ function convertDialogueNodeFlowToEdgeFlows(
 }
 
 export function convertDialogueNodeFlowsToEdgeFlows(
-  dialogueNodeFlows: DialogueNodeFlow[]
+  dialogueNodeFlows: DialogueNodeFlow[],
 ): EdgeFlow[] {
   return dialogueNodeFlows.reduce(
     (acc, cur) => [...acc, ...convertDialogueNodeFlowToEdgeFlows(cur)],
-    [] as EdgeFlow[]
+    [] as EdgeFlow[],
   );
 }

@@ -10,7 +10,7 @@ import type {
 } from "../entities/dialogue-node-flow";
 
 export function convertConnectionReactFlowEventToNodeDialogueFlowEvent(
-  event: Connection
+  event: Connection,
 ): DialogueNodeFlowEvent<DialogueNodeFlowEventType.CONNECTION_DIALOGUE_CARD> {
   return {
     type: DialogueNodeFlowEventType.CONNECTION_DIALOGUE_CARD,

@@ -1,4 +1,3 @@
 export enum VoiceOverType {
-    CHARACTER = "CHARACTER" 
-  }
-  
+  CHARACTER = "CHARACTER",
+}

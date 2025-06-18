@@ -13,7 +13,7 @@ type DialogueNodeFlowSelectProps<T = string> = {
 };
 
 export function DialogueNodeFlowSelect<T = string>(
-  props: DialogueNodeFlowSelectProps<T>
+  props: DialogueNodeFlowSelectProps<T>,
 ) {
   return (
     <div className="dialogue-node-flow-select">

@@ -74,7 +74,7 @@ export function DialogueFlowDashboard() {
         setNodes((nodes) => applyDialogueNodeFlowEvent(event, nodes));
         setEdges((edges) => applyDialogueEdgeFlowEvent(event, edges));
       }),
-    [onNodeDialogueFlowEvent, setNodes, setEdges]
+    [onNodeDialogueFlowEvent, setNodes, setEdges],
   );
 
   const handleAddDialogueNodeFlow = useCallback(() => {
@@ -107,10 +107,10 @@ export function DialogueFlowDashboard() {
           const dialogueDataGodotJSON = JSON.parse(e.target?.result as string);
 
           const dialogueData = convertDialogueNodeGodotsToDialogueNodes(
-            dialogueDataGodotJSON
+            dialogueDataGodotJSON,
           );
           const dialogueNodeFlows = calcPositionDialogueNodeFlows(
-            convertDialogueNodesToDialogueNodeFlows(dialogueData)
+            convertDialogueNodesToDialogueNodeFlows(dialogueData),
           );
           const dialogueEdgeFlows =
             convertDialogueNodeFlowsToEdgeFlows(dialogueNodeFlows);
@@ -125,7 +125,7 @@ export function DialogueFlowDashboard() {
 
       reader.readAsText(file);
     },
-    [setEdges, setNodes]
+    [setEdges, setNodes],
   );
 
   const handleExport = useCallback(() => {

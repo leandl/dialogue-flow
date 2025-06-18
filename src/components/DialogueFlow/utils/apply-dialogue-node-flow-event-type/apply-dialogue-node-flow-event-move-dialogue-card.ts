@@ -6,7 +6,7 @@ import type {
 
 export function applyDialogueNodeFlowEventMoveDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.MOVE_DIALOGUE_CARD>,
-  nodes: NodeFlow[]
+  nodes: NodeFlow[],
 ): NodeFlow[] {
   return nodes.map((node) => {
     if (node.id === event.dialogueId) {

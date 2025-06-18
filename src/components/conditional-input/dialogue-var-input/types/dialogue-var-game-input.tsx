@@ -19,7 +19,7 @@ export function DialogueVarGameInput({
 
   const handleOnChange = useCallback(
     (newValue: string) => onChange([DialogueVarType.VAR_GAME, newValue]),
-    [onChange]
+    [onChange],
   );
 
   return (

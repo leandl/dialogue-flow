@@ -25,7 +25,7 @@ import type {
 
 export function convertDialogueNodeGodotControlRandomToDialogueNodeControlRandom(
   dialogueNodeControlRandomId: string,
-  dialogueNodeControlRandomGodot: DialogueNodeGodotControlRandom
+  dialogueNodeControlRandomGodot: DialogueNodeGodotControlRandom,
 ): DialogueNodeControlRandom {
   return {
     id: dialogueNodeControlRandomId,
@@ -36,7 +36,7 @@ export function convertDialogueNodeGodotControlRandomToDialogueNodeControlRandom
 
 export function convertDialogueNodeGodotControlIFToDialogueNodeControlIF(
   dialogueNodeControlIFId: string,
-  dialogueNodeControlIFGodot: DialogueNodeGodotControlIF
+  dialogueNodeControlIFGodot: DialogueNodeGodotControlIF,
 ): DialogueNodeControlIF {
   return {
     id: dialogueNodeControlIFId,
@@ -51,7 +51,7 @@ export function convertDialogueNodeGodotControlIFToDialogueNodeControlIF(
 
 export function convertDialogueNodeGodotControlActionToDialogueNodeControlAction(
   dialogueNodeControlActionId: string,
-  dialogueNodeControlActionGodot: DialogueNodeGodotControlAction
+  dialogueNodeControlActionGodot: DialogueNodeGodotControlAction,
 ): DialogueNodeControlAction {
   return {
     id: dialogueNodeControlActionId,
@@ -63,7 +63,7 @@ export function convertDialogueNodeGodotControlActionToDialogueNodeControlAction
 
 export function convertDialogueNodeGodotControlEventToDialogueNodeControlEvent(
   dialogueNodeControlEventId: string,
-  dialogueNodeControlEventGodot: DialogueNodeGodotControlEvent
+  dialogueNodeControlEventGodot: DialogueNodeGodotControlEvent,
 ): DialogueNodeControlEvent {
   return {
     id: dialogueNodeControlEventId,
@@ -75,7 +75,7 @@ export function convertDialogueNodeGodotControlEventToDialogueNodeControlEvent(
 
 export function convertDialogueNodeGodotDialogueToDialogueNodeDialogue(
   dialogueNodeDialogueId: string,
-  dialogueNodeDialogueGodot: DialogueNodeGodotDialogue
+  dialogueNodeDialogueGodot: DialogueNodeGodotDialogue,
 ): DialogueNodeDialogue {
   return {
     id: dialogueNodeDialogueId,
@@ -87,7 +87,7 @@ export function convertDialogueNodeGodotDialogueToDialogueNodeDialogue(
 }
 
 export function convertDialogueNodeGodotChoiceOptionToDialogueNodeChoiceOption(
-  dialogueNodeChoiceOptionGodot: DialogueNodeGodotChoiceOption
+  dialogueNodeChoiceOptionGodot: DialogueNodeGodotChoiceOption,
 ): DialogueNodeChoiceOption {
   return {
     text: dialogueNodeChoiceOptionGodot.text,
@@ -97,7 +97,7 @@ export function convertDialogueNodeGodotChoiceOptionToDialogueNodeChoiceOption(
 
 export function convertDialogueNodeGodotChoiceToDialogueNodeChoice(
   dialogueNodeChoiceId: string,
-  dialogueNodeChoiceGodot: DialogueNodeGodotChoice
+  dialogueNodeChoiceGodot: DialogueNodeGodotChoice,
 ): DialogueNodeChoice {
   return {
     id: dialogueNodeChoiceId,
@@ -105,42 +105,69 @@ export function convertDialogueNodeGodotChoiceToDialogueNodeChoice(
     character: dialogueNodeChoiceGodot.character,
     text: dialogueNodeChoiceGodot.text,
     choices: dialogueNodeChoiceGodot.choices.map(
-      convertDialogueNodeGodotChoiceOptionToDialogueNodeChoiceOption
+      convertDialogueNodeGodotChoiceOptionToDialogueNodeChoiceOption,
     ),
   };
 }
 
-
 export function convertDialogueNodeGodotVoiceOverToDialogueNodeVoiceOver(
   dialogueNodeVoiceOverId: string,
-  dialogueNodeVoiceOverGodot: DialogueNodeGodotVoiceOver
+  dialogueNodeVoiceOverGodot: DialogueNodeGodotVoiceOver,
 ): DialogueNodeVoiceOver {
   return {
     id: dialogueNodeVoiceOverId,
     type: "VOICE-OVER",
     voiceOverType: dialogueNodeVoiceOverGodot.voiceOverType,
     data: dialogueNodeVoiceOverGodot.data,
-    next: dialogueNodeVoiceOverGodot.next
+    next: dialogueNodeVoiceOverGodot.next,
   };
 }
 export function convertDialogueNodeGodotToDialogueNode(
   dialogueNodeId: string,
-  dialogueNodeGodot: DialogueNodeGodot
+  dialogueNodeGodot: DialogueNodeGodot,
 ): DialogueNode {
   switch (dialogueNodeGodot.type) {
-    case "CONTROL.RANDOM": return convertDialogueNodeGodotControlRandomToDialogueNodeControlRandom(dialogueNodeId, dialogueNodeGodot);
-    case "CONTROL.IF": return convertDialogueNodeGodotControlIFToDialogueNodeControlIF(dialogueNodeId, dialogueNodeGodot);
-    case "CONTROL.ACTION": return convertDialogueNodeGodotControlActionToDialogueNodeControlAction(dialogueNodeId, dialogueNodeGodot);
-    case "CONTROL.EVENT": return convertDialogueNodeGodotControlEventToDialogueNodeControlEvent(dialogueNodeId, dialogueNodeGodot);
-    
-    case "DIALOGUE": return convertDialogueNodeGodotDialogueToDialogueNodeDialogue(dialogueNodeId, dialogueNodeGodot);
-    case "CHOICE": return convertDialogueNodeGodotChoiceToDialogueNodeChoice(dialogueNodeId, dialogueNodeGodot);
-    case "VOICE-OVER": return convertDialogueNodeGodotVoiceOverToDialogueNodeVoiceOver(dialogueNodeId, dialogueNodeGodot);
+    case "CONTROL.RANDOM":
+      return convertDialogueNodeGodotControlRandomToDialogueNodeControlRandom(
+        dialogueNodeId,
+        dialogueNodeGodot,
+      );
+    case "CONTROL.IF":
+      return convertDialogueNodeGodotControlIFToDialogueNodeControlIF(
+        dialogueNodeId,
+        dialogueNodeGodot,
+      );
+    case "CONTROL.ACTION":
+      return convertDialogueNodeGodotControlActionToDialogueNodeControlAction(
+        dialogueNodeId,
+        dialogueNodeGodot,
+      );
+    case "CONTROL.EVENT":
+      return convertDialogueNodeGodotControlEventToDialogueNodeControlEvent(
+        dialogueNodeId,
+        dialogueNodeGodot,
+      );
+
+    case "DIALOGUE":
+      return convertDialogueNodeGodotDialogueToDialogueNodeDialogue(
+        dialogueNodeId,
+        dialogueNodeGodot,
+      );
+    case "CHOICE":
+      return convertDialogueNodeGodotChoiceToDialogueNodeChoice(
+        dialogueNodeId,
+        dialogueNodeGodot,
+      );
+    case "VOICE-OVER":
+      return convertDialogueNodeGodotVoiceOverToDialogueNodeVoiceOver(
+        dialogueNodeId,
+        dialogueNodeGodot,
+      );
   }
 }
 
 export function convertDialogueNodeGodotsToDialogueNodes(
-  dialogueNodeGodots: DialogueNodeGodots
+  dialogueNodeGodots: DialogueNodeGodots,
 ): DialogueNodes {
   return Object.fromEntries(
     Object.entries(dialogueNodeGodots).map(
@@ -148,9 +175,9 @@ export function convertDialogueNodeGodotsToDialogueNodes(
         dialogueNodeId,
         convertDialogueNodeGodotToDialogueNode(
           dialogueNodeId,
-          dialogueNodeGodot
+          dialogueNodeGodot,
         ),
-      ]
-    )
+      ],
+    ),
   );
 }

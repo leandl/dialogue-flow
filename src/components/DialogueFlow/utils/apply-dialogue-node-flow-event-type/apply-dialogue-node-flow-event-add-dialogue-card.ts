@@ -7,7 +7,7 @@ import { createDialogueNodeFlowDialogue } from "../create-dialogue-node-flow/cre
 
 export function applyDialogueNodeFlowEventAddDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.ADD_DIALOGUE_CARD>,
-  nodes: DialogueNodeFlow[]
+  nodes: DialogueNodeFlow[],
 ): DialogueNodeFlow[] {
   const dateNow = Date.now();
   const nodeId = nodes.length === 0 ? "MAIN" : `node-${dateNow}`;

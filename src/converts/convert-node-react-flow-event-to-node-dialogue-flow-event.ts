@@ -5,7 +5,7 @@ import {
 } from "../entities/dialogue-node-flow-event";
 
 export function convertNodeReactFlowEventToNodeDialogueFlowEvent(
-  event: NodeChange
+  event: NodeChange,
 ): DialogueNodeFlowEvent | null {
   if (event.type === "position" && event.position) {
     return {

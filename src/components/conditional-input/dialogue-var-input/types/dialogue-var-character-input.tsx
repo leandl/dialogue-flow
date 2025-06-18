@@ -22,13 +22,13 @@ export function DialogueVarCharacterInput({
   const handleOnChangeCharacter = useCallback(
     (newValueCharacter: string) =>
       onChange([DialogueVarType.VAR_CHARACTER, newValueCharacter, varName]),
-    [onChange, varName]
+    [onChange, varName],
   );
 
   const handleOnChangeVarName = useCallback(
     (newValueVarName: string) =>
       onChange([DialogueVarType.VAR_CHARACTER, character, newValueVarName]),
-    [onChange, character]
+    [onChange, character],
   );
 
   return (

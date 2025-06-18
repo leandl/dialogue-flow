@@ -2,7 +2,7 @@ import type { DialogueNodeFlowType } from "../../../entities/dialogue-node-flow"
 import type { DialogueNodeFlowSelectOption } from "../dialogue-node-flow/dialogue-node-flow-select";
 
 export function convertCharacterToSelectOption(
-  value: string
+  value: string,
 ): DialogueNodeFlowSelectOption<string> {
   return {
     label: value,
@@ -11,7 +11,7 @@ export function convertCharacterToSelectOption(
 }
 
 export function convertDialogueTypeToSelectOption<
-  T extends DialogueNodeFlowType
+  T extends DialogueNodeFlowType,
 >(value: T): DialogueNodeFlowSelectOption<T> {
   return {
     label: value,
@@ -20,7 +20,7 @@ export function convertDialogueTypeToSelectOption<
 }
 
 export function convertVarGameToSelectOption<T extends string>(
-  value: T
+  value: T,
 ): DialogueNodeFlowSelectOption<T> {
   return {
     label: value.toUpperCase(),
@@ -29,7 +29,7 @@ export function convertVarGameToSelectOption<T extends string>(
 }
 
 export function convertVarCharacterToSelectOption<T extends string>(
-  value: T
+  value: T,
 ): DialogueNodeFlowSelectOption<T> {
   return {
     label: value.toUpperCase(),

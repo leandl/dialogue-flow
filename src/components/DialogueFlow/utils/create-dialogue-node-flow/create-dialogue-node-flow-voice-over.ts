@@ -5,7 +5,7 @@ import type { DialogueNodeFlowOptions } from "../types";
 
 export function createDialogueNodeFlowVoiceOver(
   nodeId: string,
-  options?: DialogueNodeFlowOptions
+  options?: DialogueNodeFlowOptions,
 ): DialogueNodeFlow<"VOICE-OVER"> {
   return {
     id: nodeId,
@@ -23,7 +23,7 @@ export function createDialogueNodeFlowVoiceOver(
       voiceOverType: VoiceOverType.CHARACTER,
       content: {
         character: "",
-        text: ""
+        text: "",
       },
       targetId: createNodeFlowTargetId(nodeId),
       sourceId: createNodeFlowSourceId(nodeId),

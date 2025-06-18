@@ -27,7 +27,7 @@ export function DialogueDataBooleanInput({
 }: DialogueDataBooleanInputProps) {
   const handleOnChange = useCallback(
     (newValue: boolean) => onChange([DialogueDataType.BOOLEAN, newValue]),
-    [onChange]
+    [onChange],
   );
 
   return (

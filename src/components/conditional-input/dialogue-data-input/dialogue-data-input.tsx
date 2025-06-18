@@ -16,14 +16,14 @@ const dialogueDataValueDefault: {
 };
 
 type ComponentDialogueDataInputProps<
-  T extends DialogueDataType = DialogueDataType
+  T extends DialogueDataType = DialogueDataType,
 > = {
   value: DialogueDataValue<T>;
   onChange(newValue: DialogueDataValue<T>): void;
 };
 
 type FunctionComponentDialogueDataInput<
-  T extends DialogueDataType = DialogueDataType
+  T extends DialogueDataType = DialogueDataType,
 > = (props: ComponentDialogueDataInputProps<T>) => React.JSX.Element;
 
 const allComponentDialogueDataInput: {
@@ -52,7 +52,7 @@ type DialogueDataInputProps<T extends DialogueDataType = DialogueDataType> = {
 };
 
 export function DialogueDataInput<
-  T extends DialogueDataType = DialogueDataType
+  T extends DialogueDataType = DialogueDataType,
 >({ value, onChange }: DialogueDataInputProps<T>) {
   const dataType = value[0];
   const ComponentDialogueDataInput = allComponentDialogueDataInput[

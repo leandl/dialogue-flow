@@ -4,14 +4,18 @@ import type {
   DialogueNodeFlowEventType,
 } from "../../../../entities/dialogue-node-flow-event";
 import { VoiceOverType } from "../../../../entities/voice-over";
-import { isDialogueNodeFlow, updateData, updateDialogueNodeFlowData } from "../functions";
+import {
+  isDialogueNodeFlow,
+  updateData,
+  updateDialogueNodeFlowData,
+} from "../functions";
 
 export function applyDialogueNodeFlowEventChangeDialogueCharacter(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER>,
-  nodes: NodeFlow[]
+  nodes: NodeFlow[],
 ): NodeFlow[] {
   return nodes.map((node) => {
-    if (node.data.id !== event.dialogueId ) {
+    if (node.data.id !== event.dialogueId) {
       return node;
     }
 
@@ -26,11 +30,11 @@ export function applyDialogueNodeFlowEventChangeDialogueCharacter(
 
     if (
       isDialogueNodeFlow("VOICE-OVER", node) &&
-      node.data.voiceOverType === VoiceOverType.CHARACTER 
+      node.data.voiceOverType === VoiceOverType.CHARACTER
     ) {
       return updateDialogueNodeFlowData(node, {
         content: updateData(node.data.content, {
-          character: event.character
+          character: event.character,
         }),
       });
     }

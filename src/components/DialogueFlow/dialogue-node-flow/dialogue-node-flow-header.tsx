@@ -26,7 +26,7 @@ export function DialogueNodeFlowHeader({
         type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_TYPE,
         dialogueType: dialogueType,
       }),
-    [notifyNodeDialogueFlowEvent, dialogId]
+    [notifyNodeDialogueFlowEvent, dialogId],
   );
 
   return (

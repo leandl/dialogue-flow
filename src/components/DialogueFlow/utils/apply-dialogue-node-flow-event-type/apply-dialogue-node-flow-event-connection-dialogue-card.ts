@@ -11,7 +11,7 @@ import {
 
 export function applyDialogueNodeFlowEventConnectionDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.CONNECTION_DIALOGUE_CARD>,
-  nodes: NodeFlow[]
+  nodes: NodeFlow[],
 ): NodeFlow[] {
   if (event.from === event.to) {
     return nodes;
@@ -30,7 +30,7 @@ export function applyDialogueNodeFlowEventConnectionDialogueCard(
             : {
                 ...choice,
                 next: event.to,
-              }
+              },
         ),
       });
     }
@@ -43,7 +43,7 @@ export function applyDialogueNodeFlowEventConnectionDialogueCard(
             : {
                 ...nextOption,
                 next: event.to,
-              }
+              },
         ),
       });
     }

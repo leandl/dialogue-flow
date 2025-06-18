@@ -27,7 +27,7 @@ export function DialogueNodeFlowControlIF({ data }: DialogueNodeFlowControlIF) {
           condition,
         },
       }),
-    [data.id, notifyNodeDialogueFlowEvent]
+    [data.id, notifyNodeDialogueFlowEvent],
   );
 
   return (

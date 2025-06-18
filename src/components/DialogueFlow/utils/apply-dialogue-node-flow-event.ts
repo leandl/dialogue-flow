@@ -21,7 +21,7 @@ import { applyDialogueNodeFlowEventRemoveOptionInDialogueCard } from "./apply-di
 
 type FunctionApplyDialogueNodeFlowEvent<T extends DialogueNodeFlowEventType> = (
   event: DialogueNodeFlowEvent<T>,
-  nodes: NodeFlow[]
+  nodes: NodeFlow[],
 ) => NodeFlow[];
 
 const applyDialogueNodeFlowEventByEventType: {
@@ -57,7 +57,7 @@ const applyDialogueNodeFlowEventByEventType: {
 
 export function applyDialogueNodeFlowEvent<T extends DialogueNodeFlowEventType>(
   event: DialogueNodeFlowEvent<T>,
-  nodes: DialogueNodeFlow[]
+  nodes: DialogueNodeFlow[],
 ): DialogueNodeFlow[] {
   const functionApplyDialogueNodeFlowEvent =
     applyDialogueNodeFlowEventByEventType[

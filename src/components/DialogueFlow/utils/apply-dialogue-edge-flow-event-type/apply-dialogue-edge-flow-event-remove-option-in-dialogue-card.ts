@@ -13,7 +13,7 @@ import {
 
 export function applyDialogueEdgeFlowEventRemoveOptionInDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD>,
-  edges: EdgeFlow[]
+  edges: EdgeFlow[],
 ): EdgeFlow[] {
   const currentNodeEdges: EdgeFlow[] = [];
   const anotherEdges: EdgeFlow[] = [];
@@ -35,7 +35,7 @@ export function applyDialogueEdgeFlowEventRemoveOptionInDialogueCard(
     }
 
     const currentIndex = convertNodeFlowSubSourceIdToIndex(
-      edge.sourceHandle as NodeFlowSubSourceId
+      edge.sourceHandle as NodeFlowSubSourceId,
     );
 
     if (currentIndex < event.index) {
@@ -45,7 +45,7 @@ export function applyDialogueEdgeFlowEventRemoveOptionInDialogueCard(
 
     const newSourceId = createNodeFlowSubSourceId(
       edge.source,
-      currentIndex - 1
+      currentIndex - 1,
     );
 
     updatedEdges.push({

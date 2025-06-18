@@ -23,7 +23,7 @@ const actions: Record<DialogueActionType, string> = {
 };
 
 const selectActionOptions: SelectOption<DialogueActionType>[] = Object.entries(
-  actions
+  actions,
 ).map(([action, label]) => ({
   value: action as DialogueActionType,
   label: label,
@@ -43,7 +43,7 @@ export function DialogueActionInput({
         onChange([newAction, varAction, [DialogueDataType.INTERGER, 0]]);
       }
     },
-    [onChange, varAction, valueAction]
+    [onChange, varAction, valueAction],
   );
 
   const handleVarActionChange = useCallback(
@@ -54,7 +54,7 @@ export function DialogueActionInput({
         onChange([action, newVarAction, valueAction]);
       }
     },
-    [onChange, action, valueAction]
+    [onChange, action, valueAction],
   );
 
   const handleValueActionChange = useCallback(
@@ -67,7 +67,7 @@ export function DialogueActionInput({
         }
       }
     },
-    [onChange, action, varAction]
+    [onChange, action, varAction],
   );
 
   return (

@@ -18,14 +18,14 @@ const dialogueVarValueDefault: {
 };
 
 type ComponentDialogueVarInputProps<
-  T extends DialogueVarType = DialogueVarType
+  T extends DialogueVarType = DialogueVarType,
 > = {
   value: DialogueVarValue<T>;
   onChange(newValue: DialogueVarValue<T>): void;
 };
 
 type FunctionComponentDialogueVarInput<
-  T extends DialogueVarType = DialogueVarType
+  T extends DialogueVarType = DialogueVarType,
 > = (props: ComponentDialogueVarInputProps<T>) => React.JSX.Element;
 
 const allComponentDialogueVarInput: {

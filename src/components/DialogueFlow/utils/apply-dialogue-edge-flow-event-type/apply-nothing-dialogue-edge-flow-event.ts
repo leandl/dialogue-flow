@@ -5,7 +5,7 @@ import type {
 } from "../../../../entities/dialogue-node-flow-event";
 
 export function applyNothingDialogueEdgeFlowEvent<
-  T extends DialogueNodeFlowEventType
+  T extends DialogueNodeFlowEventType,
 >(_event: DialogueNodeFlowEvent<T>, edges: EdgeFlow[]): EdgeFlow[] {
   return edges;
 }

@@ -44,20 +44,21 @@ export type DialogueNodeGodotChoice = {
   choices: DialogueNodeGodotChoiceOption[];
 };
 
-
 type DialogueNodeGodotVoiceOverData = {
   character: string | null;
   text: string;
-}
+};
 
 type DialogueNodeGodotVoiceOverDataByVoiceOverType = {
-  [VoiceOverType.CHARACTER]: DialogueNodeGodotVoiceOverData
-}
+  [VoiceOverType.CHARACTER]: DialogueNodeGodotVoiceOverData;
+};
 
-export type DialogueNodeGodotVoiceOver<T extends VoiceOverType = VoiceOverType> = {
+export type DialogueNodeGodotVoiceOver<
+  T extends VoiceOverType = VoiceOverType,
+> = {
   type: "VOICE-OVER";
   voiceOverType: T;
-  data: DialogueNodeGodotVoiceOverDataByVoiceOverType[T]
+  data: DialogueNodeGodotVoiceOverDataByVoiceOverType[T];
   next: string | null;
 };
 

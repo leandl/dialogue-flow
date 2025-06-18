@@ -15,7 +15,7 @@ import {
 
 export function applyDialogueNodeFlowEventRemoveOptionInDialogueCard(
   event: DialogueNodeFlowEvent<DialogueNodeFlowEventType.REMOVE_OPTION_IN_DIALOGUE_CARD>,
-  nodes: DialogueNodeFlow[]
+  nodes: DialogueNodeFlow[],
 ): DialogueNodeFlow[] {
   return nodes.map((node) => {
     if (node.id !== event.dialogueId) return node;

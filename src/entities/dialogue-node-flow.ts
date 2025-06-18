@@ -8,7 +8,7 @@ export const allDialogueNodeFlowTypes = [
   "CONTROL.ACTION",
   "DIALOGUE",
   "CHOICE",
-  "VOICE-OVER"
+  "VOICE-OVER",
 ] as const;
 
 export type DialogueNodeFlowType = (typeof allDialogueNodeFlowTypes)[number];
@@ -91,22 +91,22 @@ export type DialogueNodeFlowChoice = {
 type DialogueNodeFlowVoiceOverData = {
   character: string | null;
   text: string;
-}
-
-type DialogueNodeFlowVoiceOverDataByVoiceOverType = {
-  [VoiceOverType.CHARACTER]: DialogueNodeFlowVoiceOverData
-}
-
-export type DialogueNodeFlowVoiceOver<T extends VoiceOverType = VoiceOverType> = {
-  id: string;
-  targetId: NodeFlowTargetId;
-  type: "VOICE-OVER";
-  voiceOverType: T;
-  content: DialogueNodeFlowVoiceOverDataByVoiceOverType[T]
-  sourceId: NodeFlowSourceId;
-  next: string | null;
 };
 
+type DialogueNodeFlowVoiceOverDataByVoiceOverType = {
+  [VoiceOverType.CHARACTER]: DialogueNodeFlowVoiceOverData;
+};
+
+export type DialogueNodeFlowVoiceOver<T extends VoiceOverType = VoiceOverType> =
+  {
+    id: string;
+    targetId: NodeFlowTargetId;
+    type: "VOICE-OVER";
+    voiceOverType: T;
+    content: DialogueNodeFlowVoiceOverDataByVoiceOverType[T];
+    sourceId: NodeFlowSourceId;
+    next: string | null;
+  };
 
 type DialogueNodeFlowByType = {
   CHOICE: DialogueNodeFlowChoice;
@@ -144,5 +144,5 @@ export type EdgeFlow = {
 };
 
 export type DialogueNodeFlow<
-  T extends DialogueNodeFlowType = DialogueNodeFlowType
+  T extends DialogueNodeFlowType = DialogueNodeFlowType,
 > = NodeFlow<T>;

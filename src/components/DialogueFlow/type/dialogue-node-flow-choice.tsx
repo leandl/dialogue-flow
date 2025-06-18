@@ -26,7 +26,7 @@ export function DialogueNodeFlowChoice({
         type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT,
         text,
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   const handleChangeCharacter = useCallback(
@@ -36,7 +36,7 @@ export function DialogueNodeFlowChoice({
         type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER,
         character,
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   const handleAddOption = useCallback(
@@ -45,7 +45,7 @@ export function DialogueNodeFlowChoice({
         dialogueId: data.id,
         type: DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD,
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   const handleRemoveOption = useCallback(
@@ -56,7 +56,7 @@ export function DialogueNodeFlowChoice({
         sourceId,
         index,
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   const handleChangeOptionText = useCallback(
@@ -68,7 +68,7 @@ export function DialogueNodeFlowChoice({
         index,
         text: newText,
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   return (

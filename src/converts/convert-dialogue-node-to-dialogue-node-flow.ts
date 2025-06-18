@@ -27,20 +27,20 @@ import type {
 } from "../entities/dialogue-node-flow";
 
 export function convertDialogueNodeIdToNodeFlowTargetId(
-  dialogueNodeId: string
+  dialogueNodeId: string,
 ): NodeFlowTargetId {
   return `target-${dialogueNodeId}`;
 }
 
 export function convertDialogueNodeIdToNodeFlowSourceId(
-  dialogueNodeId: string
+  dialogueNodeId: string,
 ): NodeFlowSourceId {
   return `source-${dialogueNodeId}`;
 }
 
 export function convertDialogueNodeIdToNodeFlowSubSourceId(
   dialogueNodeId: string,
-  id: number | string
+  id: number | string,
 ): NodeFlowSubSourceId {
   return `sub-source-${dialogueNodeId}-${id}`;
 }
@@ -48,24 +48,24 @@ export function convertDialogueNodeIdToNodeFlowSubSourceId(
 export function convertDialogueNodeControlRandomOptionToDialogueNodeFlowControlRandomOption(
   dialogueNodeControlRandomId: string,
   dialogueNodeControlRandomOptionId: number,
-  dialogueNodeControlRandomOption: string | null
+  dialogueNodeControlRandomOption: string | null,
 ): DialogueNodeFlowControlRandomOption {
   return {
     sourceId: convertDialogueNodeIdToNodeFlowSubSourceId(
       dialogueNodeControlRandomId,
-      dialogueNodeControlRandomOptionId
+      dialogueNodeControlRandomOptionId,
     ),
     next: dialogueNodeControlRandomOption,
   };
 }
 
 export function convertDialogueNodeControlRandomToDialogueNodeFlowControlRandom(
-  dialogueNodeControlRandom: DialogueNodeControlRandom
+  dialogueNodeControlRandom: DialogueNodeControlRandom,
 ): DialogueNodeFlowControlRandom {
   return {
     id: dialogueNodeControlRandom.id,
     targetId: convertDialogueNodeIdToNodeFlowTargetId(
-      dialogueNodeControlRandom.id
+      dialogueNodeControlRandom.id,
     ),
     type: "CONTROL.RANDOM",
     nexts: dialogueNodeControlRandom.nexts.map(
@@ -73,14 +73,14 @@ export function convertDialogueNodeControlRandomToDialogueNodeFlowControlRandom(
         convertDialogueNodeControlRandomOptionToDialogueNodeFlowControlRandomOption(
           dialogueNodeControlRandom.id,
           index,
-          dialogueNodeControlRandomOption
-        )
+          dialogueNodeControlRandomOption,
+        ),
     ),
   };
 }
 
 export function convertDialogueNodeControlIFToDialogueNodeFlowControlIF(
-  dialogueNodeControlIF: DialogueNodeControlIF
+  dialogueNodeControlIF: DialogueNodeControlIF,
 ): DialogueNodeFlowControlIF {
   return {
     id: dialogueNodeControlIF.id,
@@ -91,53 +91,53 @@ export function convertDialogueNodeControlIFToDialogueNodeFlowControlIF(
       false: dialogueNodeControlIF.next.false,
       sourceFalseId: convertDialogueNodeIdToNodeFlowSubSourceId(
         dialogueNodeControlIF.id,
-        "FALSE"
+        "FALSE",
       ),
       true: dialogueNodeControlIF.next.true,
       sourceTrueId: convertDialogueNodeIdToNodeFlowSubSourceId(
         dialogueNodeControlIF.id,
-        "TRUE"
+        "TRUE",
       ),
     },
   };
 }
 
 export function convertDialogueNodeControlActionToDialogueNodeFlowControlAction(
-  dialogueNodeControlAction: DialogueNodeControlAction
+  dialogueNodeControlAction: DialogueNodeControlAction,
 ): DialogueNodeFlowControlAction {
   return {
     id: dialogueNodeControlAction.id,
     targetId: convertDialogueNodeIdToNodeFlowTargetId(
-      dialogueNodeControlAction.id
+      dialogueNodeControlAction.id,
     ),
     type: "CONTROL.ACTION",
     action: dialogueNodeControlAction.action,
     sourceId: convertDialogueNodeIdToNodeFlowSourceId(
-      dialogueNodeControlAction.id
+      dialogueNodeControlAction.id,
     ),
     next: dialogueNodeControlAction.next,
   };
 }
 
 export function convertDialogueNodeControlEventToDialogueNodeFlowControlEvent(
-  dialogueNodeControlEvent: DialogueNodeControlEvent
+  dialogueNodeControlEvent: DialogueNodeControlEvent,
 ): DialogueNodeFlowControlEvent {
   return {
     id: dialogueNodeControlEvent.id,
     targetId: convertDialogueNodeIdToNodeFlowTargetId(
-      dialogueNodeControlEvent.id
+      dialogueNodeControlEvent.id,
     ),
     type: "CONTROL.EVENT",
     eventName: dialogueNodeControlEvent.eventName,
     sourceId: convertDialogueNodeIdToNodeFlowSourceId(
-      dialogueNodeControlEvent.id
+      dialogueNodeControlEvent.id,
     ),
     next: dialogueNodeControlEvent.next,
   };
 }
 
 export function convertDialogueNodeDialogueToDialogueNodeFlowDialogue(
-  dialogueNodeDialogue: DialogueNodeDialogue
+  dialogueNodeDialogue: DialogueNodeDialogue,
 ): DialogueNodeFlowDialogue {
   return {
     id: dialogueNodeDialogue.id,
@@ -153,20 +153,20 @@ export function convertDialogueNodeDialogueToDialogueNodeFlowDialogue(
 export function convertDialogueNodeChoiceOptionToDialogueNodeFlowChoiceOption(
   dialogueNodeChoiceId: string,
   dialogueNodeChoiceOptionId: number,
-  dialogueNodeChoiceOption: DialogueNodeChoiceOption
+  dialogueNodeChoiceOption: DialogueNodeChoiceOption,
 ): DialogueNodeFlowChoiceOption {
   return {
     text: dialogueNodeChoiceOption.text,
     sourceId: convertDialogueNodeIdToNodeFlowSubSourceId(
       dialogueNodeChoiceId,
-      dialogueNodeChoiceOptionId
+      dialogueNodeChoiceOptionId,
     ),
     next: dialogueNodeChoiceOption.next,
   };
 }
 
 export function convertDialogueNodeChoiceToDialogueNodeFlowChoice(
-  dialogueNodeChoice: DialogueNodeChoice
+  dialogueNodeChoice: DialogueNodeChoice,
 ): DialogueNodeFlowChoice {
   return {
     id: dialogueNodeChoice.id,
@@ -178,15 +178,14 @@ export function convertDialogueNodeChoiceToDialogueNodeFlowChoice(
       convertDialogueNodeChoiceOptionToDialogueNodeFlowChoiceOption(
         dialogueNodeChoice.id,
         index,
-        dialogueNodeChoiceOption
-      )
+        dialogueNodeChoiceOption,
+      ),
     ),
   };
 }
 
-
 export function convertDialogueNodeVoiceOverToDialogueNodeFlowVoiceOver(
-  dialogueNodeVoiceOver: DialogueNodeVoiceOver
+  dialogueNodeVoiceOver: DialogueNodeVoiceOver,
 ): DialogueNodeFlowVoiceOver {
   return {
     id: dialogueNodeVoiceOver.id,
@@ -199,21 +198,42 @@ export function convertDialogueNodeVoiceOverToDialogueNodeFlowVoiceOver(
   };
 }
 
-function convertDialogueNodeToDialogueNodeFlowData(dialogueNode: DialogueNode): DialogueNodeFlow["data"] {
+function convertDialogueNodeToDialogueNodeFlowData(
+  dialogueNode: DialogueNode,
+): DialogueNodeFlow["data"] {
   switch (dialogueNode.type) {
-    case "CONTROL.RANDOM": return convertDialogueNodeControlRandomToDialogueNodeFlowControlRandom(dialogueNode);
-    case "CONTROL.IF": return convertDialogueNodeControlIFToDialogueNodeFlowControlIF(dialogueNode);
-    case "CONTROL.ACTION": return  convertDialogueNodeControlActionToDialogueNodeFlowControlAction(dialogueNode);
-    case "CONTROL.EVENT": return convertDialogueNodeControlEventToDialogueNodeFlowControlEvent(dialogueNode);
+    case "CONTROL.RANDOM":
+      return convertDialogueNodeControlRandomToDialogueNodeFlowControlRandom(
+        dialogueNode,
+      );
+    case "CONTROL.IF":
+      return convertDialogueNodeControlIFToDialogueNodeFlowControlIF(
+        dialogueNode,
+      );
+    case "CONTROL.ACTION":
+      return convertDialogueNodeControlActionToDialogueNodeFlowControlAction(
+        dialogueNode,
+      );
+    case "CONTROL.EVENT":
+      return convertDialogueNodeControlEventToDialogueNodeFlowControlEvent(
+        dialogueNode,
+      );
 
-    case "DIALOGUE": return convertDialogueNodeDialogueToDialogueNodeFlowDialogue(dialogueNode);
-    case "CHOICE": return convertDialogueNodeChoiceToDialogueNodeFlowChoice(dialogueNode);
-    case "VOICE-OVER": return convertDialogueNodeVoiceOverToDialogueNodeFlowVoiceOver(dialogueNode)
+    case "DIALOGUE":
+      return convertDialogueNodeDialogueToDialogueNodeFlowDialogue(
+        dialogueNode,
+      );
+    case "CHOICE":
+      return convertDialogueNodeChoiceToDialogueNodeFlowChoice(dialogueNode);
+    case "VOICE-OVER":
+      return convertDialogueNodeVoiceOverToDialogueNodeFlowVoiceOver(
+        dialogueNode,
+      );
   }
 }
 
 export function convertDialogueNodeToDialogueNodeFlow(
-  dialogueNode: DialogueNode
+  dialogueNode: DialogueNode,
 ): DialogueNodeFlow {
   return {
     id: dialogueNode.id,
@@ -228,10 +248,10 @@ export function convertDialogueNodeToDialogueNodeFlow(
 }
 
 export function convertDialogueNodesToDialogueNodeFlows(
-  dialogueNodeGodots: DialogueNodes
+  dialogueNodeGodots: DialogueNodes,
 ): DialogueNodeFlow[] {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return Object.entries(dialogueNodeGodots).map(([_, dialogueNodeGodot]) =>
-    convertDialogueNodeToDialogueNodeFlow(dialogueNodeGodot)
+    convertDialogueNodeToDialogueNodeFlow(dialogueNodeGodot),
   );
 }

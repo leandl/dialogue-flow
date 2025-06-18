@@ -28,7 +28,7 @@ export function DialogueNodeFlowControlEvent({
           eventName,
         },
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   return (

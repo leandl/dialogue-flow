@@ -23,7 +23,7 @@ export function DialogueNodeFlowControlRandom({
         dialogueId: data.id,
         type: DialogueNodeFlowEventType.ADD_OPTION_IN_DIALOGUE_CARD,
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   const handleRemoveOption = useCallback(
@@ -34,7 +34,7 @@ export function DialogueNodeFlowControlRandom({
         sourceId,
         index,
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   return (

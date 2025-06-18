@@ -23,7 +23,7 @@ export function DialogueNodeFlowDialogue({
         type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_TEXT,
         text,
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   const handleChangeCharacter = useCallback(
@@ -33,7 +33,7 @@ export function DialogueNodeFlowDialogue({
         type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_CHARACTER,
         character,
       }),
-    [notifyNodeDialogueFlowEvent, data.id]
+    [notifyNodeDialogueFlowEvent, data.id],
   );
 
   return (

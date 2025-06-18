@@ -10,7 +10,7 @@ import { applyNothingDialogueEdgeFlowEvent } from "./apply-dialogue-edge-flow-ev
 
 type FunctionApplyDialogueEdgeFlowEvent<T extends DialogueNodeFlowEventType> = (
   event: DialogueNodeFlowEvent<T>,
-  edges: EdgeFlow[]
+  edges: EdgeFlow[],
 ) => EdgeFlow[];
 
 const applyDialogueEdgeFlowEventByEventType: {
@@ -45,7 +45,7 @@ const applyDialogueEdgeFlowEventByEventType: {
 
 export function applyDialogueEdgeFlowEvent<T extends DialogueNodeFlowEventType>(
   event: DialogueNodeFlowEvent<T>,
-  edges: EdgeFlow[]
+  edges: EdgeFlow[],
 ): EdgeFlow[] {
   const functionApplyDialogueEdgeFlowEvent =
     applyDialogueEdgeFlowEventByEventType[

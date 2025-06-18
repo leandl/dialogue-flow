@@ -93,7 +93,7 @@ type UniqueData<T extends UniqueDataType = UniqueDataType> =
   UniqueDataByUniqueDataType[T];
 
 export type DialogueNodeFlowEventChangeDialogueUniqueData<
-  T extends UniqueDataType = UniqueDataType
+  T extends UniqueDataType = UniqueDataType,
 > = {
   type: DialogueNodeFlowEventType.CHANGE_DIALOGUE_UNIQUE_DATA;
   dialogueId: string;
@@ -140,5 +140,5 @@ type DialogueNodeFlowEventByType = {
 };
 
 export type DialogueNodeFlowEvent<
-  T extends DialogueNodeFlowEventType = DialogueNodeFlowEventType
+  T extends DialogueNodeFlowEventType = DialogueNodeFlowEventType,
 > = DialogueNodeFlowEventByType[T];
