@@ -39,13 +39,13 @@ type DialogueFlowData = {
   notifyConnectionReactFlowEvent(e: Connection): void;
   notifyNodeDialogueFlowEvent(e: DialogueNodeFlowEvent): void;
   onNodeDialogueFlowEvent(
-    l: ObserverListener<DialogueNodeFlowEvent>,
+    l: ObserverListener<DialogueNodeFlowEvent>
   ): UnsubscribeFunction;
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const DialogueFlowContext = createContext<DialogueFlowData>(
-  {} as DialogueFlowData,
+  {} as DialogueFlowData
 );
 
 type DialogueFlowProviderProps = {
@@ -55,24 +55,24 @@ type DialogueFlowProviderProps = {
 export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
   const connectionReactFlowEventObserver = useMemo(
     () => new Observer<Connection>(),
-    [],
+    []
   );
   const nodeReactFlowEventObserver = useMemo(
     () => new Observer<NodeChange[]>(),
-    [],
+    []
   );
   const nodeDialogueFlowEventObserver = useMemo(
     () => new Observer<DialogueNodeFlowEvent>(),
-    [],
+    []
   );
 
   const selectDialogueTypeOptions = useMemo(
     () => allDialogueNodeFlowTypes.map(convertDialogueTypeToSelectOption),
-    [],
+    []
   );
 
   const selectCharacterOptions = useMemo(() => {
-    const allCharacters = ["CHRIS", "BENNEDETTE"];
+    const allCharacters = ["PETER", "CHRIS", "BENNEDETTE"];
     return allCharacters.map(convertCharacterToSelectOption);
   }, []);
 
@@ -96,13 +96,13 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
               nodeDialogueFlowEventObserver.publish(event);
             }
           });
-      },
+      }
     );
 
     const unsubscribeConnectionReactFlowEvent =
       connectionReactFlowEventObserver.subscribe((event) => {
         nodeDialogueFlowEventObserver.publish(
-          convertConnectionReactFlowEventToNodeDialogueFlowEvent(event),
+          convertConnectionReactFlowEventToNodeDialogueFlowEvent(event)
         );
       });
 
@@ -118,23 +118,23 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
 
   const notifyNodeReactFlowEvent = useCallback(
     (e: NodeChange[]) => nodeReactFlowEventObserver.publish(e),
-    [nodeReactFlowEventObserver],
+    [nodeReactFlowEventObserver]
   );
 
   const notifyConnectionReactFlowEvent = useCallback(
     (e: Connection) => connectionReactFlowEventObserver.publish(e),
-    [connectionReactFlowEventObserver],
+    [connectionReactFlowEventObserver]
   );
 
   const notifyNodeDialogueFlowEvent = useCallback(
     (e: DialogueNodeFlowEvent) => nodeDialogueFlowEventObserver.publish(e),
-    [nodeDialogueFlowEventObserver],
+    [nodeDialogueFlowEventObserver]
   );
 
   const onNodeDialogueFlowEvent = useCallback(
     (listener: ObserverListener<DialogueNodeFlowEvent>) =>
       nodeDialogueFlowEventObserver.subscribe(listener),
-    [nodeDialogueFlowEventObserver],
+    [nodeDialogueFlowEventObserver]
   );
 
   return (
