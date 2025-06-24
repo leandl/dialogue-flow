@@ -57,7 +57,7 @@ export type DialogueNodeGodotVoiceOver<
   T extends VoiceOverType = VoiceOverType,
 > = {
   type: "VOICE-OVER";
-  voiceOverType: T;
+  "voice-over-type": T;
   data: DialogueNodeGodotVoiceOverDataByVoiceOverType[T];
   next: string | null;
 };
