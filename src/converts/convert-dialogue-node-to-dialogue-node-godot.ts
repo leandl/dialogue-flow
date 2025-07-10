@@ -10,17 +10,18 @@ import type {
   DialogueNodes,
   DialogueNodeVoiceOver,
 } from "../entities/dialogue-node";
-import type {
-  DialogueNodeGodot,
-  DialogueNodeGodotChoice,
-  DialogueNodeGodotChoiceOption,
-  DialogueNodeGodotControlAction,
-  DialogueNodeGodotControlEvent,
-  DialogueNodeGodotControlIF,
-  DialogueNodeGodotControlRandom,
-  DialogueNodeGodotDialogue,
-  DialogueNodeGodots,
-  DialogueNodeGodotVoiceOver,
+import {
+  DialogueNodeGodotName,
+  type DialogueNodeGodot,
+  type DialogueNodeGodotChoice,
+  type DialogueNodeGodotChoiceOption,
+  type DialogueNodeGodotControlAction,
+  type DialogueNodeGodotControlEvent,
+  type DialogueNodeGodotControlIF,
+  type DialogueNodeGodotControlRandom,
+  type DialogueNodeGodotDialogue,
+  type DialogueNodeGodots,
+  type DialogueNodeGodotVoiceOver,
 } from "../entities/dialogue-node-godot";
 
 export function convertDialogueNodeControlRandomToDialogueNodeGodotControlRandom(
@@ -38,8 +39,8 @@ export function convertDialogueNodeControlIFToDialogueNodeGodotControlIF(
   return {
     type: "CONTROL.IF",
     condition: node.condition,
-    next_false: node.next.false,
-    next_true: node.next.true,
+    next_false: node.next.false || DialogueNodeGodotName.END,
+    next_true: node.next.true || DialogueNodeGodotName.END,
   };
 }
 
@@ -49,7 +50,7 @@ export function convertDialogueNodeControlActionToDialogueNodeGodotControlAction
   return {
     type: "CONTROL.ACTION",
     action: node.action,
-    next: node.next,
+    next: node.next || DialogueNodeGodotName.END,
   };
 }
 
@@ -59,7 +60,7 @@ export function convertDialogueNodeControlEventToDialogueNodeGodotControlEvent(
   return {
     type: "CONTROL.EVENT",
     "event-name": node.eventName,
-    next: node.next,
+    next: node.next || DialogueNodeGodotName.END,
   };
 }
 
@@ -70,7 +71,7 @@ export function convertDialogueNodeDialogueToDialogueNodeGodotDialogue(
     type: "DIALOGUE",
     character: node.character as string,
     text: node.text,
-    next: node.next,
+    next: node.next || DialogueNodeGodotName.END,
   };
 }
 
@@ -79,7 +80,7 @@ export function convertDialogueNodeChoiceOptionToDialogueNodeGodotChoiceOption(
 ): DialogueNodeGodotChoiceOption {
   return {
     text: option.text,
-    next: option.next,
+    next: option.next || DialogueNodeGodotName.END,
   };
 }
 
@@ -103,7 +104,7 @@ export function convertDialogueNodeVoiceOverToDialogueNodeGodotVoiceOver(
     type: "VOICE-OVER",
     "voice-over-type": node.voiceOverType,
     data: node.data,
-    next: node.next,
+    next: node.next || DialogueNodeGodotName.END,
   };
 }
 

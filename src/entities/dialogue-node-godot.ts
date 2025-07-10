@@ -1,6 +1,11 @@
 import type { DialogueAction, DialogueOperator } from "./dialogue-logic";
 import type { VoiceOverType } from "./voice-over";
 
+export enum DialogueNodeGodotName {
+  MAIN = "MAIN",
+  END = "END",
+}
+
 export type DialogueNodeGodotControlRandom = {
   type: "CONTROL.RANDOM";
   nexts: Array<string | null>;
@@ -9,32 +14,32 @@ export type DialogueNodeGodotControlRandom = {
 export type DialogueNodeGodotControlEvent = {
   type: "CONTROL.EVENT";
   "event-name": string;
-  next: string | null;
+  next: string | DialogueNodeGodotName.END;
 };
 
 export type DialogueNodeGodotControlIF = {
   type: "CONTROL.IF";
   condition: DialogueOperator;
-  next_true: string | null;
-  next_false: string | null;
+  next_true: string | DialogueNodeGodotName.END;
+  next_false: string | DialogueNodeGodotName.END;
 };
 
 export type DialogueNodeGodotControlAction = {
   type: "CONTROL.ACTION";
   action: DialogueAction;
-  next: string | null;
+  next: string | DialogueNodeGodotName.END;
 };
 
 export type DialogueNodeGodotDialogue = {
   type: "DIALOGUE";
   character: string;
   text: string;
-  next: string | null;
+  next: string | DialogueNodeGodotName.END;
 };
 
 export type DialogueNodeGodotChoiceOption = {
   text: string;
-  next: string | null;
+  next: string | DialogueNodeGodotName.END;
 };
 
 export type DialogueNodeGodotChoice = {
@@ -59,7 +64,7 @@ export type DialogueNodeGodotVoiceOver<
   type: "VOICE-OVER";
   "voice-over-type": T;
   data: DialogueNodeGodotVoiceOverDataByVoiceOverType[T];
-  next: string | null;
+  next: string | DialogueNodeGodotName.END;
 };
 
 export type DialogueNodeGodot =

@@ -82,7 +82,7 @@ export function DialogueFlowProvider({ children }: DialogueFlowProviderProps) {
   }, []);
 
   const selectVarCharacterOptions = useMemo(() => {
-    const allVarCharacters = ["heart"];
+    const allVarCharacters = ["life", "sanity", "affection", "emotion"];
     return allVarCharacters.map(convertVarCharacterToSelectOption);
   }, []);
 

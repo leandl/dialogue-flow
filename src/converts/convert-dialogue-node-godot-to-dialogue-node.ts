@@ -10,17 +10,18 @@ import type {
   DialogueNodes,
   DialogueNodeVoiceOver,
 } from "../entities/dialogue-node";
-import type {
-  DialogueNodeGodot,
-  DialogueNodeGodotChoice,
-  DialogueNodeGodotChoiceOption,
-  DialogueNodeGodotControlAction,
-  DialogueNodeGodotControlEvent,
-  DialogueNodeGodotControlIF,
-  DialogueNodeGodotControlRandom,
-  DialogueNodeGodotDialogue,
-  DialogueNodeGodots,
-  DialogueNodeGodotVoiceOver,
+import {
+  DialogueNodeGodotName,
+  type DialogueNodeGodot,
+  type DialogueNodeGodotChoice,
+  type DialogueNodeGodotChoiceOption,
+  type DialogueNodeGodotControlAction,
+  type DialogueNodeGodotControlEvent,
+  type DialogueNodeGodotControlIF,
+  type DialogueNodeGodotControlRandom,
+  type DialogueNodeGodotDialogue,
+  type DialogueNodeGodots,
+  type DialogueNodeGodotVoiceOver,
 } from "../entities/dialogue-node-godot";
 
 export function convertDialogueNodeGodotControlRandomToDialogueNodeControlRandom(
@@ -35,54 +36,69 @@ export function convertDialogueNodeGodotControlRandomToDialogueNodeControlRandom
 }
 
 export function convertDialogueNodeGodotControlIFToDialogueNodeControlIF(
-  dialogueNodeControlIFId: string,
-  dialogueNodeControlIFGodot: DialogueNodeGodotControlIF
+  dialogueNodeId: string,
+  dialogueNodeGodot: DialogueNodeGodotControlIF
 ): DialogueNodeControlIF {
   return {
-    id: dialogueNodeControlIFId,
+    id: dialogueNodeId,
     type: "CONTROL.IF",
-    condition: dialogueNodeControlIFGodot.condition,
+    condition: dialogueNodeGodot.condition,
     next: {
-      true: dialogueNodeControlIFGodot.next_true,
-      false: dialogueNodeControlIFGodot.next_false,
+      true:
+        dialogueNodeGodot.next_true !== DialogueNodeGodotName.END
+          ? dialogueNodeGodot.next_true
+          : null,
+      false:
+        dialogueNodeGodot.next_false !== DialogueNodeGodotName.END
+          ? dialogueNodeGodot.next_false
+          : null,
     },
   };
 }
 
 export function convertDialogueNodeGodotControlActionToDialogueNodeControlAction(
-  dialogueNodeControlActionId: string,
-  dialogueNodeControlActionGodot: DialogueNodeGodotControlAction
+  dialogueNodeId: string,
+  dialogueNodeGodot: DialogueNodeGodotControlAction
 ): DialogueNodeControlAction {
   return {
-    id: dialogueNodeControlActionId,
+    id: dialogueNodeId,
     type: "CONTROL.ACTION",
-    action: dialogueNodeControlActionGodot.action,
-    next: dialogueNodeControlActionGodot.next,
+    action: dialogueNodeGodot.action,
+    next:
+      dialogueNodeGodot.next !== DialogueNodeGodotName.END
+        ? dialogueNodeGodot.next
+        : null,
   };
 }
 
 export function convertDialogueNodeGodotControlEventToDialogueNodeControlEvent(
-  dialogueNodeControlEventId: string,
-  dialogueNodeControlEventGodot: DialogueNodeGodotControlEvent
+  dialogueNodeId: string,
+  dialogueNodeGodot: DialogueNodeGodotControlEvent
 ): DialogueNodeControlEvent {
   return {
-    id: dialogueNodeControlEventId,
+    id: dialogueNodeId,
     type: "CONTROL.EVENT",
-    eventName: dialogueNodeControlEventGodot["event-name"],
-    next: dialogueNodeControlEventGodot.next,
+    eventName: dialogueNodeGodot["event-name"],
+    next:
+      dialogueNodeGodot.next !== DialogueNodeGodotName.END
+        ? dialogueNodeGodot.next
+        : null,
   };
 }
 
 export function convertDialogueNodeGodotDialogueToDialogueNodeDialogue(
-  dialogueNodeDialogueId: string,
-  dialogueNodeDialogueGodot: DialogueNodeGodotDialogue
+  dialogueNodeId: string,
+  dialogueNodeGodot: DialogueNodeGodotDialogue
 ): DialogueNodeDialogue {
   return {
-    id: dialogueNodeDialogueId,
+    id: dialogueNodeId,
     type: "DIALOGUE",
-    character: dialogueNodeDialogueGodot.character,
-    text: dialogueNodeDialogueGodot.text,
-    next: dialogueNodeDialogueGodot.next,
+    character: dialogueNodeGodot.character,
+    text: dialogueNodeGodot.text,
+    next:
+      dialogueNodeGodot.next !== DialogueNodeGodotName.END
+        ? dialogueNodeGodot.next
+        : null,
   };
 }
 
@@ -91,7 +107,10 @@ export function convertDialogueNodeGodotChoiceOptionToDialogueNodeChoiceOption(
 ): DialogueNodeChoiceOption {
   return {
     text: dialogueNodeChoiceOptionGodot.text,
-    next: dialogueNodeChoiceOptionGodot.next,
+    next:
+      dialogueNodeChoiceOptionGodot.next !== DialogueNodeGodotName.END
+        ? dialogueNodeChoiceOptionGodot.next
+        : null,
   };
 }
 
@@ -111,15 +130,18 @@ export function convertDialogueNodeGodotChoiceToDialogueNodeChoice(
 }
 
 export function convertDialogueNodeGodotVoiceOverToDialogueNodeVoiceOver(
-  dialogueNodeVoiceOverId: string,
-  dialogueNodeVoiceOverGodot: DialogueNodeGodotVoiceOver
+  dialogueNodeId: string,
+  dialogueNodeGodot: DialogueNodeGodotVoiceOver
 ): DialogueNodeVoiceOver {
   return {
-    id: dialogueNodeVoiceOverId,
+    id: dialogueNodeId,
     type: "VOICE-OVER",
-    voiceOverType: dialogueNodeVoiceOverGodot["voice-over-type"],
-    data: dialogueNodeVoiceOverGodot.data,
-    next: dialogueNodeVoiceOverGodot.next,
+    voiceOverType: dialogueNodeGodot["voice-over-type"],
+    data: dialogueNodeGodot.data,
+    next:
+      dialogueNodeGodot.next !== DialogueNodeGodotName.END
+        ? dialogueNodeGodot.next
+        : null,
   };
 }
 export function convertDialogueNodeGodotToDialogueNode(
